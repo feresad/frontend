@@ -1,0 +1,184 @@
+
+<nav class="navbar">
+    <h4>Abinject</h4>
+    <img class="logo" alt="no avaible image" src="../../../assets/img/logo-2-1.png">
+    <div class="profile">
+      <div class="notification-container">
+        <span id="notificationIcon" class="fas fa-bell">
+        <div id="notificationList" class="notification-list">
+          <!-- Liste des notifications -->
+          <ul>
+            <li>Notification 1</li>
+            <li>Notification 2</li>
+            <li>Notification 3</li>
+          </ul>
+        </div>
+      </span>
+      </div>
+      <input id="idsearchInput" type="text" placeholder="Search" class="form-label">
+      <span class="fas fa-search"></span>
+      <img class="profile-image" alt="no avaible image" src="../../../assets/img/photo-prof.png">
+      <p class="profile-name">Feres Adouani</p>    
+    </div>
+  </nav>
+
+  <!-- sidebar -->
+  <input type="checkbox" id="toggle">
+  <label class="side-toggle" for="toggle"><span class="fas fa-bars"></span></label>
+
+  <div class="sidebar">
+    <div class="sidebar-menu">
+      <span class="fas fa-clipboard-list"></span><a href="">Dashboard</a>
+    </div>
+    <div class="sidebar-menu">
+      <span class="fas fa-boxes"></span><a href="">Produit</a>
+    </div>
+    <div class="sidebar-menu">
+      <span class="fas fa-cogs"></span><a>Machine</a>
+    </div>
+    <div class="sidebar-menu">
+      <span class="fas fa-battery-full"></span><a>Consomation</a>
+    </div>
+    <div class="sidebar-menu">
+      <span class="fas fa-exclamation-triangle"></span><a>Rubut</a>
+    </div>
+    <div class="sidebar-menu">
+      <span class="fas fa-cog"></span><a>Setting</a>
+    </div>
+  </div>
+
+  <!-- main dahsboard -->
+  <main>
+    <div class="dashboard-container">
+      <!-- 4 cards top -->
+      <div class="card total1">
+        <div class="info">
+          <div class="info-detail">
+            <a href="/admin/list-prod">
+            <h3>Produit</h3>
+            <p>Lorem ipsem dolor</p>
+            <h2>1,873,250 <span>Piece</span></h2>
+            </a>
+          </div>
+          <div class="info-image"><i class="fas fa-boxes"></i></div>
+        </div>
+      </div>
+
+      <div class="card total2">          
+        <div class="info">
+          <div class="info-detail">
+            <h3>Machines</h3>
+            <p>Lorem ipsem dolor</p>
+            <h2>10,890 <span>Machines</span></h2>
+          </div>
+          <div class="info-image"><i class="fas fa-cogs"></i></div>
+        </div>
+      </div>
+
+      <div class="card total3">
+        <div class="info">
+          <div class="info-detail">
+            <h3>Utilisateur </h3>
+            <p>Lorem ipsem dolor</p>
+            <h2>340 <span>Utilisateur</span></h2>
+          </div>
+          <div class="info-image"><i class="fas fa-user-friends"></i></div>
+        </div>
+      </div>
+
+      <div class="card total4">          
+        <div class="info">
+          <div class="info-detail">
+            <h3>Daily Orders</h3>
+            <p>Lorem ipsem dolor</p>
+            <h2>56 <span>Orders</span></h2>
+          </div>
+          <div class="info-image"><i class="fas fa-shipping-fast"></i></div>
+        </div>
+      </div>
+
+      <!-- 2 cards bottom -->
+      <div class="card detail">
+        <div class="detail-header">
+          <h2>All Produit</h2>
+          <button>See More</button>         
+        </div>
+        <table>
+          <tr>
+            <th>ID</th>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Qantity</th>
+            <th>Disponibilite</th>
+            <th>Actions</th>
+        </tr>
+       <tr>
+        <td>1</td>
+        <td>lien</td>
+        <td>Prod1</td>
+        <td>50</td>
+        <td><span class="status EnStock"><i class="fas fa-circle"> EN STOCK</i></span></td>
+       </tr> 
+       <tr>
+        <td>2</td>
+        <td>lien</td>
+        <td>Prod2</td>
+        <td>2</td>
+        <td><span class="status presuqeFini"><i class="fas fa-circle"> Presque Fini</i></span></td>
+       </tr> 
+       <tr>
+        <td>3</td>
+        <td>lien</td>
+        <td>Prod3</td>
+        <td>0</td>
+        <td ><span class="status horsStock"><i class="fas fa-circle"> Hors Stock</i></span></td>
+       </tr>
+        </table>
+      </div>
+      <div class="card customer">
+        <h2>Pannes Machines</h2>
+        <div class="customer-wrapper">
+          <img class="customer-image" alt="no avaible image" src="https://pbs.twimg.com/media/EYt947jXYAY7So1.jpg:large">
+          <div class="customer-name">
+            <h4>Mollitia rerum</h4>
+            <p>Lorem ipsum dolor sit amet.</p>
+          </div>
+          <p class="customer-date">Today</p>
+        </div>
+        <!-- T add more-->
+        <div class="customer-wrapper">
+          <img class="customer-image" alt="no avaible image" src="https://pbs.twimg.com/media/ErVhH0YVoAEov_Q.jpg">
+          <div class="customer-name">
+            <h4>Mollitia rerum</h4>
+            <p>Lorem ipsum dolor sit amet.</p>
+          </div>
+          <p class="customer-date">Today</p>
+        </div>
+        <div class="customer-wrapper">
+          <img class="customer-image" alt="no avaible image" src="https://pbs.twimg.com/media/ErXj7hSW8AckL_l.jpg">
+          <div class="customer-name">
+            <h4>Mollitia rerum</h4>
+            <p>Lorem ipsum dolor sit amet.</p>
+          </div>
+          <p class="customer-date">Yesterday</p>
+        </div>
+        <div class="customer-wrapper">
+          <img class="customer-image" alt="no avaible image" src="https://64.media.tumblr.com/001bdb860de2ea9bc9cc21fc6988f13b/d66cbcd97ae5ebef-43/s540x810/2187a41e09b8d1096783e166d83fbabe1019d592.jpg">
+          <div class="customer-name">
+            <h4>Mollitia rerum</h4>
+            <p>Lorem ipsum dolor sit amet.</p>
+          </div>
+          <p class="customer-date">Yesterday</p>
+        </div>
+        <div class="customer-wrapper">
+          <img class="customer-image" alt="no avaible image" src="https://yzgeneration.com/wp-content/uploads/2022/04/One_Piece_1015_3.webp">
+          <div class="customer-name">
+            <h4>Mollitia rerum</h4>
+            <p>Lorem ipsum dolor sit amet.</p>
+          </div>
+          <p class="customer-date">Yesterday</p>
+        </div>
+
+    </div>
+  </div>
+  </main>
