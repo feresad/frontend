@@ -10,17 +10,3 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   });
-  $(document).ready(function() {
-    $('#idsearchInput').on('input', function() {
-      var searchTerm = $(this).val().toLowerCase();
-      
-      // Parcourir chaque élément de la page
-      $('body *').filter(function() {
-        var text = $(this).text().toLowerCase();
-        
-        // Vérifier si le texte de l'élément contient le terme de recherche
-        return text.indexOf(searchTerm) > -1;
-      }).show(); // Afficher les éléments correspondants
-    });
-  });
-  

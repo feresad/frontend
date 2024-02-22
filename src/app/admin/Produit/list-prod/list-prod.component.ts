@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
-import { Produit } from '../../produit';
-import { mesService } from '../../messervice';
+import { Produit } from '../../../produit';
+import { mesService } from '../../../messervice';
 import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-dash',
+  selector: 'app-list-prod',
   standalone: true,
   imports: [RouterModule],
-  templateUrl: './dash.component.html',
-  styleUrl: './dash.component.css'
+  templateUrl: './list-prod.component.html',
+  styleUrl: './list-prod.component.css'
 })
-export class DashComponent {
+export class ListProdComponent {
   produits: Produit[]= [];
 
   constructor(private mesService: mesService) { }
@@ -22,6 +22,7 @@ this.getProduitsList();
       this.produits = data;
     });
   }
+
   deleteProduit(id: number): void {
     this.mesService.deleteProduit(id).subscribe((data: any) => {
       console.log(data);
