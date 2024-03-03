@@ -29,7 +29,7 @@
       <span class="fas fa-clipboard-list"></span><a href="/dashadmin">Dashboard</a>
     </div>
     <div class="sidebar-menu">
-      <span class="fas fa-boxes"></span><a href="/admin/list-prod">Produit</a>
+      <span class="fas fa-boxes"></span><a href="/admin/produit">Produit</a>
     </div>
     <div class="sidebar-menu">
       <span class="fas fa-cogs"></span><a href="/admin/machine">Machine</a>
@@ -41,22 +41,47 @@
       <span class="fas fa-exclamation-triangle"></span><a>Rubut</a>
     </div>
     <div class="sidebar-menu">
-      <span class="fas fa-user"></span><a>Utilisateur</a>
-    </div>
+        <span class="fas fa-user"></span><a>Utilisateur</a>
+      </div>
     <div class="sidebar-menu">
       <span class="fas fa-cog"></span><a>Setting</a>
     </div>
   </div>
-<main>
-  <div class="buttons">  
-    <a class="neumorphic" href="/admin/ajout-prod">
-    <i class="fas fa-plus"></i>
-      <span>Ajouter un Produit</span>
-    </a>
-    <a href="/admin/list-prod" class="neumorphic">
-        <i class="fas fa-bars"></i>
-      <span>Liste Produit</span>
 
-  </a>
-  </div>
-</main>
+
+  
+  <!-- main dahsboard -->
+  <main>
+    <div *ngIf="successMessage" class="alert alert-success">
+      {{successMessage}}
+    </div>
+    <div *ngIf="errorMessage" class="alert alert-danger">
+    {{errorMessage}}
+    </div>
+    <div class="dashboard-container">
+        <div class="card detail">
+            <div class="detail-header">
+                <h2>Modifier Machine</h2>
+            </div>
+            
+            <form class="form" (submit)="onSubmit()">
+                <div class="form-group">
+                  <label for="name">Nom:</label><br>
+                  <input type="text" class="form-control" id="name" name="name" [(ngModel)]="machine.name"><br>
+                </div>
+                <div class="form-group">
+                  <label>Etat:</label><br>
+                  <input name="image" id="image" type="checkbox" class="form-control" [(ngModel)]="machine.etat"><br>
+                </div>
+                <div class="form-group">
+                  <label>Description :</label><br>
+                  <input name="description" id="description" class="form-control" [(ngModel)]="machine.description"><br>
+                </div>
+                <button type="submit">Modifier Machine</button>
+              </form>
+             
+              
+        </div>
+    </div>
+  </main> 
+                    

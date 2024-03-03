@@ -2,11 +2,15 @@ import { Component } from '@angular/core';
 import { Produit } from '../../produit';
 import { mesService } from '../../messervice';
 import { RouterModule } from '@angular/router';
+import {  HttpClientModule } from '@angular/common/http';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-dash',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule,
+  ],
   templateUrl: './dash.component.html',
   styleUrl: './dash.component.css'
 })
@@ -29,4 +33,5 @@ this.getProduitsList();
     });
   }
 
+   
 }

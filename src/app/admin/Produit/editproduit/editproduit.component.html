@@ -35,7 +35,7 @@
       <span class="fas fa-cogs"></span><a href="/admin/machines">Machine</a>
     </div>
     <div class="sidebar-menu">
-      <span class="fas fa-battery-full"></span><a>Consomation</a>
+      <span class="fas fa-battery-full"></span><a href="/admin/consommation">Consomation</a>
     </div>
     <div class="sidebar-menu">
       <span class="fas fa-exclamation-triangle"></span><a>Rubut</a>
@@ -52,13 +52,13 @@
   
   <!-- main dahsboard -->
   <main>
+    <div *ngIf="modi === true" class="alert alert-success">
+      Le produit a été modifié avec succès.
+    </div>
+    <div *ngIf="modi === false" class="alert alert-danger">
+      Une erreur est survenue lors de la modification du produit. Veuillez réessayer.
+    </div>
     <div class="dashboard-container">
-        <div *ngIf="modi === true" class="alert alert-success">
-            Le produit a été modifié avec succès.
-          </div>
-          <div *ngIf="modi === false" class="alert alert-danger">
-            Une erreur est survenue lors de la modification du produit. Veuillez réessayer.
-          </div>
         <div class="card detail">
             <div class="detail-header">
                 <h2>Edit Produit</h2>

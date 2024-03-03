@@ -119,7 +119,3 @@ button {
     width:100%;
     transition:800ms ease all;
   }
-  button a{
-    text-decoration: none;
-    color: white;
-  }

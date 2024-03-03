@@ -29,7 +29,7 @@
       <span class="fas fa-clipboard-list"></span><a href="/dashadmin">Dashboard</a>
     </div>
     <div class="sidebar-menu">
-      <span class="fas fa-boxes"></span><a href="/admin/list-prod">Produit</a>
+      <span class="fas fa-boxes"></span><a href="/admin/produit">Produit</a>
     </div>
     <div class="sidebar-menu">
       <span class="fas fa-cogs"></span><a href="/admin/machine">Machine</a>
@@ -47,16 +47,29 @@
       <span class="fas fa-cog"></span><a>Setting</a>
     </div>
   </div>
-<main>
-  <div class="buttons">  
-    <a class="neumorphic" href="/admin/ajout-prod">
-    <i class="fas fa-plus"></i>
-      <span>Ajouter un Produit</span>
-    </a>
-    <a href="/admin/list-prod" class="neumorphic">
-        <i class="fas fa-bars"></i>
-      <span>Liste Produit</span>
 
-  </a>
-  </div>
-</main>
+
+  
+  <!-- main dahsboard -->
+  <main>
+    <div class="dashboard">
+        <div class="card detail">
+            <div class="detail-header">
+              <h2>Consommation</h2>  
+            </div>
+            <table>
+              <tr>
+                <th>ID</th>
+                <th>Qantité</th>
+                <th>Nom Produit</th>
+                <th>Nom Machine</th>
+            </tr>
+            <tr *ngFor="let consommation of conso">
+              <td>{{ consommation.id }}</td>
+              <td>{{ consommation.quantite }}</td>
+              <td>{{ consommation.nomProduit }}</td>
+              <td>{{ consommation.nomMachine }}</td>
+            </table>
+            </div>
+    </div>
+  </main>

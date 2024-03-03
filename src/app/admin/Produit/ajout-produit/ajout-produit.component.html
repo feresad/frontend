@@ -35,7 +35,7 @@
       <span class="fas fa-cogs"></span><a href="/admin/machines">Machine</a>
     </div>
     <div class="sidebar-menu">
-      <span class="fas fa-battery-full"></span><a>Consomation</a>
+      <span class="fas fa-battery-full"></span><a href="/admin/consommation">Consomation</a>
     </div>
     <div class="sidebar-menu">
       <span class="fas fa-exclamation-triangle"></span><a>Rubut</a>
@@ -53,6 +53,13 @@
   <!-- main dahsboard -->
   <main>
     <div class="dashboard-container">
+      <div *ngIf="successMessage" class="alert alert-success">
+        {{ successMessage }}
+      </div>
+      
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
         <div class="card detail">
             <div class="detail-header">
                 <h2>Ajout Produit</h2>

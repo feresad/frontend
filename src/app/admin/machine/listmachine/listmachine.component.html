@@ -29,7 +29,7 @@
       <span class="fas fa-clipboard-list"></span><a href="/dashadmin">Dashboard</a>
     </div>
     <div class="sidebar-menu">
-      <span class="fas fa-boxes"></span><a href="/admin/list-prod">Produit</a>
+      <span class="fas fa-boxes"></span><a href="/admin/produit">Produit</a>
     </div>
     <div class="sidebar-menu">
       <span class="fas fa-cogs"></span><a href="/admin/machine">Machine</a>
@@ -47,16 +47,42 @@
       <span class="fas fa-cog"></span><a>Setting</a>
     </div>
   </div>
-<main>
-  <div class="buttons">  
-    <a class="neumorphic" href="/admin/ajout-prod">
-    <i class="fas fa-plus"></i>
-      <span>Ajouter un Produit</span>
-    </a>
-    <a href="/admin/list-prod" class="neumorphic">
-        <i class="fas fa-bars"></i>
-      <span>Liste Produit</span>
 
-  </a>
-  </div>
-</main>
+
+  
+  <!-- main dahsboard -->
+  <main>
+    <div class="dashboard">
+        <div class="card detail">
+            <div class="detail-header">
+              <h2>Liste Produit</h2>  
+            </div>
+            <table>
+              <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Etat</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+           @for (machine of machines; track machine) {
+<tr>
+            <td>{{ machine.id }}</td>
+            <td>{{ machine.name }}</td>
+            <td><span *ngIf="machine.etat; else horsStock" class="status EnStock">
+              <i class="fas fa-circle"></i> EN Marche
+            </span>
+            <ng-template #horsStock>
+              <span class="status horsStock">
+                <i class="fas fa-circle"></i> En Panne
+              </span>
+            </ng-template></td>
+            <td>{{ machine.description }}</td>
+            <td><button class="custom-btn btn-2" (click)="deleteMachine(machine.id)">Delete</button>
+                <button class="custom-btn btn-2" [routerLink]="['/admin/edit-mach', machine.id]">Edit</button></td>
+           </tr>
+}
+            </table>
+            </div>
+    </div>
+  </main>

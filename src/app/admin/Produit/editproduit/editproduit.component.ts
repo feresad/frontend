@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Produit } from '../../../produit';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { mesService } from '../../../messervice';
 
 @Component({
   selector: 'app-edit-produit',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule,RouterModule],
   templateUrl: './editproduit.component.html',
   styleUrl: './editproduit.component.css'
 })
