@@ -39,8 +39,9 @@ h2 > span{
 .profile{
   display: flex;
   width: 32%;
-  max-width: 400px;
-  justify-content: space-around;
+  max-width: 220px;
+  justify-content: space-between;
+  margin: 20px;
   align-items: center;
 }
 
@@ -377,6 +378,46 @@ main{
     background-color: #f8d7da;
     border-color: #f5c6cb;
   }
+
+   .email-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #191c24;
+    padding: 15px;
+    font-size: 14px;
+    white-space: unset;
+    width: 12%;
+}
+
+.email-dropdown-content #title {
+    font-size: 16px;
+    color: white;
+    text-decoration: none;
+}
+
+.dropdown-item {
+    font-size: 13px;
+    text-decoration: none;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.dropdown-item a {
+    color: white;
+    text-decoration: none;
+}
+
+.email-dropdown-content #footer {
+    font-size: 13px;
+    color: white;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+}
+ 
 /* make a responsive */
 
 @media screen and (max-width: 1070px) {

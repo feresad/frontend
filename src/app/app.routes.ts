@@ -10,6 +10,7 @@ import { ListmachineComponent } from './admin/machine/listmachine/listmachine.co
 import { AjoutmachineComponent } from './admin/machine/ajoutmachine/ajoutmachine.component';
 import { EditmachineComponent } from './admin/machine/editmachine/editmachine.component';
 import { ConsommationComponent } from './admin/Consommation/consommation.component';
+import { RebutComponent } from './admin/rebut/rebut.component';
 
 export const routes: Routes = [
 
@@ -45,6 +46,9 @@ export const routes: Routes = [
     },
     {
         path:'admin/consommation',component:ConsommationComponent
+    },
+    {
+        path:'admin/rebut',component:RebutComponent
     },
 
 ];

@@ -47,11 +47,11 @@
       <span class="fas fa-battery-full"></span><a href="/admin/consommation">Consomation</a>
     </div>
     <div class="sidebar-menu">
-      <span class="fas fa-exclamation-triangle"></span><a href="/admin/rebut">Rubut</a>
+      <span class="fas fa-exclamation-triangle"></span><a>Rubut</a>
     </div>
     <div class="sidebar-menu">
-        <span class="fas fa-user"></span><a>Utilisateur</a>
-      </div>
+      <span class="fas fa-user"></span><a>Utilisateur</a>
+    </div>
     <div class="sidebar-menu">
       <span class="fas fa-cog"></span><a>Setting</a>
     </div>
@@ -61,24 +61,26 @@
   
   <!-- main dahsboard -->
   <main>
-    <div *ngIf="successMessage" class="alert alert-success">
-        {{ successMessage }}
-      </div>
-      
-      <div *ngIf="errorMessage" class="alert alert-danger">
-        {{ errorMessage }}
-      </div>
-    <div class="dashboard-container">
+    <div class="dashboard">
         <div class="card detail">
             <div class="detail-header">
-                <h2>Ajout Machine</h2>
+              <h2>Consommation</h2>  
             </div>
-              <label>Nom:</label><br>
-              <input [(ngModel)]="machine.name" name="name"><br>
-              <label>description:</label><br>
-              <input [(ngModel)]="machine.description" name="description"><br>
-              <button (click)="ajouterMachine()">Ajouter une Machine</button>
-        </div>
+            <table>
+              <tr>
+                <th>ID</th>
+                <th>Nom Produit</th>
+                <th>Nom Machine</th>
+                <th>Quantite</th>
+                <th>Date</th>
+            </tr>
+            <tr *ngFor="let rebut of rebut">
+              <td>{{rebut.id}}</td>
+              <td>{{rebut.nomproduit}}</td>
+              <td>{{rebut.nomMachine}}</td>
+              <td>{{rebut.quantite}}</td>
+              <td>{{rebut.date}}</td>
+            </table>
+            </div>
     </div>
-  </main> 
-                    
+  </main>

@@ -3,20 +3,28 @@
     <h4>Abinject</h4>
     <img class="logo" alt="no avaible image" src="../../../assets/img/logo-2-1.png">
     <div class="profile">
-      <div class="notification-container">
-        <span id="notificationIcon" class="fas fa-bell">
-        <div id="notificationList" class="notification-list">
-          <!-- Liste des notifications -->
-          <ul>
-            <li>Notification 1</li>
-            <li>Notification 2</li>
-            <li>Notification 3</li>
-          </ul>
+      <div class="email-container">
+        <span id="email" class="material-symbols-outlined"> <i class="fas fa-bell"></i> </span>
+        <div class="email-dropdown-content">
+            <span id="title">Messages</span>
+            <div class="dropdown-divider"></div>
+            <div class="dropdown-item">
+                <a href="#">Mark sent you a message</a>
+            </div>
+            <div class="dropdown-divider"></div>
+            <div class="dropdown-item">
+                
+                <a href="#">Cregh sent you a message</a>
+            </div>
+            <div class="dropdown-divider"></div>
+            <div class="dropdown-item">
+                
+                <a href="#">Profile picture updated</a>
+            </div>
+            <div class="dropdown-divider"></div>
+            <span id="footer">4 new messages</span>
         </div>
-      </span>
-      </div>
-      <input id="idsearchInput" type="text" placeholder="Search" class="form-label">
-      <span class="fas fa-search"></span>
+    </div>
       <img class="profile-image" alt="no avaible image" src="../../../assets/img/photo-prof.png">
       <p class="profile-name">Feres Adouani</p>    
     </div>
@@ -40,7 +48,7 @@
       <span class="fas fa-battery-full"></span><a href="admin/consommation">Consomation</a>
     </div>
     <div class="sidebar-menu">
-      <span class="fas fa-exclamation-triangle"></span><a>Rubut</a>
+      <span class="fas fa-exclamation-triangle"></span><a href="/admin/rebut">Rubut</a>
     </div>
     <div class="sidebar-menu">
       <span class="fas fa-user"></span><a>Utilisateur</a>
@@ -60,7 +68,7 @@
             <a href="/admin/produit">
             <h3>Produit</h3>
             <p>Lorem ipsem dolor</p>
-            <h2>1,873,250 <span>Piece</span></h2>
+            <h2>{{nbproduits}} <span>Piece</span></h2>
             </a>
           </div>
           <div class="info-image"><i class="fas fa-boxes"></i></div>
@@ -73,7 +81,7 @@
             <a href="/admin/machine">
             <h3>Machines</h3>
             <p>Lorem ipsem dolor</p>
-            <h2>10,890 <span>Machines</span></h2>
+            <h2>{{nbMachine}} <span>Machines</span></h2>
           </a>
           </div>
           <div class="info-image"><i class="fas fa-cogs"></i></div>
@@ -97,10 +105,10 @@
             <a href="/admin/consommation">
             <h3>Consommation</h3>
             <p>Lorem ipsem dolor</p>
-            <h2>56 <span>Orders</span></h2>
+            <h2>{{nbConsommation}} <span>Consomation</span></h2>
           </a>
           </div>
-          <div class="info-image"><i class="fas fa-shipping-fast"></i></div>
+          <div class="info-image"><i class="fas fa-battery-full"></i></div>
         </div>
       </div>
 
@@ -119,18 +127,17 @@
             <th>Disponibilite</th>
             <th>Actions</th>
         </tr>
-       @for (produit of produits; track produit) {
-<tr>
+<tr *ngFor="let produit of produits">
         <td>{{ produit.id }}</td>
         <td>{{ produit.image }}</td>
         <td>{{ produit.name }}</td>
         <td>{{ produit.matiere_Premier }}</td> 
         <td><span class="status EnStock"><i class="fas fa-circle"> EN STOCK</i></span></td>
-        <td> <button class="custom-btn btn-2" (click)="deleteProduit(produit.id)">Delete</button>
+        <td>
           <button class="custom-btn btn-2" [routerLink]="['/admin/edit-prod', produit.id]">Edit</button>
+          <button class="custom-btn btn-2" (click)="deleteProduit(produit.id)">Delete</button>
         </td>
        </tr>
-}
         </table>
       </div>
       <div class="card customer">

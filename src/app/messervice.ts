@@ -14,6 +14,7 @@ export class mesService {
     private PURL = 'http://localhost:8080/produits/';
     private MURL = 'http://localhost:8080/machines/';
     private CURL = 'http://localhost:8080/consommations/';
+    private RURL = 'http://localhost:8080/rebut/';
 
     constructor(private httpClient: HttpClient) { }
 
@@ -35,6 +36,9 @@ export class mesService {
     editProduit(id: number,produit: Produit): Observable<Produit> {
         return this.httpClient.put<Produit>(`${this.PURL}${id}`, produit);
     }
+    CountProduit(): Observable<number> {
+        return this.httpClient.get<number>(`${this.PURL}count`);
+    }
 
 
     // Machines 
@@ -53,9 +57,20 @@ export class mesService {
     editMachine(id: number,machine: Machine): Observable<Machine> {
         return this.httpClient.put<Machine>(`${this.MURL}${id}`, machine);
     }
+    CountMachine(): Observable<number> {
+        return this.httpClient.get<number>(`${this.MURL}count`);
+    }
 
     // Consommations
     getConsommationsList(): Observable<Produit[]> {
         return this.httpClient.get<Consommationn[]>(`${this.CURL}all`);
+    }
+    countConsommation(): Observable<number> {
+        return this.httpClient.get<number>(`${this.CURL}count`);
+    }
+
+    // Rebut
+    getRebutList(): Observable<Produit[]> {
+        return this.httpClient.get<Produit[]>(`${this.RURL}all`);
     }
 }

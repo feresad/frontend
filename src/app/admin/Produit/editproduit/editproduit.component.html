@@ -2,19 +2,28 @@
     <h4>Abinject</h4>
     <img class="logo" alt="no avaible image" src="../../../assets/img/logo-2-1.png">
     <div class="profile">
-      <div class="notification-container">
-        <span id="notificationIcon" class="fas fa-bell"></span>
-        <div id="notificationList" class="notification-list">
-          <!-- Liste des notifications -->
-          <ul>
-            <li>Notification 1</li>
-            <li>Notification 2</li>
-            <li>Notification 3</li>
-          </ul>
+      <div class="email-container">
+        <span id="email" class="material-symbols-outlined"> <i class="fas fa-bell"></i> </span>
+        <div class="email-dropdown-content">
+            <span id="title">Messages</span>
+            <div class="dropdown-divider"></div>
+            <div class="dropdown-item">
+                <a href="#">Mark sent you a message</a>
+            </div>
+            <div class="dropdown-divider"></div>
+            <div class="dropdown-item">
+                <img src="../../../assets/img/photo-prof.png" alt="Profile Picture" class="email-profile-pic">
+                <a href="#">Cregh sent you a message</a>
+            </div>
+            <div class="dropdown-divider"></div>
+            <div class="dropdown-item">
+                <img src="../../../assets/img/photo-prof.png" alt="Profile Picture" class="email-profile-pic">
+                <a href="#">Profile picture updated</a>
+            </div>
+            <div class="dropdown-divider"></div>
+            <span id="footer">4 new messages</span>
         </div>
-      </div>
-      <input id="idsearchInput" type="text" placeholder="Search" class="form-label">
-      <span class="fas fa-search"></span>
+    </div>
       <img class="profile-image" alt="no avaible image" src="../../../assets/img/photo-prof.png">
       <p class="profile-name">Feres Adouani</p>    
     </div>
@@ -38,7 +47,7 @@
       <span class="fas fa-battery-full"></span><a href="/admin/consommation">Consomation</a>
     </div>
     <div class="sidebar-menu">
-      <span class="fas fa-exclamation-triangle"></span><a>Rubut</a>
+      <span class="fas fa-exclamation-triangle"></span><a href="/admin/rebut">Rubut</a>
     </div>
     <div class="sidebar-menu">
         <span class="fas fa-user"></span><a>Utilisateur</a>
@@ -52,14 +61,15 @@
   
   <!-- main dahsboard -->
   <main>
-    <div *ngIf="modi === true" class="alert alert-success">
-      Le produit a été modifié avec succès.
-    </div>
-    <div *ngIf="modi === false" class="alert alert-danger">
-      Une erreur est survenue lors de la modification du produit. Veuillez réessayer.
-    </div>
+   
     <div class="dashboard-container">
         <div class="card detail">
+          <div *ngIf="modi === true" class="alert alert-success">
+            Le produit a été modifié avec succès.
+          </div>
+          <div *ngIf="modi === false" class="alert alert-danger">
+            Une erreur est survenue lors de la modification du produit. Veuillez réessayer.
+          </div>
             <div class="detail-header">
                 <h2>Edit Produit</h2>
             </div>
