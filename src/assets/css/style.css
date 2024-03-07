@@ -199,6 +199,7 @@ main{
   transition: all 1s ease-in;
 }
 
+
 .total1:hover{
   background-color: #fff;
   color: #2d2b98;
@@ -278,6 +279,9 @@ main{
 .detail-header button:hover{
   background-color: transparent;
   color: #2d2b98;
+}
+.detail-header p{
+ display: right;
 }
 
 .detail table{
@@ -386,11 +390,12 @@ main{
     padding: 15px;
     font-size: 14px;
     white-space: unset;
-    width: 12%;
+    width: 15%;
 }
 
 .email-dropdown-content #title {
     font-size: 16px;
+    padding: 20px;
     color: white;
     text-decoration: none;
 }
@@ -400,6 +405,7 @@ main{
     text-decoration: none;
     color: white;
     display: flex;
+    padding: 10px;
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
@@ -413,6 +419,7 @@ main{
 .email-dropdown-content #footer {
     font-size: 13px;
     color: white;
+    padding: 20px;
     text-decoration: none;
     display: flex;
     justify-content: center;

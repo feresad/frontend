@@ -34,29 +34,28 @@
   <label class="side-toggle" for="toggle"><span class="fas fa-bars"></span></label>
 
   <div class="sidebar">
-    <div class="sidebar-menu">
-      <span class="fas fa-clipboard-list"></span><a href="/dashadmin">Dashboard</a>
+    <div class="sidebar-menu" routerLink="/dashadmin">
+      <span class="fas fa-clipboard-list"></span><a>Dashboard</a>
+    </div>
+    <div class="sidebar-menu" routerLink="/admin/produit">
+      <span class="fas fa-boxes"></span><a>Produit</a>
+    </div>
+    <div class="sidebar-menu" routerLink="/admin/machine">
+      <span class="fas fa-cogs"></span><a>Machine</a>
+    </div>
+    <div class="sidebar-menu" routerLink="/admin/consommation">
+      <span class="fas fa-battery-full"></span><a>Consomation</a>
+    </div>
+    <div class="sidebar-menu" routerLink="/admin/rebut">
+      <span class="fas fa-exclamation-triangle"></span><a>Rubut</a>
     </div>
     <div class="sidebar-menu">
-      <span class="fas fa-boxes"></span><a href="/admin/produit">Produit</a>
+      <span class="fas fa-user"></span><a>Utilisateur</a>
     </div>
-    <div class="sidebar-menu">
-      <span class="fas fa-cogs"></span><a href="/admin/machine">Machine</a>
-    </div>
-    <div class="sidebar-menu">
-      <span class="fas fa-battery-full"></span><a href="/admin/consommation">Consomation</a>
-    </div>
-    <div class="sidebar-menu">
-      <span class="fas fa-exclamation-triangle"></span><a href="/admin/rebut">Rubut</a>
-    </div>
-    <div class="sidebar-menu">
-        <span class="fas fa-user"></span><a>Utilisateur</a>
-      </div>
     <div class="sidebar-menu">
       <span class="fas fa-cog"></span><a>Setting</a>
     </div>
   </div>
-
 
   
   <!-- main dahsboard -->
@@ -72,6 +71,7 @@
         <div class="card detail">
             <div class="detail-header">
                 <h2>Ajout Machine</h2>
+                <button routerLink="/admin/list-mach">List Machine</button>
             </div>
               <label>Nom:</label><br>
               <input [(ngModel)]="machine.name" name="name"><br>

@@ -21,7 +21,7 @@ export class AjoutmachineComponent implements OnInit{
     
   }
   ajouterMachine(): void {
-    this.mesService.ajouterMachine(this.machine).subscribe((data: any) => {
+    this.mesService.ajouterMachine(this.machine).subscribe((data: Machine): void => {
       this.successMessage = 'L\'ajout de la machine a été effectué avec succès. La machine est maintenant en état de marche.';
       this.errorMessage = '';
     },

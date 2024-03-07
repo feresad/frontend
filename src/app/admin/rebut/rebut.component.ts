@@ -4,11 +4,12 @@ import { Rebut } from '../../rebut';
 import { CommonModule } from '@angular/common';
 import { Produit } from '../../produit';
 import { Machine } from '../../machine';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-rebut',
   standalone: true,
-  imports: [CommonModule],
+  imports: [RouterModule,CommonModule],
   templateUrl: './rebut.component.html',
   styleUrl: './rebut.component.css'
 })

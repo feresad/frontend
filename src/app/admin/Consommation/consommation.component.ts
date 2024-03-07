@@ -4,11 +4,12 @@ import { Consommationn } from '../../consommationn';
 import { mesService } from '../../messervice';
 import { Machine } from '../../machine';
 import { Produit } from '../../produit';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-consommation',
   standalone: true,
-  imports: [CommonModule],
+  imports: [RouterModule,CommonModule],
   templateUrl: './consommation.component.html',
   styleUrl: './consommation.component.css'
 })

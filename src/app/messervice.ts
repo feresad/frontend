@@ -42,14 +42,14 @@ export class mesService {
 
 
     // Machines 
-    getMachinesList(): Observable<Produit[]> {
-        return this.httpClient.get<Produit[]>(`${this.MURL}all`);
+    getMachinesList(): Observable<Machine[]> {
+        return this.httpClient.get<Machine[]>(`${this.MURL}all`);
     }
     getMachineDetails(id: number): Observable<Machine> {
         return this.httpClient.get<Machine>(`${this.MURL}${id}`);
     }
-    ajouterMachine(produit: Produit): Observable<Produit> {
-        return this.httpClient.post<Produit>(`${this.MURL}add`, produit);
+    ajouterMachine(machine: Machine): Observable<Machine> {
+        return this.httpClient.post<Machine>(`${this.MURL}add`, machine);
     }
     deleteMachine(id: number): Observable<Object> {
         return this.httpClient.delete(`${this.MURL}${id}`);
@@ -62,7 +62,7 @@ export class mesService {
     }
 
     // Consommations
-    getConsommationsList(): Observable<Produit[]> {
+    getConsommationsList(): Observable<Consommationn[]> {
         return this.httpClient.get<Consommationn[]>(`${this.CURL}all`);
     }
     countConsommation(): Observable<number> {
