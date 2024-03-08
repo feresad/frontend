@@ -11,6 +11,7 @@ import { AjoutmachineComponent } from './admin/machine/ajoutmachine/ajoutmachine
 import { EditmachineComponent } from './admin/machine/editmachine/editmachine.component';
 import { ConsommationComponent } from './admin/Consommation/consommation.component';
 import { RebutComponent } from './admin/rebut/rebut.component';
+import { ParametresComponent } from './admin/parametres/parametres.component';
 
 export const routes: Routes = [
 
@@ -49,6 +50,9 @@ export const routes: Routes = [
     },
     {
         path:'admin/rebut',component:RebutComponent
+    },
+    {
+        path:'parametres',component:ParametresComponent
     },
 
 ];

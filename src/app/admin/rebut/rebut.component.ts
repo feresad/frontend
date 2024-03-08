@@ -5,11 +5,12 @@ import { CommonModule } from '@angular/common';
 import { Produit } from '../../produit';
 import { Machine } from '../../machine';
 import { RouterModule } from '@angular/router';
+import { NavbarComponent } from '../../navbar/navbar.component';
 
 @Component({
   selector: 'app-rebut',
   standalone: true,
-  imports: [RouterModule,CommonModule],
+  imports: [RouterModule,CommonModule, NavbarComponent],
   templateUrl: './rebut.component.html',
   styleUrl: './rebut.component.css'
 })

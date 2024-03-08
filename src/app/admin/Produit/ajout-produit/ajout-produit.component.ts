@@ -5,14 +5,15 @@ import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms'
 import { Router, RouterModule } from '@angular/router';
 import { mesService } from '../../../messervice';
 import { CommonModule } from '@angular/common';
+import { NavbarComponent } from '../../../navbar/navbar.component';
 
 @Component({
-  selector: 'app-ajoutproduit',
-  standalone: true,
-  imports: [FormsModule, CommonModule,RouterModule],
-  providers: [mesService],
-  templateUrl: './ajout-produit.component.html',
-  styleUrls: ['./ajout-produit.component.css']
+    selector: 'app-ajoutproduit',
+    standalone: true,
+    providers: [mesService],
+    templateUrl: './ajout-produit.component.html',
+    styleUrls: ['./ajout-produit.component.css'],
+    imports: [FormsModule, CommonModule, RouterModule, NavbarComponent]
 })
 export class AjoutproduitComponent implements OnInit {
   produit: Produit = new Produit();

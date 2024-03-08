@@ -4,11 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { mesService } from '../../../messervice';
 import { Machine } from '../../../machine';
 import { RouterModule } from '@angular/router';
+import { NavbarComponent } from '../../../navbar/navbar.component';
 
 @Component({
   selector: 'app-ajoutmachine',
   standalone: true,
-  imports: [FormsModule,CommonModule,RouterModule],
+  imports: [FormsModule,CommonModule,RouterModule , NavbarComponent],
   templateUrl: './ajoutmachine.component.html',
   styleUrl: './ajoutmachine.component.css'
 })

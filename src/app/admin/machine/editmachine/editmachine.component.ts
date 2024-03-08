@@ -4,11 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { mesService } from '../../../messervice';
 import { Machine } from '../../../machine';
 import { ActivatedRoute, RouterModule } from '@angular/router';
+import { NavbarComponent } from '../../../navbar/navbar.component';
 
 @Component({
   selector: 'app-editmachine',
   standalone: true,
-  imports: [CommonModule,FormsModule,RouterModule],
+  imports: [CommonModule,FormsModule,RouterModule,NavbarComponent],
   templateUrl: './editmachine.component.html',
   styleUrl: './editmachine.component.css'
 })

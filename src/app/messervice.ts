@@ -39,6 +39,10 @@ export class mesService {
     CountProduit(): Observable<number> {
         return this.httpClient.get<number>(`${this.PURL}count`);
     }
+    SearchProduit(name: string): Observable<Produit[]> {
+        return this.httpClient.get<Produit[]>(`${this.PURL}search?name=${name}`);
+    }
+    
 
 
     // Machines 
@@ -59,6 +63,9 @@ export class mesService {
     }
     CountMachine(): Observable<number> {
         return this.httpClient.get<number>(`${this.MURL}count`);
+    }
+    SearchMachine(etat: boolean): Observable<Machine[]> {
+        return this.httpClient.get<Machine[]>(`${this.MURL}search?etat=${etat}`);
     }
 
     // Consommations
