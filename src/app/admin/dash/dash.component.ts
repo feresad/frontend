@@ -6,7 +6,6 @@ import {  HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { NavbarComponent } from "../../navbar/navbar.component";
 
 
 @Component({
@@ -14,7 +13,7 @@ import { NavbarComponent } from "../../navbar/navbar.component";
     standalone: true,
     templateUrl: './dash.component.html',
     styleUrl: './dash.component.css',
-    imports: [RouterModule, CommonModule, NavbarComponent]
+    imports: [RouterModule, CommonModule]
 })
 export class DashComponent {
   produits: Produit[]= [];

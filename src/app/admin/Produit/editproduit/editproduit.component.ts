@@ -4,12 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { mesService } from '../../../messervice';
-import { NavbarComponent } from '../../../navbar/navbar.component';
 
 @Component({
   selector: 'app-edit-produit',
   standalone: true,
-  imports: [FormsModule, CommonModule,RouterModule,NavbarComponent],
+  imports: [FormsModule, CommonModule,RouterModule],
   templateUrl: './editproduit.component.html',
   styleUrl: './editproduit.component.css'
 })

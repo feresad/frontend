@@ -4,12 +4,11 @@ import { mesService } from '../../../messervice';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { NavbarComponent } from '../../../navbar/navbar.component';
 
 @Component({
   selector: 'app-list-prod',
   standalone: true,
-  imports: [RouterModule,CommonModule,FormsModule,NavbarComponent],
+  imports: [RouterModule,CommonModule,FormsModule],
   templateUrl: './list-prod.component.html',
   styleUrl: './list-prod.component.css'
 })

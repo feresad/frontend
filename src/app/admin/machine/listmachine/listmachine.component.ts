@@ -3,13 +3,12 @@ import { Machine } from '../../../machine';
 import { mesService } from '../../../messervice';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { NavbarComponent } from '../../../navbar/navbar.component';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-listmachine',
   standalone: true,
-  imports: [RouterModule,CommonModule,NavbarComponent,FormsModule],
+  imports: [RouterModule,CommonModule,FormsModule],
   templateUrl: './listmachine.component.html',
   styleUrl: './listmachine.component.css'
 })

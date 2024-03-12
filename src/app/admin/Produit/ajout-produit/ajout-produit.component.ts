@@ -5,7 +5,6 @@ import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms'
 import { Router, RouterModule } from '@angular/router';
 import { mesService } from '../../../messervice';
 import { CommonModule } from '@angular/common';
-import { NavbarComponent } from '../../../navbar/navbar.component';
 
 @Component({
     selector: 'app-ajoutproduit',
@@ -13,7 +12,7 @@ import { NavbarComponent } from '../../../navbar/navbar.component';
     providers: [mesService],
     templateUrl: './ajout-produit.component.html',
     styleUrls: ['./ajout-produit.component.css'],
-    imports: [FormsModule, CommonModule, RouterModule, NavbarComponent]
+    imports: [FormsModule, CommonModule, RouterModule]
 })
 export class AjoutproduitComponent implements OnInit {
   produit: Produit = new Produit();

@@ -5,12 +5,11 @@ import { mesService } from '../../messervice';
 import { Machine } from '../../machine';
 import { Produit } from '../../produit';
 import { RouterModule } from '@angular/router';
-import { NavbarComponent } from '../../navbar/navbar.component';
 
 @Component({
   selector: 'app-consommation',
   standalone: true,
-  imports: [RouterModule,CommonModule,NavbarComponent],
+  imports: [RouterModule,CommonModule],
   templateUrl: './consommation.component.html',
   styleUrl: './consommation.component.css'
 })

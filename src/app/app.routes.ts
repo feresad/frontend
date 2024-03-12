@@ -54,5 +54,6 @@ export const routes: Routes = [
     {
         path:'parametres',component:ParametresComponent
     },
+    
 
 ];
