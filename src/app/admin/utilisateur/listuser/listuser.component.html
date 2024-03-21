@@ -62,8 +62,20 @@
                 <td>{{ user.email }}</td>
                 <td *ngFor="let role of user.roles">{{ role.name }}</td>
                 <td>
-                    <button class="custom-btn btn-1">Modifier Mot de Passe</button>
-                  <button class="custom-btn btn-edit">Edit</button>
+                    <button class="custom-btn btn-1" (click)="openModal(user)">
+                      <div id="passwordModal" class="modal" *ngIf="showModal">
+                        <div class="modal-content">
+                          <span class="close" (click)="closeModal()">&times;</span>
+                          <h2>Modifier Mot de Passe</h2>
+                          <form (submit)="changePassword()">
+                            <input type="password" class="input" [(ngModel)]="newPassword" name="newPassword" placeholder="Nouveau mot de passe" required><br>
+                            <input type="password" class="input" [(ngModel)]="confirmPassword" name="confirmPassword" placeholder="Confirmer mot de passe" required>
+                            <button type="submit" class=".button">Modifier</button>
+                          </form>
+                        </div>
+                      </div>
+                      Modifier Mot de Passe</button>
+                    
                   <button class="custom-btn btn-2" (click)="deleteUser(user.id)">Delete</button>
                 </td>
               </tr>

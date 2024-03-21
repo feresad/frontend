@@ -10,6 +10,10 @@ import { Users } from '../../../users';
 })
 export class ListuserComponent implements OnInit{
   users: Users[] = [];
+  showModal: boolean = false;
+  userToEdit: number = 0;
+  newPassword: string = '';
+  confirmPassword: string = '';
 
   constructor(private mesService: mesService, private router: Router) {}
 
@@ -29,6 +33,42 @@ export class ListuserComponent implements OnInit{
     });
   }
  
+  openModal(user: any): void {
+    this.showModal = true;
+    this.userToEdit = user.id;
+  }
+
+  closeModal(): void {
+    this.showModal = false;
+    this.userToEdit = 0;
+    this.newPassword = '';
+    this.confirmPassword = '';
+    if (this.newPassword !== this.confirmPassword) {
+      // Gérer l'erreur de confirmation de mot de passe
+      return;
+    }
+  }
+
+  changePassword(): void {
+    if (this.newPassword !== this.confirmPassword) {
+      console.error("Les mots de passe ne correspondent pas");
+      // Ici, vous pourriez vouloir afficher une alerte à l'utilisateur ou un message dans l'interface
+      return;
+    }
+    
+    this.mesService.changePassword(this.userToEdit, this.newPassword).subscribe({
+      next: (data) => {
+        console.log("Mot de passe modifié avec succès", data);
+        this.loadUsers(); // Recharger la liste des utilisateurs si nécessaire
+        this.closeModal(); // Fermer le modal après la mise à jour
+      },
+      error: (error) => {
+        console.error('Erreur lors de la modification du mot de passe', error);
+        // Ici aussi, considérez d'afficher un feedback à l'utilisateur
+      }
+    });
+  }
+
   loadUsers(): void {
     this.mesService.getUsersList().subscribe({
       next: (data) => {

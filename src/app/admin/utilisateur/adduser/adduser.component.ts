@@ -35,7 +35,6 @@ export class AdduserComponent implements OnInit{
   addUser(): void {
     if (this.password !== this.confirmPassword) {
       // Gérer l'erreur de confirmation de mot de passe
-      console.error('Les mots de passe ne correspondent pas.');
       return;
     }
 

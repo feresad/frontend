@@ -23,6 +23,7 @@ export class LoginComponent {
     this.mesService.login(this.username, this.password).subscribe({
       next: (data) => {
         localStorage.setItem('authToken', data.token);
+        console.log(data);
         // Exemple de stockage de rôles dans localStorage
         // Assurez-vous que votre API renvoie les rôles de cette manière ou ajustez en conséquence
         const roles = data.roles; // Assurez-vous que cela correspond à la structure de votre réponse

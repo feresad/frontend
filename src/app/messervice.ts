@@ -139,6 +139,11 @@ import { jwtDecode } from "jwt-decode";
                 catchError(this.handleError)
             );
         }
+        changePassword(id: number, newPassword: string): Observable<any> {
+            const url = `${this.AURL}${id}`;
+            return this.httpClient.put(url, { password: newPassword }, this.getHttpOptions());
+          }
+        
         //delete user
         deleteUser(id: any): Observable<Object> {
             return this.httpClient.delete(`${this.AURL}${id}`, this.getHttpOptions());
