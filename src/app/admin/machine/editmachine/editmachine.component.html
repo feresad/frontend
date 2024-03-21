@@ -4,6 +4,7 @@
   <div class="profile">
     <img class="profile-image" alt="no avaible image" src="../../../assets/img/photo-prof.png">
     <p class="profile-name">Feres Adouani</p>    
+    <span class="fas fa-sign-out-alt" (click)="logout()"></span>
   </div>
 </nav>
 
@@ -27,7 +28,7 @@
   <div class="sidebar-menu" routerLink="/admin/rebut">
     <span class="fas fa-exclamation-triangle"></span><a>Rubut</a>
   </div>
-  <div class="sidebar-menu">
+  <div class="sidebar-menu" routerLink="/utilisateur">
     <span class="fas fa-user"></span><a>Utilisateur</a>
   </div>
   <div class="sidebar-menu">

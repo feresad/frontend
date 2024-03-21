@@ -3,12 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { mesService } from '../../../messervice';
 import { Machine } from '../../../machine';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-editmachine',
-  standalone: true,
-  imports: [CommonModule,FormsModule,RouterModule],
   templateUrl: './editmachine.component.html',
   styleUrl: './editmachine.component.css'
 })
@@ -17,7 +15,7 @@ export class EditmachineComponent implements OnInit{
   successMessage: string = '';
   errorMessage: string = '';
 
-  constructor(private mesService: mesService,private route: ActivatedRoute) {}
+  constructor(private mesService: mesService,private route: ActivatedRoute,private router : Router) {}
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       const id = params['id'];
@@ -46,5 +44,15 @@ export class EditmachineComponent implements OnInit{
   onSubmit() {
     this.updateMachine();
   }
-
+  logout(): void {
+    this.mesService.logout().subscribe({
+      next: (data) => {
+        localStorage.removeItem('authToken');
+        this.router.navigate(['/login']);
+      },
+      error: (error) => {
+        console.error('Logout error', error);
+      }
+    });
+}
 }

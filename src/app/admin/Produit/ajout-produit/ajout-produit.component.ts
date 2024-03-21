@@ -8,18 +8,15 @@ import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-ajoutproduit',
-    standalone: true,
-    providers: [mesService],
     templateUrl: './ajout-produit.component.html',
     styleUrls: ['./ajout-produit.component.css'],
-    imports: [FormsModule, CommonModule, RouterModule]
 })
 export class AjoutproduitComponent implements OnInit {
   produit: Produit = new Produit();
   successMessage: string = '';
   errorMessage: string = '';
 
-  constructor(private mesService: mesService){}
+  constructor(private mesService: mesService, private router : Router){}
 
   ngOnInit():void{
     
@@ -39,4 +36,15 @@ export class AjoutproduitComponent implements OnInit {
         }
       );
   }
+  logout(): void {
+    this.mesService.logout().subscribe({
+      next: (data) => {
+        localStorage.removeItem('authToken');
+        this.router.navigate(['/login']);
+      },
+      error: (error) => {
+        console.error('Logout error', error);
+      }
+    });
+}
 }

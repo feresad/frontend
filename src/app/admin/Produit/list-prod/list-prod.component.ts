@@ -1,14 +1,12 @@
 import { Component } from '@angular/core';
 import { Produit } from '../../../produit';
 import { mesService } from '../../../messervice';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-list-prod',
-  standalone: true,
-  imports: [RouterModule,CommonModule,FormsModule],
   templateUrl: './list-prod.component.html',
   styleUrl: './list-prod.component.css'
 })
@@ -18,7 +16,7 @@ export class ListProdComponent {
   errorMessage: string = '';
   searchQuery: string = '';
 
-  constructor(private mesService: mesService) { }
+  constructor(private mesService: mesService, private router : Router) { }
 ngOnInit(){
 this.getProduitsList();
 }
@@ -59,4 +57,16 @@ this.getProduitsList();
       this.getProduitsList();
     }
   }
+
+  logout(): void {
+    this.mesService.logout().subscribe({
+      next: (data) => {
+        localStorage.removeItem('authToken');
+        this.router.navigate(['/login']);
+      },
+      error: (error) => {
+        console.error('Logout error', error);
+      }
+    });
+}
 }

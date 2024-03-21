@@ -39,7 +39,7 @@ h2 > span{
 .profile{
   display: flex;
   width: 32%;
-  max-width: 150px;
+  max-width: 200px;
   justify-content: space-between;
   margin: 20px;
   align-items: center;

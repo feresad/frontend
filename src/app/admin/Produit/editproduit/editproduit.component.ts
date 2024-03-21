@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Produit } from '../../../produit';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { mesService } from '../../../messervice';
 
 @Component({
   selector: 'app-edit-produit',
-  standalone: true,
-  imports: [FormsModule, CommonModule,RouterModule],
   templateUrl: './editproduit.component.html',
   styleUrl: './editproduit.component.css'
 })
@@ -17,7 +15,7 @@ export class EditProduitComponent implements OnInit {
   modi:  boolean | null = null;
 // Edit Produit
  
-  constructor(private mesService : mesService, private route: ActivatedRoute) { }
+  constructor(private mesService : mesService, private route: ActivatedRoute, private router : Router) { }
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       const id = params['id'];
@@ -43,4 +41,15 @@ export class EditProduitComponent implements OnInit {
   onSubmit() {
     this.editProduit();
   }
+  logout(): void {
+    this.mesService.logout().subscribe({
+      next: (data) => {
+        localStorage.removeItem('authToken');
+        this.router.navigate(['/login']);
+      },
+      error: (error) => {
+        console.error('Logout error', error);
+      }
+    });
+}
 }

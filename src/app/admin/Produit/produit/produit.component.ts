@@ -1,13 +1,23 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { mesService } from '../../../messervice';
 
 @Component({
   selector: 'app-produit',
-  standalone: true,
-  imports:[RouterModule],
   templateUrl: './produit.component.html',
   styleUrl: './produit.component.css'
 })
 export class ProduitComponent {
-
+  constructor(private mesService: mesService, private router :Router) { }
+  logout(): void {
+    this.mesService.logout().subscribe({
+      next: (data) => {
+        localStorage.removeItem('authToken');
+        this.router.navigate(['/login']);
+      },
+      error: (error) => {
+        console.error('Logout error', error);
+      }
+    });
+}
 }

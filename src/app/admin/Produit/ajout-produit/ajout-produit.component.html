@@ -3,7 +3,8 @@
   <img class="logo" alt="no avaible image" src="../../../assets/img/logo-2-1.png">
   <div class="profile">
     <img class="profile-image" alt="no avaible image" src="../../../assets/img/photo-prof.png">
-    <p class="profile-name">Feres Adouani</p>    
+    <p class="profile-name">Feres Adouani</p>   
+    <span class="fas fa-sign-out-alt" (click)="logout()"></span> 
   </div>
 </nav>
 
@@ -27,7 +28,7 @@
   <div class="sidebar-menu" routerLink="/admin/rebut">
     <span class="fas fa-exclamation-triangle"></span><a>Rubut</a>
   </div>
-  <div class="sidebar-menu">
+  <div class="sidebar-menu" routerLink="/utilisateur">
     <span class="fas fa-user"></span><a>Utilisateur</a>
   </div>
   <div class="sidebar-menu">
@@ -51,13 +52,13 @@
                 <h2>Ajout Produit</h2>
             </div>
               <label>Nom:</label><br>
-              <input [(ngModel)]="produit.name" name="name"><br>
+              <input (ngModel)="produit.name" name="name"><br>
               <label>Image:</label><br>
-              <input [(ngModel)]="produit.image" name="image"><br>
+              <input (ngModel)="produit.image" name="image"><br>
               <label>Quantite:</label><br>
-              <input [(ngModel)]="produit.quantite" name="quantite"><br>
+              <input (ngModel)="produit.quantite" name="quantite"><br>
               <label>Matiere Premier:</label><br>
-              <input [(ngModel)]="produit.matiere_Premier" name="matiere_Premier"><br>
+              <input (ngModel)="produit.matiere_Premier" name="matiere_Premier"><br>
               <button (click)="ajouterProduit()">Add Product</button>
         </div>
     </div>

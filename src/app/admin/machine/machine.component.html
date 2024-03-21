@@ -3,7 +3,8 @@
   <img class="logo" alt="no avaible image" src="../../../assets/img/logo-2-1.png">
   <div class="profile">
     <img class="profile-image" alt="no avaible image" src="../../../assets/img/photo-prof.png">
-    <p class="profile-name">Feres Adouani</p>    
+    <p class="profile-name">Feres Adouani</p>  
+    <span class="fas fa-sign-out-alt" (click)="logout()"></span>  
   </div>
 </nav>
 
@@ -28,7 +29,7 @@
     <span class="fas fa-exclamation-triangle"></span><a>Rubut</a>
   </div>
   <div class="sidebar-menu">
-    <span class="fas fa-user"></span><a>Utilisateur</a>
+    <span class="fas fa-user" routerLink="/utilisateur"></span><a>Utilisateur</a>
   </div>
   <div class="sidebar-menu">
     <span class="fas fa-cog"></span><a>Paramètres</a>

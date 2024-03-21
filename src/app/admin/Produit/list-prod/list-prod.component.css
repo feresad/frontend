@@ -122,3 +122,46 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
 button a{
   text-decoration: none;
 }
+.btn-edit {
+  width: 80px; /* Ajustez la largeur selon le contenu */
+  height: 40px;
+  line-height: 42px;
+  padding: 0;
+  border: none;
+  background: yellow; /* Cette ligne est déjà correcte pour une couleur de fond jaune solide */
+  background: linear-gradient(0deg, rgba(255,223,0,1) 0%, rgba(255,239,0,1) 100%); /* Dégradé de jaune */
+}
+
+.btn-edit:hover {
+  color: #ffd700; /* Une teinte jaune pour le texte au survol */
+  background: transparent;
+  box-shadow: none;
+}
+
+.btn-edit:before,
+.btn-edit:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 2px;
+  width: 0;
+  background: #ffd700; /* Couleur jaune pour les lignes animées */
+  box-shadow: -1px -1px 5px 0px #fff,
+    7px 7px 20px 0px rgba(0,0,0,.3),
+    4px 4px 5px 0px rgba(0,0,0,.2);
+  transition: 400ms ease all;
+}
+
+.btn-edit:after {
+  right: inherit;
+  top: inherit;
+  left: 0;
+  bottom: 0;
+}
+
+.btn-edit:hover:before,
+.btn-edit:hover:after {
+  width: 100%;
+  transition: 800ms ease all;
+}

@@ -4,12 +4,10 @@ import { Consommationn } from '../../consommationn';
 import { mesService } from '../../messervice';
 import { Machine } from '../../machine';
 import { Produit } from '../../produit';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 
 @Component({
   selector: 'app-consommation',
-  standalone: true,
-  imports: [RouterModule,CommonModule],
   templateUrl: './consommation.component.html',
   styleUrl: './consommation.component.css'
 })
@@ -17,7 +15,7 @@ export class ConsommationComponent implements OnInit{
   conso : Consommationn[] = [];
 
 
-  constructor(private mesService : mesService) { }
+  constructor(private mesService : mesService, private router: Router) { }
   ngOnInit(){
     this.getConsommationsList();
   }
@@ -36,6 +34,16 @@ export class ConsommationComponent implements OnInit{
     });
   }
 
-
+  logout(): void {
+    this.mesService.logout().subscribe({
+      next: (data) => {
+        localStorage.removeItem('authToken');
+        this.router.navigate(['/login']);
+      },
+      error: (error) => {
+        console.error('Logout error', error);
+      }
+    });
+}
 
 }

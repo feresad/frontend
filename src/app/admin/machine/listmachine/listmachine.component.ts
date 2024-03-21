@@ -1,14 +1,12 @@
 import { Component } from '@angular/core';
 import { Machine } from '../../../machine';
 import { mesService } from '../../../messervice';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-listmachine',
-  standalone: true,
-  imports: [RouterModule,CommonModule,FormsModule],
   templateUrl: './listmachine.component.html',
   styleUrl: './listmachine.component.css'
 })
@@ -16,7 +14,7 @@ export class ListmachineComponent {
   machines: Machine[]=[];
   //recherche machine par etat 
   etat: string = '';
-  constructor(private mesService: mesService) { }
+  constructor(private mesService: mesService , private router : Router) { }
 
   ngOnInit(){
     this.getMachinesList();
@@ -51,5 +49,15 @@ export class ListmachineComponent {
     }
   }
 
-
+  logout(): void {
+    this.mesService.logout().subscribe({
+      next: (data) => {
+        localStorage.removeItem('authToken');
+        this.router.navigate(['/login']);
+      },
+      error: (error) => {
+        console.error('Logout error', error);
+      }
+    });
+}
 }

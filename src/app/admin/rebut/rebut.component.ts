@@ -4,19 +4,17 @@ import { Rebut } from '../../rebut';
 import { CommonModule } from '@angular/common';
 import { Produit } from '../../produit';
 import { Machine } from '../../machine';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-rebut',
-  standalone: true,
-  imports: [RouterModule,CommonModule],
   templateUrl: './rebut.component.html',
   styleUrl: './rebut.component.css'
 })
 export class RebutComponent implements OnInit{
   // declare rebut as an array of Rebut
   rebut: Rebut[] = [];
-  constructor(private mesService : mesService) { }
+  constructor(private mesService : mesService,private router : Router) { }
 
   ngOnInit() {
   this.getRebutList();
@@ -37,4 +35,15 @@ export class RebutComponent implements OnInit{
     });
   }
 
+  logout(): void {
+    this.mesService.logout().subscribe({
+      next: (data) => {
+        localStorage.removeItem('authToken');
+        this.router.navigate(['/login']);
+      },
+      error: (error) => {
+        console.error('Logout error', error);
+      }
+    });
+}
 }

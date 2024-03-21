@@ -3,12 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { mesService } from '../../../messervice';
 import { Machine } from '../../../machine';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-ajoutmachine',
-  standalone: true,
-  imports: [FormsModule,CommonModule,RouterModule],
   templateUrl: './ajoutmachine.component.html',
   styleUrl: './ajoutmachine.component.css'
 })
@@ -16,7 +14,7 @@ export class AjoutmachineComponent implements OnInit{
   machine: Machine = new Machine();
   successMessage: string = '';
   errorMessage: string = '';
-  constructor(private mesService: mesService) {}
+  constructor(private mesService: mesService, private router : Router) {}
   ngOnInit(): void {
     
   }
@@ -30,4 +28,15 @@ export class AjoutmachineComponent implements OnInit{
       this.successMessage = '';
     });
   }
+  logout(): void {
+    this.mesService.logout().subscribe({
+      next: (data) => {
+        localStorage.removeItem('authToken');
+        this.router.navigate(['/login']);
+      },
+      error: (error) => {
+        console.error('Logout error', error);
+      }
+    });
+}
 }
