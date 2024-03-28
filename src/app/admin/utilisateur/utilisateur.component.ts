@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { mesService } from '../../messervice';
 import { Router,RouterModule } from '@angular/router';
 
@@ -7,8 +7,11 @@ import { Router,RouterModule } from '@angular/router';
   templateUrl: './utilisateur.component.html',
   styleUrl: './utilisateur.component.css'
 })
-export class UtilisateurComponent {
-
+export class UtilisateurComponent implements OnInit{
+  username: String = '';
+  ngOnInit(): void {
+    this.username = localStorage.getItem('username') || '';
+  }
   constructor(private mesService: mesService, private router: Router) {}
   
   logout(): void {

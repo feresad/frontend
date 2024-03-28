@@ -16,11 +16,14 @@ export class AdduserComponent implements OnInit{
   roles: Role[] = [];
   selectedRole: string = '';
   showPassword: boolean = false;
-
+  usernamenav: string = '';
+  successMessage: string = '';
+  errorMessage: string = '';
   constructor(private mesService: mesService, private router: Router) {}
 
   ngOnInit() {
     this.loadRoles();
+    this.usernamenav = localStorage.getItem('username') || '';
   }
   loadRoles(): void {
     this.mesService.getRoles().subscribe({
@@ -40,11 +43,11 @@ export class AdduserComponent implements OnInit{
 
     this.mesService.register(this.username, this.email, this.password,[this.selectedRole]).subscribe({
       next: (data) => {
-        this.router.navigate(['/admin/list-util']);
+        this.successMessage = 'Utilisateur ajouté avec succès';
       
       },
       error: (error) => {
-        console.error('Erreur lors de l\'ajout de l\'utilisateur', error);
+        this.errorMessage ='Erreur lors de l\'ajout de l\'utilisateur';
       }
     });
   }

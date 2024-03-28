@@ -26,6 +26,7 @@ import { DashempComponent } from './emp/dashemp/dashemp.component';
 import { AdduserComponent } from './admin/utilisateur/adduser/adduser.component';
 import { UtilisateurComponent } from './admin/utilisateur/utilisateur.component';
 import { ListuserComponent } from './admin/utilisateur/listuser/listuser.component';
+import { AjoutConsommationComponent } from './admin/Consommation/ajout-consommation/ajout-consommation.component';
 
 // Fonction pour récupérer le token JWT depuis les cookies
 export function tokenGetter() {
@@ -51,6 +52,7 @@ export function tokenGetter() {
       AdduserComponent,
       ListuserComponent,
       DashempComponent,
+      AjoutConsommationComponent,
       // Ajoutez d'autres déclarations de composants ici si nécessaire
     ],
     imports: [

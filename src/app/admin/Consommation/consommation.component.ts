@@ -13,11 +13,13 @@ import { RouterModule, Router } from '@angular/router';
 })
 export class ConsommationComponent implements OnInit{
   conso : Consommationn[] = [];
+  username : String = '';
 
 
   constructor(private mesService : mesService, private router: Router) { }
   ngOnInit(){
     this.getConsommationsList();
+    this.username = localStorage.getItem('username') || '';
   }
   getConsommationsList(): void {
     this.mesService.getConsommationsList().subscribe((data: Consommationn[]) => {

@@ -3,7 +3,7 @@
     <img class="logo" alt="no avaible image" src="../../../assets/img/logo-2-1.png">
     <div class="profile">
       <img class="profile-image" alt="no avaible image" src="../../../assets/img/photo-prof.png">
-      <p class="profile-name">{{usernamenav}}</p>
+      <p class="profile-name">{{username}}</p>
       <span class="fas fa-sign-out-alt" (click)="logout()"></span>    
     </div>
   </nav>
@@ -50,31 +50,24 @@
           <div class="card detail">
               <div class="detail-header">
                   <h2>Ajout Utilisateur</h2>
-                  <button routerLink="/list-util" style="width: 150px;">List Utilisateur</button>
+                  <button routerLink="/consommation" style="width: 150px;">List Consommations</button>
               </div>
               <div class="form-container">
-                <form id="addUserForm" (ngSubmit)="addUser()">
+                <form id="addUserForm" (ngSubmit)="ajoutConsommation()">
                     <div class="form-group">
-                        <label for="username">Nom d'utilisateur</label>
-                        <input type="text" id="username" name="username" [(ngModel)]="username" required>
+                        <label for="quantite">Quantite</label>
+                        <input type="text" id="quantite" name="quantite" [(ngModel)]="Consommation.quantite" required>
                     </div>
                     <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" [(ngModel)]="email" required>
+                        <label for="produit">Nom Produit</label>
+                        <select id="produit" name="produit" [(ngModel)]="Consommation.idProduit" required>
+                            <option *ngFor="let produit of produits" [value]="produit.id">{{produit.name}}</option>
+                        </select>
                     </div>
                     <div class="form-group">
-                        <label for="password">Mot de passe</label>
-                        <input type="password" [(ngModel)]="password" name="password" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="confirmPassword">Confirmer le mot de passe</label>
-                        <input type="password" name="confirmPassword" [(ngModel)]="confirmPassword" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="role">Rôle</label>
-                            <select id="role" name="role" [(ngModel)]="selectedRole" required>
-                             <option *ngFor="let role of roles" [value]="role.name">{{ role.name }}</option>
+                        <label for="machine">Machine</label>
+                            <select id="machine" name="machine" [(ngModel)]="Consommation.idMachine" required>
+                             <option *ngFor="let machine of machines" [value]="machine.id">{{machine.name}}</option>
                             </select>
                     </div>
                     <button type="submit">Ajouter Utilisateur</button>

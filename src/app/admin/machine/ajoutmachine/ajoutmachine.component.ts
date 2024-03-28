@@ -14,9 +14,10 @@ export class AjoutmachineComponent implements OnInit{
   machine: Machine = new Machine();
   successMessage: string = '';
   errorMessage: string = '';
+  username: String = '';
   constructor(private mesService: mesService, private router : Router) {}
   ngOnInit(): void {
-    
+    this.username = localStorage.getItem('username') || '';
   }
   ajouterMachine(): void {
     this.mesService.ajouterMachine(this.machine).subscribe((data: Machine): void => {

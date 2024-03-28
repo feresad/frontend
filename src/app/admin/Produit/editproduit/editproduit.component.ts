@@ -13,6 +13,7 @@ import { mesService } from '../../../messervice';
 export class EditProduitComponent implements OnInit {
   produit: Produit = new Produit();
   modi:  boolean | null = null;
+  username: String = '';
 // Edit Produit
  
   constructor(private mesService : mesService, private route: ActivatedRoute, private router : Router) { }
@@ -21,6 +22,7 @@ export class EditProduitComponent implements OnInit {
       const id = params['id'];
       this.getProduitDetails(id);
     });
+    this.username = localStorage.getItem('username') || '';
   }
   getProduitDetails(id: number): void {
     this.mesService.getProduit(id).subscribe((data: Produit) => {

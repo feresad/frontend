@@ -15,11 +15,12 @@ export class AjoutproduitComponent implements OnInit {
   produit: Produit = new Produit();
   successMessage: string = '';
   errorMessage: string = '';
-
+  username: String = '';
+  
   constructor(private mesService: mesService, private router : Router){}
 
   ngOnInit():void{
-    
+    this.username = localStorage.getItem('username') || '';
   }
   ajouterProduit(): void {
     this.mesService.ajouterProduit(this.produit)
@@ -28,6 +29,7 @@ export class AjoutproduitComponent implements OnInit {
           this.successMessage = 'Produit ajouté avec succès.';
           this.errorMessage = ''; // Assurez-vous que le message d'erreur est vide en cas de succès
           // Réinitialisez le formulaire ou effectuez toute autre action nécessaire
+          this.produit.etat = 0;
           this.produit = new Produit();
         },
         (error: HttpErrorResponse) => {
@@ -36,6 +38,7 @@ export class AjoutproduitComponent implements OnInit {
         }
       );
   }
+
   logout(): void {
     this.mesService.logout().subscribe({
       next: (data) => {

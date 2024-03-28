@@ -15,10 +15,12 @@ export class ListProdComponent {
   successMessage: string = '';
   errorMessage: string = '';
   searchQuery: string = '';
+  username: String = '';
 
   constructor(private mesService: mesService, private router : Router) { }
 ngOnInit(){
 this.getProduitsList();
+this.username = localStorage.getItem('username') || '';
 }
   getProduitsList(): void{
     this.mesService.getProduitsList().subscribe((data: any[]) => {
@@ -41,19 +43,13 @@ this.getProduitsList();
   // Search Produit
   SearchProduit(): void {
     if (this.searchQuery.trim() !== '') {
-      // Convertir la chaîne de recherche en minuscules pour une recherche insensible à la casse
       const searchValue = this.searchQuery.toLowerCase();
-      // Filtrer les produits en fonction de la chaîne de recherche
       const filteredProduits = this.produits.filter(produit => {
-        // Convertir le nom du produit en minuscules pour une comparaison insensible à la casse
         const lowercaseName = produit.name.toLowerCase();
-        // Vérifier si le nom du produit contient la chaîne de recherche
         return lowercaseName.includes(searchValue);
       });
-      // Mettre à jour la liste des produits avec les produits filtrés
       this.produits = filteredProduits;
     } else {
-      // Si la chaîne de recherche est vide, réinitialiser la liste des produits
       this.getProduitsList();
     }
   }

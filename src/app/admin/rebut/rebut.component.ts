@@ -14,10 +14,12 @@ import { Router, RouterModule } from '@angular/router';
 export class RebutComponent implements OnInit{
   // declare rebut as an array of Rebut
   rebut: Rebut[] = [];
+  username: String = '';
   constructor(private mesService : mesService,private router : Router) { }
 
   ngOnInit() {
   this.getRebutList();
+  this.username = localStorage.getItem('username') || '';
   }
 
   getRebutList(){

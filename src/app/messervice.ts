@@ -94,6 +94,9 @@ import { jwtDecode } from "jwt-decode";
         countConsommation(): Observable<number> {
             return this.httpClient.get<number>(`${this.CURL}count`);
         }
+        ajoutConsommation(consommation: Consommationn): Observable<Consommationn> {
+            return this.httpClient.post<Consommationn>(`${this.CURL}add`, consommation);
+        }
 
         // Rebut
         getRebutList(): Observable<Produit[]> {
@@ -122,9 +125,8 @@ import { jwtDecode } from "jwt-decode";
         }
 
         logout(): Observable<any> {
-            // For logout, you'd typically clear the local storage and not necessarily make a backend call
             localStorage.removeItem('authToken');
-            // If backend call is needed, adjust accordingly.
+            localStorage.removeItem('username');
             return this.httpClient.post(`${this.AURL}signout`, {}, this.getHttpOptions())
                 .pipe(catchError(this.handleError));
         }

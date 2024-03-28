@@ -14,6 +14,7 @@ export class EditmachineComponent implements OnInit{
   machine: Machine = new Machine();
   successMessage: string = '';
   errorMessage: string = '';
+  username: String = '';
 
   constructor(private mesService: mesService,private route: ActivatedRoute,private router : Router) {}
   ngOnInit(): void {
@@ -21,6 +22,7 @@ export class EditmachineComponent implements OnInit{
       const id = params['id'];
       this.getMachineDetails(id);
     });
+    this.username = localStorage.getItem('username') || '';
   }
   getMachineDetails(id: number) {
     this.mesService.getMachineDetails(id)

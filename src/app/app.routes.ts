@@ -20,6 +20,7 @@ import { ErrorComponent } from './error/error.component';
 import { UtilisateurComponent } from './admin/utilisateur/utilisateur.component';
 import { AdduserComponent } from './admin/utilisateur/adduser/adduser.component';
 import { ListuserComponent } from './admin/utilisateur/listuser/listuser.component';
+import { AjoutConsommationComponent } from './admin/Consommation/ajout-consommation/ajout-consommation.component';
 
 export const routes: Routes = [
 
@@ -27,37 +28,37 @@ export const routes: Routes = [
         path:'',component:LoginComponent
     },    
     {
-        path:'dashadmin',component:DashComponent ,canActivate: [AuthGuard],data: { expectedRole: 'ADMIN' }
+        path:'dash',component:DashComponent ,canActivate: [AuthGuard],data: { expectedRole: 'ADMIN' }
     },
     {
-        path:'admin/produit',component:ProduitComponent,canActivate: [AuthGuard],data: { expectedRole: 'ADMIN' }
+        path:'produit',component:ProduitComponent,canActivate: [AuthGuard],data: { expectedRole: 'ADMIN' }
     },
     {
-        path:'admin/list-prod',component:ListProdComponent,canActivate: [AuthGuard],data: { expectedRole: 'ADMIN' }
+        path:'list-prod',component:ListProdComponent,canActivate: [AuthGuard],data: { expectedRole: 'ADMIN' }
     },
     {
-        path:'admin/ajout-prod',component:AjoutproduitComponent,canActivate: [AuthGuard],data: { expectedRole: 'ADMIN' }
+        path:'ajout-prod',component:AjoutproduitComponent,canActivate: [AuthGuard],data: { expectedRole: 'ADMIN' }
     },
     {
-        path:'admin/edit-prod/:id',component:EditProduitComponent,canActivate: [AuthGuard],data: { expectedRole: 'ADMIN' }
+        path:'edit-prod/:id',component:EditProduitComponent,canActivate: [AuthGuard],data: { expectedRole: 'ADMIN' }
     },
     {
-        path:'admin/machine',component:MachineComponent,canActivate: [AuthGuard],data: { expectedRole: 'ADMIN' }
+        path:'machine',component:MachineComponent,canActivate: [AuthGuard],data: { expectedRole: 'ADMIN' }
     },
     {
-        path:'admin/list-mach',component:ListmachineComponent,canActivate: [AuthGuard],data: { expectedRole: 'ADMIN' }
+        path:'list-mach',component:ListmachineComponent,canActivate: [AuthGuard],data: { expectedRole: 'ADMIN' }
     },
     {
-        path:'admin/ajout-mach',component:AjoutmachineComponent,canActivate: [AuthGuard],data: { expectedRole: 'ADMIN' }
+        path:'ajout-mach',component:AjoutmachineComponent,canActivate: [AuthGuard],data: { expectedRole: 'ADMIN' }
     },
     {
-        path:'admin/edit-mach/:id',component:EditmachineComponent,canActivate: [AuthGuard],data: { expectedRole: 'ADMIN' }
+        path:'edit-mach/:id',component:EditmachineComponent,canActivate: [AuthGuard],data: { expectedRole: 'ADMIN' }
     },
     {
-        path:'admin/consommation',component:ConsommationComponent,canActivate: [AuthGuard],data: { expectedRole: 'ADMIN' }
+        path:'consommation',component:ConsommationComponent,canActivate: [AuthGuard],data: { expectedRole: 'ADMIN' }
     },
     {
-        path:'admin/rebut',component:RebutComponent,canActivate: [AuthGuard],data: { expectedRole: 'ADMIN' }
+        path:'rebut',component:RebutComponent,canActivate: [AuthGuard],data: { expectedRole: 'ADMIN' }
     },
     {
         path:'parametres',component:ParametresComponent,canActivate: [AuthGuard],data: { expectedRole: 'ADMIN' }
@@ -66,10 +67,13 @@ export const routes: Routes = [
         path:'utilisateur',component:UtilisateurComponent,canActivate: [AuthGuard],data: { expectedRole: 'ADMIN' }
     },
     {
-        path:'admin/ajout-util',component:AdduserComponent ,canActivate: [AuthGuard],data: { expectedRole: 'ADMIN' }
+        path:'ajout-util',component:AdduserComponent ,canActivate: [AuthGuard],data: { expectedRole: 'ADMIN' }
     },
     {
-        path:'admin/list-util',component:ListuserComponent,canActivate: [AuthGuard],data: { expectedRole: 'ADMIN' }
+        path:'list-util',component:ListuserComponent,canActivate: [AuthGuard],data: { expectedRole: 'ADMIN' }
+    },
+    {
+        path:'ajout-conso',component:AjoutConsommationComponent,canActivate: [AuthGuard],data: { expectedRole: 'ADMIN' }
     },
     {
         path:'error',component:ErrorComponent

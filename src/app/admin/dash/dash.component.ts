@@ -20,6 +20,8 @@ export class DashComponent {
   nbMachine: number = 0;
   nbConsommation: number = 0;
   nbuser: number = 0;
+  username: string = '';
+  role: string = '';
 
   constructor(private mesService: mesService, private router :Router) { }
 ngOnInit(){
@@ -28,6 +30,8 @@ this.CountProduit();
 this.CountMachine();
 this.CountConsommation();
 this.countUser();
+this.username = localStorage.getItem('username') || '';
+this.role = localStorage.getItem('roles') || '';
 }
 
 getProduitsList(): void{
@@ -66,6 +70,7 @@ getProduitsList(): void{
     this.mesService.logout().subscribe({
       next: (data) => {
         localStorage.removeItem('authToken');
+        localStorage.removeItem('username');
         this.router.navigate(['/']);
       },
       error: (error) => {

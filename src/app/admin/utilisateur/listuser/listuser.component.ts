@@ -14,12 +14,14 @@ export class ListuserComponent implements OnInit{
   userToEdit: number = 0;
   newPassword: string = '';
   confirmPassword: string = '';
+  username: String = '';
 
   constructor(private mesService: mesService, private router: Router) {}
 
   
   ngOnInit(): void {
     this.loadUsers();
+    this.username = localStorage.getItem('username') || '';
   }
 // delete user by id
   deleteUser(id: any): void {

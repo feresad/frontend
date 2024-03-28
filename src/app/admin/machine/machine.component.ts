@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { Router, RouterModule } from '@angular/router';
 import { mesService } from '../../messervice';
@@ -9,8 +9,12 @@ import { mesService } from '../../messervice';
   templateUrl: './machine.component.html',
   styleUrl: './machine.component.css'
 })
-export class MachineComponent {
+export class MachineComponent implements OnInit{
+  username: String = '';
   constructor(private mesService: mesService, private router :Router) { }
+  ngOnInit(): void {
+    this.username = localStorage.getItem('username') || '';
+  }
   logout(): void {
     this.mesService.logout().subscribe({
       next: (data) => {

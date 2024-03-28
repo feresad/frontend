@@ -23,15 +23,15 @@ export class LoginComponent {
     this.mesService.login(this.username, this.password).subscribe({
       next: (data) => {
         localStorage.setItem('authToken', data.token);
-        console.log(data);
-        // Exemple de stockage de rôles dans localStorage
-        // Assurez-vous que votre API renvoie les rôles de cette manière ou ajustez en conséquence
+        localStorage.setItem('username', data.username);
+       
         const roles = data.roles; // Assurez-vous que cela correspond à la structure de votre réponse
         localStorage.setItem('roles', JSON.stringify(roles));
   
-        // Redirection basée sur le rôle
+        // Redirection si authentifie vers dash et si non rester dans login
+        
         if (roles == "ADMIN") {
-          this.router.navigate(['/dashadmin']);
+          this.router.navigate(['/dash']);
         } else if (roles == "USER") {
           this.router.navigate(['/user']);
         } else {

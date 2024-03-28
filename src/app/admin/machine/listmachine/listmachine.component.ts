@@ -14,10 +14,12 @@ export class ListmachineComponent {
   machines: Machine[]=[];
   //recherche machine par etat 
   etat: string = '';
+  username: String = '';
   constructor(private mesService: mesService , private router : Router) { }
 
   ngOnInit(){
     this.getMachinesList();
+    this.username = localStorage.getItem('username') || '';
   }
   getMachinesList(): void{
     this.mesService.getMachinesList().subscribe((data: any[]) => {
@@ -33,6 +35,7 @@ export class ListmachineComponent {
     if (this.etat.trim() !== '') {
       const filteredMachines = this.machines.filter(machine => {
         // Vérifier si la machine correspond à l'état saisi
+        console.log('en panne');
         if (this.etat.toLowerCase() === 'en panne') {
           return !machine.etat; // Retourne les machines en panne (état false)
         } else if (this.etat.toLowerCase() === 'en marche') {
