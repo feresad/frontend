@@ -15,7 +15,7 @@ export class EditmachineComponent implements OnInit{
   successMessage: string = '';
   errorMessage: string = '';
   username: String = '';
-
+  role: string = '';
   constructor(private mesService: mesService,private route: ActivatedRoute,private router : Router) {}
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -23,6 +23,7 @@ export class EditmachineComponent implements OnInit{
       this.getMachineDetails(id);
     });
     this.username = localStorage.getItem('username') || '';
+    this.role = localStorage.getItem('roles') || '';
   }
   getMachineDetails(id: number) {
     this.mesService.getMachineDetails(id)
@@ -46,11 +47,16 @@ export class EditmachineComponent implements OnInit{
   onSubmit() {
     this.updateMachine();
   }
+  isAdmin(): boolean {
+    const roles = JSON.parse(localStorage.getItem('roles') || '[]');
+    return roles.includes('ADMIN');
+  }
   logout(): void {
     this.mesService.logout().subscribe({
       next: (data) => {
         localStorage.removeItem('authToken');
-        this.router.navigate(['/login']);
+        localStorage.removeItem('username');
+        this.router.navigate(['/']);
       },
       error: (error) => {
         console.error('Logout error', error);

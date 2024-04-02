@@ -37,6 +37,7 @@ import { jwtDecode } from "jwt-decode";
 
         constructor(private httpClient: HttpClient) { }
 
+        //Produit
         getProduitsList(): Observable<Produit[]> {
             return this.httpClient.get<Produit[]>(`${this.PURL}all`);
         }
@@ -86,6 +87,11 @@ import { jwtDecode } from "jwt-decode";
         SearchMachine(etat: boolean): Observable<Machine[]> {
             return this.httpClient.get<Machine[]>(`${this.MURL}search?etat=${etat}`);
         }
+        // Dans le service mesService
+        getMachinesByName(machineName: string): Observable<Machine[]> {
+            return this.httpClient.get<Machine[]>(`${this.MURL}searchMachine?name=${machineName}`);
+        }
+
 
         // Consommations
         getConsommationsList(): Observable<Consommationn[]> {
@@ -96,6 +102,9 @@ import { jwtDecode } from "jwt-decode";
         }
         ajoutConsommation(consommation: Consommationn): Observable<Consommationn> {
             return this.httpClient.post<Consommationn>(`${this.CURL}add`, consommation);
+        }
+        getConsommationsByMachineId(machineId: number): Observable<Consommationn[]> {
+            return this.httpClient.get<Consommationn[]>(`${this.CURL}machine/${machineId}`);
         }
 
         // Rebut

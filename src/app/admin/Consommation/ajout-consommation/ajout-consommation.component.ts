@@ -17,11 +17,13 @@ export class AjoutConsommationComponent implements OnInit{
   machines: Machine[] = [];
   successMessage: string = '';
   errorMessage: string = '';
+  role: string = '';
   constructor(private mesService: mesService, private router : Router){}
   ngOnInit(): void {
     this.username = localStorage.getItem('username') || '';
     this.getProduitsList();
     this.getMachinesList();
+    this.role = localStorage.getItem('roles') || '';
   }
   ajoutConsommation(): void {
     this.mesService.ajoutConsommation(this.Consommation).subscribe({
@@ -54,13 +56,17 @@ export class AjoutConsommationComponent implements OnInit{
       }
     });
   }
-
+  isAdmin(): boolean {
+    const roles = JSON.parse(localStorage.getItem('roles') || '[]');
+    return roles.includes('ADMIN');
+  }
 
   logout(): void {
     this.mesService.logout().subscribe({
       next: (data) => {
         localStorage.removeItem('authToken');
-        this.router.navigate(['/login']);
+        localStorage.removeItem('username');
+        this.router.navigate(['/']);
       },
       error: (error) => {
         console.error('Logout error', error);

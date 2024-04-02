@@ -52,10 +52,11 @@ export class AdduserComponent implements OnInit{
     });
   }
 
-  logout(): void {
+ logout(): void {
     this.mesService.logout().subscribe({
       next: (data) => {
         localStorage.removeItem('authToken');
+        localStorage.removeItem('username');
         this.router.navigate(['/']);
       },
       error: (error) => {

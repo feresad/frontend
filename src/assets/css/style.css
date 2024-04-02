@@ -387,7 +387,7 @@ main{
     line-height: 28px;
     align-items: center;
     position: relative;
-    max-width: 190px;
+    max-width: 2500px;
    }
    
    .input {
@@ -449,7 +449,8 @@ main{
   }
   
   button[type="submit"] {
-    width: 100%;
+    width: 90%;
+    display: block;
     background-color: #3e3dab;
     color: #fff;
     padding: 10px;
@@ -759,9 +760,10 @@ button a {
 }
 .detail-header button{
   width: 170px;
+  height: 40px;
 }
 .detail-header .but{
-    margin-left: 1000px;
+    margin-left: 600px;
 }
 
 select {

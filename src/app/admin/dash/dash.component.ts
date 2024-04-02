@@ -22,6 +22,7 @@ export class DashComponent {
   nbuser: number = 0;
   username: string = '';
   role: string = '';
+  isSidebarOpen: boolean = false;
 
   constructor(private mesService: mesService, private router :Router) { }
 ngOnInit(){
@@ -33,7 +34,9 @@ this.countUser();
 this.username = localStorage.getItem('username') || '';
 this.role = localStorage.getItem('roles') || '';
 }
-
+toggleSidebar(): void {
+  this.isSidebarOpen = !this.isSidebarOpen;
+}
 getProduitsList(): void{
   this.mesService.getProduitsList().subscribe((data: any[]) => {
     this.produits = data;
@@ -64,6 +67,11 @@ getProduitsList(): void{
     this.mesService.countUser().subscribe((data: any) => {
       this.nbuser = data;
     });
+  }
+
+  isAdmin(): boolean {
+    const roles = JSON.parse(localStorage.getItem('roles') || '[]');
+    return roles.includes('ADMIN');
   }
 
    logout(): void {

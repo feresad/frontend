@@ -22,11 +22,12 @@ import { RebutComponent } from './admin/rebut/rebut.component';
 import { mesService } from './messervice';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from './auth/login/login.component';
-import { DashempComponent } from './emp/dashemp/dashemp.component';
 import { AdduserComponent } from './admin/utilisateur/adduser/adduser.component';
 import { UtilisateurComponent } from './admin/utilisateur/utilisateur.component';
 import { ListuserComponent } from './admin/utilisateur/listuser/listuser.component';
 import { AjoutConsommationComponent } from './admin/Consommation/ajout-consommation/ajout-consommation.component';
+import { ErrorComponent } from './error/error.component';
+import { ListconsommationComponent } from './admin/Consommation/listconsommation/listconsommation.component';
 
 // Fonction pour récupérer le token JWT depuis les cookies
 export function tokenGetter() {
@@ -51,8 +52,9 @@ export function tokenGetter() {
       UtilisateurComponent,
       AdduserComponent,
       ListuserComponent,
-      DashempComponent,
       AjoutConsommationComponent,
+      ErrorComponent,
+      ListconsommationComponent,
       // Ajoutez d'autres déclarations de composants ici si nécessaire
     ],
     imports: [

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DashempComponent } from './dashemp.component';
+import { ListconsommationComponent } from './listconsommation.component';
 
-describe('DashempComponent', () => {
-  let component: DashempComponent;
-  let fixture: ComponentFixture<DashempComponent>;
+describe('ListconsommationComponent', () => {
+  let component: ListconsommationComponent;
+  let fixture: ComponentFixture<ListconsommationComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DashempComponent]
+      imports: [ListconsommationComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(DashempComponent);
+    fixture = TestBed.createComponent(ListconsommationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

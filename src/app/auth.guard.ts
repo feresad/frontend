@@ -13,11 +13,15 @@ export class AuthGuard implements CanActivate {
     const token = localStorage.getItem('authToken');
     const roles = JSON.parse(localStorage.getItem('roles') || '[]');
 
-    if (token && roles.includes(expectedRole)) {
-      return true;
-    } else {
-      this.router.navigate(['/error']);
-      return false;
-    }
-  }
+    if (token) {
+      if (expectedRole && !roles.includes(expectedRole)) { // Check if user has the role
+         this.router.navigate(['/error']); // Redirect if no matching role
+         return false;
+      }
+      return true; //  Allow access
+   } else {
+     this.router.navigate(['/error']); 
+     return false;
+   }
+ }
 }

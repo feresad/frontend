@@ -14,7 +14,7 @@ export class EditProduitComponent implements OnInit {
   produit: Produit = new Produit();
   modi:  boolean | null = null;
   username: String = '';
-// Edit Produit
+  role: string = '';
  
   constructor(private mesService : mesService, private route: ActivatedRoute, private router : Router) { }
   ngOnInit(): void {
@@ -23,6 +23,7 @@ export class EditProduitComponent implements OnInit {
       this.getProduitDetails(id);
     });
     this.username = localStorage.getItem('username') || '';
+    this.role = localStorage.getItem('roles') || '';
   }
   getProduitDetails(id: number): void {
     this.mesService.getProduit(id).subscribe((data: Produit) => {
@@ -43,11 +44,18 @@ export class EditProduitComponent implements OnInit {
   onSubmit() {
     this.editProduit();
   }
+
+  isAdmin(): boolean {
+    const roles = JSON.parse(localStorage.getItem('roles') || '[]');
+    return roles.includes('ROLE_ADMIN');
+  }
+
   logout(): void {
     this.mesService.logout().subscribe({
       next: (data) => {
         localStorage.removeItem('authToken');
-        this.router.navigate(['/login']);
+        localStorage.removeItem('username');
+        this.router.navigate(['/']);
       },
       error: (error) => {
         console.error('Logout error', error);

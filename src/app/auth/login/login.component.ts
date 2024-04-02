@@ -24,26 +24,16 @@ export class LoginComponent {
       next: (data) => {
         localStorage.setItem('authToken', data.token);
         localStorage.setItem('username', data.username);
-       
-        const roles = data.roles; // Assurez-vous que cela correspond à la structure de votre réponse
-        localStorage.setItem('roles', JSON.stringify(roles));
+        localStorage.setItem('roles', JSON.stringify(data.roles));
   
-        // Redirection si authentifie vers dash et si non rester dans login
-        
-        if (roles == "ADMIN") {
-          this.router.navigate(['/dash']);
-        } else if (roles == "USER") {
-          this.router.navigate(['/user']);
-        } else {
-          // Gérez les cas où aucun rôle connu n'est trouvé
-          this.router.navigate(['/login']);
-        }
+        // Redirection vers dash après l'authentification réussie
+        this.router.navigate(['/dash']);
       },
       error: (error) => {
         this.errorMessage = "Login failed. Please check your credentials.";
         console.error('Login error');
       }
     });
-  }
+  } 
   
 }

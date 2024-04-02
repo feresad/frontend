@@ -14,10 +14,11 @@ export class UtilisateurComponent implements OnInit{
   }
   constructor(private mesService: mesService, private router: Router) {}
   
-  logout(): void {
+ logout(): void {
     this.mesService.logout().subscribe({
       next: (data) => {
         localStorage.removeItem('authToken');
+        localStorage.removeItem('username');
         this.router.navigate(['/']);
       },
       error: (error) => {

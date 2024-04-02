@@ -15,11 +15,13 @@ export class ListmachineComponent {
   //recherche machine par etat 
   etat: string = '';
   username: String = '';
+  role: string = '';
   constructor(private mesService: mesService , private router : Router) { }
 
   ngOnInit(){
     this.getMachinesList();
     this.username = localStorage.getItem('username') || '';
+    this.role = localStorage.getItem('roles') || '';
   }
   getMachinesList(): void{
     this.mesService.getMachinesList().subscribe((data: any[]) => {
@@ -51,12 +53,17 @@ export class ListmachineComponent {
       this.getMachinesList();
     }
   }
+  isAdmin(): boolean {
+    const roles = JSON.parse(localStorage.getItem('roles') || '[]');
+    return roles.includes('ADMIN');
+  }
 
   logout(): void {
     this.mesService.logout().subscribe({
       next: (data) => {
         localStorage.removeItem('authToken');
-        this.router.navigate(['/login']);
+        localStorage.removeItem('username');
+        this.router.navigate(['/']);
       },
       error: (error) => {
         console.error('Logout error', error);

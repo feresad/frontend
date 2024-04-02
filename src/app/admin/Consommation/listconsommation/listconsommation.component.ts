@@ -1,18 +1,16 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Consommationn } from '../../consommationn';
-import { mesService } from '../../messervice';
-import { Machine } from '../../machine';
-import { Produit } from '../../produit';
-import { RouterModule, Router } from '@angular/router';
-
+import { Consommationn } from '../../../consommationn';
+import { mesService } from '../../../messervice';
+import { Router } from '@angular/router';
+import { Machine } from '../../../machine';
+import { Produit } from '../../../produit';
 
 @Component({
-  selector: 'app-consommation',
-  templateUrl: './consommation.component.html',
-  styleUrl: './consommation.component.css'
+  selector: 'app-listconsommation',
+  templateUrl: './listconsommation.component.html',
+  styleUrl: './listconsommation.component.css'
 })
-export class ConsommationComponent implements OnInit{
+export class ListconsommationComponent implements OnInit{
   conso : Consommationn[] = [];
   username : String = '';
   role: string = '';
@@ -80,5 +78,4 @@ isAdmin(): boolean {
       }
     });
 }
-
 }

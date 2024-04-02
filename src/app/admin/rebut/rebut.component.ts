@@ -15,11 +15,13 @@ export class RebutComponent implements OnInit{
   // declare rebut as an array of Rebut
   rebut: Rebut[] = [];
   username: String = '';
+  role: string = '';
   constructor(private mesService : mesService,private router : Router) { }
 
   ngOnInit() {
   this.getRebutList();
   this.username = localStorage.getItem('username') || '';
+  this.role = localStorage.getItem('roles') || '';
   }
 
   getRebutList(){
@@ -37,11 +39,17 @@ export class RebutComponent implements OnInit{
     });
   }
 
+  isAdmin(): boolean {
+    const roles = JSON.parse(localStorage.getItem('roles') || '[]');
+    return roles.includes('ADMIN');
+  }
+
   logout(): void {
     this.mesService.logout().subscribe({
       next: (data) => {
         localStorage.removeItem('authToken');
-        this.router.navigate(['/login']);
+        localStorage.removeItem('username');
+        this.router.navigate(['/']);
       },
       error: (error) => {
         console.error('Logout error', error);

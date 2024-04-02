@@ -15,9 +15,11 @@ export class AjoutmachineComponent implements OnInit{
   successMessage: string = '';
   errorMessage: string = '';
   username: String = '';
+  role: string = '';
   constructor(private mesService: mesService, private router : Router) {}
   ngOnInit(): void {
     this.username = localStorage.getItem('username') || '';
+    this.role = localStorage.getItem('roles') || '';
   }
   ajouterMachine(): void {
     this.mesService.ajouterMachine(this.machine).subscribe((data: Machine): void => {
@@ -29,11 +31,17 @@ export class AjoutmachineComponent implements OnInit{
       this.successMessage = '';
     });
   }
+  isAdmin(): boolean {
+    const roles = JSON.parse(localStorage.getItem('roles') || '[]');
+    return roles.includes('ROLE_ADMIN');
+  }
+
   logout(): void {
     this.mesService.logout().subscribe({
       next: (data) => {
         localStorage.removeItem('authToken');
-        this.router.navigate(['/login']);
+        localStorage.removeItem('username');
+        this.router.navigate(['/']);
       },
       error: (error) => {
         console.error('Logout error', error);

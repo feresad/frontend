@@ -2,7 +2,7 @@
   <h4>Abinject</h4>
   <img class="logo" alt="no avaible image" src="../../../assets/img/logo-2-1.png">
   <div class="profile">
-    <img class="profile-image" alt="no avaible image" src="../../../assets/img/photo-prof.png">
+    <img class="profile-image" alt="no avaible image" src="../../../../assets/img/user.png">
     <p class="profile-name">{{username}}</p>
     <span class="fas fa-sign-out-alt" (click)="logout()"></span>    
   </div>
@@ -29,8 +29,8 @@
     <span class="fas fa-exclamation-triangle"></span><a>Rubut</a>
   </div>
   <div class="sidebar-menu" routerLink="/utilisateur">
-    <span class="fas fa-user"></span><a>Utilisateur</a>
-  </div>
+      <span class="fas fa-user-friends"></span><a>Utilisateur</a>
+    </div>
   <div class="sidebar-menu">
     <span class="fas fa-cog" routerLink="/parametres"></span><a>Paramètres</a>
   </div>
@@ -50,13 +50,20 @@
         <div class="card detail">
             <div class="detail-header">
                 <h2>Ajout Machine</h2>
-                <button routerLink="/list-mach" style="width: 150px;">List Machine</button>
+                <button routerLink="/list-mach">List Machine</button>
             </div>
+            <p>Note: La machine est declarer par defaut "En Marche"</p>
+            <div class="form-container">
+              <div class="form-group">
               <label>Nom:</label><br>
-              <input (ngModel)="machine.name" name="name"><br>
+              <input (ngModel)="machine.name" name="name">
+            </div>
+            <div class="form-group">
               <label>description:</label><br>
-              <input (ngModel)="machine.description" name="description"><br>
-              <button (click)="ajouterMachine()">Ajouter une Machine</button>
+              <input (ngModel)="machine.description" name="description">
+            </div>
+              <button type="submit" (click)="ajouterMachine()">Ajouter une Machine</button>
+          </div>
         </div>
     </div>
   </main> 
