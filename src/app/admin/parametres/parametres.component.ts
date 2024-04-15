@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { mesService } from '../../messervice';
+import { Users } from '../../users';
+import { Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-parametres',
@@ -8,14 +10,16 @@ import { mesService } from '../../messervice';
   styleUrl: './parametres.component.css'
 })
 export class ParametresComponent implements OnInit{
-  username: String = '';
+  username: string = '';
   role: String = '';
+  email: string = '';
+  constructor(private mesService: mesService, private router :Router) { }
 
   ngOnInit(): void {
     this.username = localStorage.getItem('username') || '';
     this.role = localStorage.getItem('roles') || '';
   }
-  constructor(private mesService: mesService, private router :Router) { }
+
 
   isAdmin(): boolean {
     const roles = JSON.parse(localStorage.getItem('roles') || '[]');

@@ -12,36 +12,13 @@ import { Router, RouterModule } from '@angular/router';
   styleUrl: './rebut.component.css'
 })
 export class RebutComponent implements OnInit{
-  // declare rebut as an array of Rebut
-  rebut: Rebut[] = [];
   username: String = '';
   role: string = '';
   constructor(private mesService : mesService,private router : Router) { }
 
   ngOnInit() {
-  this.getRebutList();
   this.username = localStorage.getItem('username') || '';
   this.role = localStorage.getItem('roles') || '';
-  }
-
-  getRebutList(){
-    // call the service method getRebutList() and subscribe to the response
-    this.mesService.getRebutList().subscribe((data: Rebut[])=>{
-      this.rebut = data;
-      this.rebut.forEach((element) => {
-        this.mesService.getProduit(element.idProduit).subscribe((data: Produit) => {
-          element.nomproduit = data.name;
-        });
-        this.mesService.getMachineDetails(element.idMachine).subscribe((data: Machine) => {
-          element.nomMachine = data.name;
-        });
-      });
-    });
-  }
-
-  isAdmin(): boolean {
-    const roles = JSON.parse(localStorage.getItem('roles') || '[]');
-    return roles.includes('ADMIN');
   }
 
   logout(): void {

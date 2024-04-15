@@ -1,14 +1,17 @@
 <div class="fullscreen-container">
   <div class="login-container">
     <h1 class="header">Login</h1>
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
     <form class="form" (ngSubmit)="login()">
       <div class="input-group">
         <label for="username">Username</label>
-        <input type="text" id="username" name="username" [(ngModel)]="username" placeholder="Type your username">
+        <input type="text" id="username" name="username" [(ngModel)]="username" placeholder="Nom d'utilisateur">
       </div>
       <div class="input-group">
         <label for="password">Password</label>
-        <input type="password" id="password" name="password" [(ngModel)]="password" placeholder="Type your password">
+        <input type="password" id="password" name="password" [(ngModel)]="password" placeholder="Mot de Passe">
       </div>
       <button class="button" type="submit">Login</button>
     </form>

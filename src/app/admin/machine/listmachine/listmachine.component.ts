@@ -4,6 +4,7 @@ import { mesService } from '../../../messervice';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Panne } from '../../../panne';
 
 @Component({
   selector: 'app-listmachine',
@@ -16,6 +17,7 @@ export class ListmachineComponent {
   etat: string = '';
   username: String = '';
   role: string = '';
+  pannes: Panne[] =[];
   constructor(private mesService: mesService , private router : Router) { }
 
   ngOnInit(){
@@ -26,6 +28,14 @@ export class ListmachineComponent {
   getMachinesList(): void{
     this.mesService.getMachinesList().subscribe((data: any[]) => {
       this.machines = data;
+      //je veux prendre panneId et chercher le panne byId et afficher Name
+      this.machines.forEach((machine) => {
+        if(!machine.etat){
+        this.mesService.getPanneById(machine.panneId).subscribe((data: Panne) => {
+          machine.panneName = data.name;
+        });
+      }
+      });
     });
   }
   deleteMachine(id: number){
@@ -57,6 +67,7 @@ export class ListmachineComponent {
     const roles = JSON.parse(localStorage.getItem('roles') || '[]');
     return roles.includes('ADMIN');
   }
+
 
   logout(): void {
     this.mesService.logout().subscribe({

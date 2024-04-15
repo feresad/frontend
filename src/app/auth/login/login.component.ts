@@ -24,13 +24,14 @@ export class LoginComponent {
       next: (data) => {
         localStorage.setItem('authToken', data.token);
         localStorage.setItem('username', data.username);
+        localStorage.setItem('email', data.email);
         localStorage.setItem('roles', JSON.stringify(data.roles));
   
         // Redirection vers dash après l'authentification réussie
         this.router.navigate(['/dash']);
       },
       error: (error) => {
-        this.errorMessage = "Login failed. Please check your credentials.";
+        this.errorMessage = "La connexion a échoué. Veuillez vérifier vos informations.";
         console.error('Login error');
       }
     });

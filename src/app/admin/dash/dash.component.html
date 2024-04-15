@@ -29,7 +29,7 @@
     <span class="fas fa-exclamation-triangle"></span><a>Rubut</a>
   </div>
   <div class="sidebar-menu" routerLink="/utilisateur">
-    <span class="fas fa-user"></span><a>Utilisateur</a>
+    <span class="fas fa-user-friends"></span><a>Utilisateur</a>
   </div>
 
   <div class="sidebar-menu" routerLink="/parametres">
@@ -101,22 +101,23 @@
             <th>Etat</th>
             <th>Actions</th>
         </tr>
-<tr *ngFor="let produit of produits">
-        <td>{{ produit.id }}</td>
-        <td>{{ produit.name }}</td>
-        <td>{{ produit.quantite }}</td>
-        <td>{{ produit.matiere_Premier }}</td> 
-        <td >
-          <span *ngIf="produit.etat == 2" class="status EnStock"><i class="fas fa-circle"> Terminer</i></span>
-            <span *ngIf="produit.etat == 1" class="status presuqeFini"><i class="fas fa-circle"> En Cours de traitement</i></span>
-            <span *ngIf="produit.etat == 0" class="status horsStock"><i class="fas fa-circle"> Aucun Traitement</i></span>
-      
-        </td>
-        <td>
-          <button class="custom-btn btn-edit" [routerLink]="['/edit-prod', produit.id]">Edit</button>
-          <button class="custom-btn btn-2" (click)="deleteProduit(produit.id)" *ngIf="role === 'ADMIN'">Delete</button>
-        </td>
-       </tr>
+        <ng-container *ngFor="let produit of produits; let i = index">
+          <tr *ngIf="i < 3">
+            <td>{{ produit.id }}</td>
+            <td>{{ produit.name }}</td>
+            <td>{{ produit.quantite }}</td>
+            <td>{{ produit.matiere_Premier }}</td>
+            <td>
+              <span *ngIf="produit.etat == 2" class="status EnStock"><i class="fas fa-circle"> Terminé</i></span>
+              <span *ngIf="produit.etat == 1" class="status presuqeFini"><i class="fas fa-circle"> En Cours de traitement</i></span>
+              <span *ngIf="produit.etat == 0" class="status horsStock"><i class="fas fa-circle"> Aucun Traitement</i></span>
+            </td>
+            <td>
+              <button class="custom-btn btn-edit" [routerLink]="['/edit-prod', produit.id]">Edit</button>
+              <button class="custom-btn btn-2" (click)="deleteProduit(produit.id)" *ngIf="role === 'ADMIN'">Delete</button>
+            </td>
+          </tr>
+        </ng-container>
         </table>
       </div>
       <div class="card customer">

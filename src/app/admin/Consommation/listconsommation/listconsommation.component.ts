@@ -57,7 +57,7 @@ export class ListconsommationComponent implements OnInit{
           });
       });
   } else {
-      // Si le champ de recherche est vide, récupérez toutes les consommations
+      
       this.getConsommationsList();
   }
 }

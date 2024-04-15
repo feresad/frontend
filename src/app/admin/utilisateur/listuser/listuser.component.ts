@@ -15,6 +15,9 @@ export class ListuserComponent implements OnInit{
   newPassword: string = '';
   confirmPassword: string = '';
   username: String = '';
+  sucessMessage: string = '';
+  errorMessage: string = '';
+  searchQuery: string = '';
 
   constructor(private mesService: mesService, private router: Router) {}
 
@@ -45,16 +48,12 @@ export class ListuserComponent implements OnInit{
     this.userToEdit = 0;
     this.newPassword = '';
     this.confirmPassword = '';
-    if (this.newPassword !== this.confirmPassword) {
-      // Gérer l'erreur de confirmation de mot de passe
-      return;
-    }
+    console.log('close modal');
   }
 
   changePassword(): void {
     if (this.newPassword !== this.confirmPassword) {
-      console.error("Les mots de passe ne correspondent pas");
-      // Ici, vous pourriez vouloir afficher une alerte à l'utilisateur ou un message dans l'interface
+      this.errorMessage = "Les mots de passe ne correspondent pas";
       return;
     }
     
@@ -63,6 +62,7 @@ export class ListuserComponent implements OnInit{
         console.log("Mot de passe modifié avec succès", data);
         this.loadUsers(); // Recharger la liste des utilisateurs si nécessaire
         this.closeModal(); // Fermer le modal après la mise à jour
+        
       },
       error: (error) => {
         console.error('Erreur lors de la modification du mot de passe', error);
@@ -81,7 +81,18 @@ export class ListuserComponent implements OnInit{
       }
     });
   }
-  
+  SearchUsers(): void {
+    if (this.searchQuery.trim() !== '') {
+      const searchValue = this.searchQuery.toLowerCase();
+      const filteredUsers = this.users.filter(users => {
+        const lowercaseName = users.username.toLowerCase();
+        return lowercaseName.includes(searchValue);
+      });
+      this.users = filteredUsers;
+    } else {
+      this.loadUsers();
+    }
+  }
  logout(): void {
     this.mesService.logout().subscribe({
       next: (data) => {

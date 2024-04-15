@@ -21,6 +21,8 @@ import { AdduserComponent } from './admin/utilisateur/adduser/adduser.component'
 import { ListuserComponent } from './admin/utilisateur/listuser/listuser.component';
 import { AjoutConsommationComponent } from './admin/Consommation/ajout-consommation/ajout-consommation.component';
 import { ListconsommationComponent } from './admin/Consommation/listconsommation/listconsommation.component';
+import { ListrebutComponent } from './admin/rebut/listrebut/listrebut.component';
+import { AjoutrebutComponent } from './admin/rebut/ajoutrebut/ajoutrebut.component';
 
 export const routes: Routes = [
 
@@ -65,6 +67,12 @@ export const routes: Routes = [
     },
     {
         path:'rebut',component:RebutComponent,canActivate: [AuthGuard]
+    },
+    {
+        path:'list-rebut',component:ListrebutComponent,canActivate: [AuthGuard]
+    },
+    {
+        path:'ajout-rebut',component:AjoutrebutComponent,canActivate: [AuthGuard]
     },
     {
         path:'parametres',component:ParametresComponent,canActivate: [AuthGuard]

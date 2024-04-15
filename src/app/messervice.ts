@@ -7,6 +7,8 @@
 import { Users } from "./users";
 import { Role } from "./role";
 import { jwtDecode } from "jwt-decode";
+import { Rebut } from "./rebut";
+import { Panne } from "./panne";
 
     @Injectable({ 
         providedIn: 'root'
@@ -78,18 +80,23 @@ import { jwtDecode } from "jwt-decode";
         deleteMachine(id: number): Observable<Object> {
             return this.httpClient.delete(`${this.MURL}${id}`);
         }
-        editMachine(id: number,machine: Machine): Observable<Machine> {
-            return this.httpClient.put<Machine>(`${this.MURL}${id}`, machine);
-        }
+        editMachine(id: number, machine: Machine): Observable<Machine> {
+            return this.httpClient.put<Machine>(`${this.MURL}${id}`, machine, this.getHttpOptions());
+          }
         CountMachine(): Observable<number> {
             return this.httpClient.get<number>(`${this.MURL}count`);
         }
         SearchMachine(etat: boolean): Observable<Machine[]> {
             return this.httpClient.get<Machine[]>(`${this.MURL}search?etat=${etat}`);
         }
-        // Dans le service mesService
         getMachinesByName(machineName: string): Observable<Machine[]> {
             return this.httpClient.get<Machine[]>(`${this.MURL}searchMachine?name=${machineName}`);
+        }
+        getPanneList(): Observable<Panne[]> {
+            return this.httpClient.get<Panne[]>(`${this.MURL}pannes`);
+        }
+        getPanneById(id: number): Observable<Panne> {
+            return this.httpClient.get<Panne>(`${this.MURL}pannes/${id}`);
         }
 
 
@@ -111,6 +118,11 @@ import { jwtDecode } from "jwt-decode";
         getRebutList(): Observable<Produit[]> {
             return this.httpClient.get<Produit[]>(`${this.RURL}all`);
         }
+        addRebut(rebut: Rebut): Observable<Rebut> {
+            return this.httpClient.post<Rebut>(`${this.RURL}add`, rebut);
+        }
+         
+        
 
         // Authentification
         login(username: string, password: string): Observable<any> {
@@ -162,4 +174,10 @@ import { jwtDecode } from "jwt-decode";
         countUser(): Observable<number> {
             return this.httpClient.get<number>(`${this.AURL}count`, this.getHttpOptions());
         }
+        searchUser(username: string): Observable<Users> {
+            return this.httpClient.get<Users>(`${this.AURL}search?username=${username}`, this.getHttpOptions()).pipe(
+                catchError(this.handleError)
+            );
+        }
+    
     }

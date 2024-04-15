@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http'; // Pour les requêtes H
 import { Router, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { routes } from './app.routes'; // Assurez-vous que le chemin vers votre fichier de routes est correct
-import { FormsModule } from '@angular/forms';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { JwtModule } from '@auth0/angular-jwt';
 import { ConsommationComponent } from './admin/Consommation/consommation.component';
 import { DashComponent } from './admin/dash/dash.component';
@@ -28,6 +28,8 @@ import { ListuserComponent } from './admin/utilisateur/listuser/listuser.compone
 import { AjoutConsommationComponent } from './admin/Consommation/ajout-consommation/ajout-consommation.component';
 import { ErrorComponent } from './error/error.component';
 import { ListconsommationComponent } from './admin/Consommation/listconsommation/listconsommation.component';
+import { ListrebutComponent } from './admin/rebut/listrebut/listrebut.component';
+import { AjoutrebutComponent } from './admin/rebut/ajoutrebut/ajoutrebut.component';
 
 // Fonction pour récupérer le token JWT depuis les cookies
 export function tokenGetter() {
@@ -48,6 +50,8 @@ export function tokenGetter() {
       ConsommationComponent,
       ParametresComponent,
       RebutComponent,
+      ListrebutComponent,
+      AjoutrebutComponent,
       LoginComponent,
       UtilisateurComponent,
       AdduserComponent,
@@ -64,6 +68,7 @@ export function tokenGetter() {
     CommonModule,
     RouterModule.forRoot(routes),
     FormsModule,
+    ReactiveFormsModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

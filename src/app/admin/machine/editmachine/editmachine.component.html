@@ -60,12 +60,14 @@
                 </div>
                 <div class="form-group">
                   <label>Etat:</label><br>
-                  <input name="etat" id="etat" type="checkbox" class="form-control" [(ngModel)]="machine.etat"><br>
+                  <input name="etat" id="etat" type="checkbox" class="form-control" [(ngModel)]="machine.etat">En Marche<br>
                 </div>
-                <div class="form-group">
-                  <label>Description :</label><br>
-                  <input name="description" id="description" class="form-control" [(ngModel)]="machine.description"><br>
-                </div>
+              <div class="form-group">
+                <label for="panne">Pannes</label>
+                <select id="panneId" name="panneId" [(ngModel)]="machine.panneId" required>
+                    <option *ngFor="let panne of pannes" [value]="panne.id">{{panne.name}}</option>
+                </select>
+            </div>
                 <button type="submit">Modifier Machine</button>
               </form>
              
