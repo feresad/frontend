@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { mesService } from '../../../messervice';
 import { Machine } from '../../../machine';
 import { Router, RouterModule } from '@angular/router';
@@ -16,20 +16,31 @@ export class AjoutmachineComponent implements OnInit{
   errorMessage: string = '';
   username: String = '';
   role: string = '';
-  constructor(private mesService: mesService, private router : Router) {}
+  machineForm: FormGroup;
+  constructor(private fb: FormBuilder,private mesService: mesService, private router : Router) {
+    this.machineForm = this.fb.group({
+      name: ['', Validators.required], // Le nom de la machine est obligatoire
+    });
+  }
   ngOnInit(): void {
     this.username = localStorage.getItem('username') || '';
     this.role = localStorage.getItem('roles') || '';
   }
   ajouterMachine(): void {
-    this.mesService.ajouterMachine(this.machine).subscribe((data: Machine): void => {
-      this.successMessage = 'L\'ajout de la machine a été effectué avec succès. La machine est maintenant en état de marche.';
-      this.errorMessage = '';
-    },
-    (error: any) => {
-      this.errorMessage = 'Echec de l\'ajout de la machine';
-      this.successMessage = '';
-    });
+    if (this.machineForm.valid) { // Ne soumettez que si le formulaire est valide
+      const machineData = this.machineForm.value; // Obtenez les valeurs du formulaire
+      this.mesService.ajouterMachine(machineData).subscribe(
+        (data) => {
+          this.successMessage = 'L\'ajout de la machine a été effectué avec succès. La machine est maintenant en état de marche.';
+          this.machineForm.reset(); // Réinitialisation du formulaire après succès
+        },
+        (error) => {
+          this.errorMessage = 'Echec de l\'ajout de la machine.';
+        }
+      );
+    } else {
+      this.errorMessage = 'Veuillez remplir correctement le formulaire.';
+    }
   }
   isAdmin(): boolean {
     const roles = JSON.parse(localStorage.getItem('roles') || '[]');

@@ -6,6 +6,8 @@ import {  HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Machine } from '../../machine';
+import { Panne } from '../../panne';
 
 
 
@@ -22,6 +24,7 @@ export class DashComponent {
   nbuser: number = 0;
   username: string = '';
   role: string = '';
+  machines: Machine[] = [];
   isSidebarOpen: boolean = false;
 
   constructor(private mesService: mesService, private router :Router) { }
@@ -31,22 +34,18 @@ this.CountProduit();
 this.CountMachine();
 this.CountConsommation();
 this.countUser();
-this.username = localStorage.getItem('username') || '';
+this.getMachinesEnPanne();
+this.username = this.mesService.getUsernameFromToken();
 this.role = localStorage.getItem('roles') || '';
 }
 toggleSidebar(): void {
   this.isSidebarOpen = !this.isSidebarOpen;
 }
 getProduitsList(): void{
-  this.mesService.getProduitsList().subscribe((data: any[]) => {
+  this.mesService.getProduitFini().subscribe((data: any[]) => {
     this.produits = data;
   });
 }
-  deleteProduit(id: number): void {
-    this.mesService.deleteProduit(id).subscribe((data: any) => {
-      this.getProduitsList();
-    });
-  }
   // compter le nombre de produits
   CountProduit(): void {
     this.mesService.CountProduit().subscribe((data: any) => {
@@ -68,6 +67,16 @@ getProduitsList(): void{
       this.nbuser = data;
     });
   }
+  getMachinesEnPanne() {
+    this.mesService.getMachinesEnPanne().subscribe((machines: Machine[]) => {
+        this.machines = machines;
+        machines.forEach((machine) => {
+            this.mesService.getPanneById(machine.panneId).subscribe((panne: Panne) => {
+                machine.panneName = panne.name;
+            });
+        });
+    });
+}
 
   isAdmin(): boolean {
     const roles = JSON.parse(localStorage.getItem('roles') || '[]');

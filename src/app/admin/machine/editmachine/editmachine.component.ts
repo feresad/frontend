@@ -15,10 +15,11 @@ export class EditmachineComponent implements OnInit{
   machine: Machine = new Machine();
   successMessage: string = '';
   errorMessage: string = '';
-  username: String = '';
+  username: string = '';
   role: string = '';
   pannes: Panne[] =[];
   checked: boolean = false;
+  selectedid: number = 1;
   constructor(private mesService: mesService,private route: ActivatedRoute,private router : Router) {}
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -26,29 +27,40 @@ export class EditmachineComponent implements OnInit{
       this.getMachineDetails(id);
     });
     this.getPannesList();
-    this.username = localStorage.getItem('username') || '';
+    this.username = this.mesService.getUsernameFromToken();
     this.role = localStorage.getItem('roles') || '';
   }
   getMachineDetails(id: number) {
     this.mesService.getMachineDetails(id)
       .subscribe(data => {
-        console.log(data);
         this.machine = data;
       }, error => console.log(error));
   }
   updateMachine() {
-    if (this.checked) { // Si la case est cochée
-      this.machine.panneId = null; // Définir panneId sur null
-    }
     this.mesService.editMachine(this.machine.id, this.machine)
-      .subscribe(data => {
-        console.log(data);
-        this.successMessage = "Machine modifiée avec succès !";
-        this.errorMessage = '';
-      }, error => {
-        console.log(error);
-        this.errorMessage = 'Error lors de la modification de la machine';
-      });
+    .subscribe(
+      (data) => {
+        this.machine = data;
+  
+          if (this.checked) {
+            this.machine.panneId = null;
+          } else {
+            this.machine.panneId = this.selectedid;
+          }
+          this.mesService.addPannetoMachine(this.machine.id, this.machine.panneId,this.username)
+            .subscribe(
+              (updatedMachine) => {
+                this.successMessage = "Machine modifiée avec succès!";
+              },
+              (error) => {
+                this.errorMessage = 'Erreur lors de la modification de la machine';
+              }
+            );
+        },
+        (error) => {
+          this.errorMessage = 'Erreur lors de la modification de la machine';
+        }
+      );
   }
  
   getPannesList(): void {

@@ -28,12 +28,15 @@
     <div class="sidebar-menu" routerLink="/rebut">
       <span class="fas fa-exclamation-triangle"></span><a>Rubut</a>
     </div>
+    <div class="sidebar-menu" routerLink="/ordreFabrication">
+      <span class="fas fa-hammer"></span><a>Ordre de fabrication</a>
+    </div>
     <div class="sidebar-menu" routerLink="/utilisateur">
         <span class="fas fa-user-friends"></span><a>Utilisateur</a>
       </div>
-    <div class="sidebar-menu">
-      <span class="fas fa-cog" routerLink="/parametres"></span><a>Paramètres</a>
-    </div>
+      <div class="sidebar-menu" routerLink="/parametres">
+        <span class="fas fa-user"></span><a>Profile</a>
+      </div>
   </div>
   
     
@@ -49,8 +52,8 @@
       <div class="dashboard-container">
           <div class="card detail">
               <div class="detail-header">
-                  <h2>Ajout Machine</h2>
-                  <button routerLink="/list-rebut">List Machine</button>
+                  <h2>Ajout Rebut</h2>
+                  <button routerLink="/list-rebut">List Rebut</button>
               </div>
               <div class="form-container">
                   <form>
@@ -70,7 +73,7 @@
                     <option *ngFor="let machine of machines" [value]="machine.id">{{machine.name}}</option>
                 </select>
               </div>
-                <button type="submit" (click)="ajoutRebut()">Ajouter une Machine</button>
+                <button type="submit" (click)="ajoutRebut()">Ajouter un Rebut</button>
             </form>
             </div>
             

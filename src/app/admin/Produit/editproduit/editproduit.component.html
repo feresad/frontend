@@ -28,6 +28,9 @@
   <div class="sidebar-menu" routerLink="/rebut">
     <span class="fas fa-exclamation-triangle"></span><a>Rubut</a>
   </div>
+  <div class="sidebar-menu" routerLink="/ordreFabrication">
+    <span class="fas fa-hammer"></span><a>Ordre de fabrication</a>
+  </div>
   <div class="sidebar-menu" routerLink="/utilisateur">
       <span class="fas fa-user-friends"></span><a>Utilisateur</a>
     </div>
@@ -49,7 +52,7 @@
             Une erreur est survenue lors de la modification du produit. Veuillez réessayer.
           </div>
             <div class="detail-header">
-                <h2>Edit Produit</h2>
+                <h2>Modifier Produit</h2>
             </div>
             
             <form class="form" (submit)="onSubmit()">
@@ -61,11 +64,25 @@
                   <label>Quantite:</label><br>
                   <input name="quantite" id="quantite" class="form-control" [(ngModel)]="produit.quantite"><br>
                 </div>
-                <div class="form-group">
-                  <label>Matière Première:</label><br>
-                  <input name="matiere_Premier" id="matiere_Premier" class="form-control" [(ngModel)]="produit.matiere_Premier"><br>
+                <div class="form-group" *ngIf="typeProduit === 'Fini'">
+                  <label>Matières Premières:</label>
+                  <div *ngFor="let matiere of produit.matieresPremieres; let i = index">
+                    <div class="form-group">
+                      <label>Nom de la Matière Première:</label>
+                      <select [(ngModel)]="matiere.name" name="matiere_name_{{ i }}">
+                        <option *ngFor="let produit of produits" [value]="produit.name">
+                          {{ produit.name }}
+                        </option>
+                      </select>
+                    </div>
+                    
+                    <div class="form-group">
+                      <label>Quantité:</label>
+                      <input [(ngModel)]="matiere.quantite" type="number" name="matiere_quantite_{{ i }}">
+                    </div>
+                  </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" *ngIf="typeProduit === 'Fini'">
                   <label for="machine">Etat</label>
                       <select id="machine" name="machine" [(ngModel)]="produit.etat" required>
                        <option [ngValue]="0">Aucun Traitement</option>
@@ -73,7 +90,7 @@
                        <option [ngValue]="2">Terminer</option>
                       </select>
               </div>
-                <button type="submit">Edit Produit</button>
+                <button type="submit">Modifier Produit</button>
               </form>
              
               

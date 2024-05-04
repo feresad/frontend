@@ -1,0 +1,102 @@
+<nav class="navbar">
+    <h4>Abinject</h4>
+    <img class="logo" alt="no avaible image" src="../../../assets/img/logo-2-1.png">
+    <div class="profile">
+      <img class="profile-image" alt="no avaible image" src="../../../../assets/img/user.png">
+      <p class="profile-name">{{username}}</p>
+      <span class="fas fa-sign-out-alt" (click)="logout()"></span>    
+    </div>
+  </nav>
+  
+  <!-- sidebar -->
+  <input type="checkbox" id="toggle">
+  <label class="side-toggle" for="toggle"><span class="fas fa-bars"></span></label>
+  
+  <div class="sidebar">
+    <div class="sidebar-menu" routerLink="/dash">
+      <span class="fas fa-clipboard-list"></span><a>Dashboard</a>
+    </div>
+    <div class="sidebar-menu" routerLink="/produit">
+      <span class="fas fa-boxes"></span><a>Produit</a>
+    </div>
+    <div class="sidebar-menu" routerLink="/machine">
+      <span class="fas fa-cogs"></span><a>Machine</a>
+    </div>
+    <div class="sidebar-menu" routerLink="/consommation">
+      <span class="fas fa-battery-full"></span><a>Consomation</a>
+    </div>
+    <div class="sidebar-menu" routerLink="/rebut">
+      <span class="fas fa-exclamation-triangle"></span><a>Rubut</a>
+    </div>
+    <div class="sidebar-menu" routerLink="/ordreFabrication">
+        <span class="fas fa-hammer"></span><a>Ordre de fabrication</a>
+      </div>
+    <div class="sidebar-menu" routerLink="/utilisateur">
+        <span class="fas fa-user-friends"></span><a>Utilisateur</a>
+      </div>
+    <div class="sidebar-menu">
+      <span class="fas fa-cog" routerLink="/parametres"></span><a>Paramètres</a>
+    </div>
+  </div>
+  
+    
+    <!-- main dahsboard -->
+    <main>
+      <div class="dashboard-container">
+          <div class="card detail">
+            <div *ngIf="successMessage" class="alert alert-success">
+                {{successMessage}}
+              </div>
+              
+              <div *ngIf="errorMessage" class="alert alert-danger">
+                  {{errorMessage}}
+              </div>
+              <div class="detail-header">
+                  <h2>Modifier Ordre</h2>
+                  <button routerLink="/listordre">List des Ordres</button>
+              </div>
+              <div class="form-container">
+                <form (submit)="onSubmit()">
+                <div class="form-group">
+                    <label for="produit">Nom de la Produit</label>
+                    <select id="produit" name="produit" [(ngModel)]="Ordre.idProduitFini" required>
+                        <option *ngFor="let produit of produits" [value]="produit.id">{{produit.name}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="machine">Nom de la Machine</label>
+                    <select id="machine" name="machine" [(ngModel)]="Ordre.idmachine" required>
+                        <option *ngFor="let machine of machines" [value]="machine.id">{{machine.name}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="date">Date</label>
+                    <input type="date" id="date" name="date" [(ngModel)]="Ordre.dateFin" required>
+                </div>
+                <div class="form-group">
+                    <label for="quantite">Quantite</label>
+                    <input type="number" id="quantite" name="quantite" [(ngModel)]="Ordre.quantite" required>
+                </div>
+                <div class="form-group">
+                    <label for="quantiteRebut">Quantite Rebut</label>
+                    <input type="number" id="quantiteRebut" name="quantiteRebut" [(ngModel)]="Ordre.quantiteRebut" required>
+                </div>
+                <div class="form-group">
+                    <label for="etat">Etat</label>
+                    <select id="etat" name="etat" [(ngModel)]="Ordre.etat" required>
+                        <option [value]="0">Planification</option>
+                        <option [value]="1">En Cours</option>
+                        <option [value]="2">Terminer</option>
+                        <option [value]="3">Panne Machine</option>
+                        <option [value]="4">Probleme Empolyée</option>
+                    </select>
+                </div>
+                <button type="submit">Modifier un Ordre</button>
+                </form>
+            </div>
+            
+          </div>
+      </div>
+    </main> 
+                      
+  

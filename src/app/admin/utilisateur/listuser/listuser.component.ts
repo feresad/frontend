@@ -10,8 +10,9 @@ import { Users } from '../../../users';
 })
 export class ListuserComponent implements OnInit{
   users: Users[] = [];
+  user: Users = new Users();
   showModal: boolean = false;
-  userToEdit: number = 0;
+  userToEdit: any;
   newPassword: string = '';
   confirmPassword: string = '';
   username: String = '';
@@ -30,46 +31,49 @@ export class ListuserComponent implements OnInit{
   deleteUser(id: any): void {
     this.mesService.deleteUser(id).subscribe({
       next: (data) => {
+        this.sucessMessage = 'Utilisateur supprimé avec succès';
         this.loadUsers();
       },
       error: (error) => {
-        console.error('Erreur lors de la suppression de l\'utilisateur', error);
+        this.errorMessage = 'Erreur lors de la suppression de l\'utilisateur';
       }
     });
   }
  
-  openModal(user: any): void {
+  openModal(user: Users): void {
     this.showModal = true;
     this.userToEdit = user.id;
+    this.user = user;
+    console.log(user);
+    console.log(this.userToEdit);
   }
 
-  closeModal(): void {
-    this.showModal = false;
-    this.userToEdit = 0;
-    this.newPassword = '';
-    this.confirmPassword = '';
-    console.log('close modal');
-  }
+  
 
   changePassword(): void {
     if (this.newPassword !== this.confirmPassword) {
       this.errorMessage = "Les mots de passe ne correspondent pas";
       return;
     }
-    
+    console.log(this.userToEdit);
+
     this.mesService.changePassword(this.userToEdit, this.newPassword).subscribe({
-      next: (data) => {
-        console.log("Mot de passe modifié avec succès", data);
-        this.loadUsers(); // Recharger la liste des utilisateurs si nécessaire
-        this.closeModal(); // Fermer le modal après la mise à jour
-        
-      },
-      error: (error) => {
-        console.error('Erreur lors de la modification du mot de passe', error);
-        // Ici aussi, considérez d'afficher un feedback à l'utilisateur
-      }
+        next: () => {
+            this.sucessMessage = "Mot de passe modifié avec succès";
+            this.loadUsers();
+            this.closeModal();
+        },
+        error: (error) => {
+            this.errorMessage = "Erreur lors de la modification du mot de passe";
+        },
     });
-  }
+}
+closeModal(): void {
+  this.showModal = false;
+  this.userToEdit = 0;
+  this.newPassword = '';
+  this.confirmPassword = '';
+}
 
   loadUsers(): void {
     this.mesService.getUsersList().subscribe({

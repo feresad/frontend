@@ -28,6 +28,9 @@
   <div class="sidebar-menu" routerLink="/rebut">
     <span class="fas fa-exclamation-triangle"></span><a>Rubut</a>
   </div>
+  <div class="sidebar-menu" routerLink="/ordreFabrication">
+    <span class="fas fa-hammer"></span><a>Ordre de fabrication</a>
+  </div>
   <div class="sidebar-menu" routerLink="/utilisateur">
       <span class="fas fa-user-friends"></span><a>Utilisateur</a>
     </div>
@@ -70,8 +73,8 @@
             </ng-template></td>
             <td>{{machine.panneName}}</td>
             <td>
-              <button class="custom-btn btn-edit" [routerLink]="['/edit-mach', machine.id]">Edit</button>
-                <button class="custom-btn btn-2" (click)="deleteMachine(machine.id)">Delete</button>
+              <button class="custom-btn btn-edit" [routerLink]="['/edit-mach', machine.id]">Modifier</button>
+                <button class="custom-btn btn-2" (click)="deleteMachine(machine.id)" *ngIf="isAdmin()">Supprimer</button>
               </td>
            </tr>
 }

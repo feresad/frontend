@@ -32,7 +32,6 @@ export class LoginComponent {
       },
       error: (error) => {
         this.errorMessage = "La connexion a échoué. Veuillez vérifier vos informations.";
-        console.error('Login error');
       }
     });
   } 

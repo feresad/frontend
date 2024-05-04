@@ -28,6 +28,9 @@
   <div class="sidebar-menu" routerLink="/rebut">
     <span class="fas fa-exclamation-triangle"></span><a>Rubut</a>
   </div>
+  <div class="sidebar-menu" routerLink="/ordreFabrication">
+    <span class="fas fa-hammer"></span><a>Ordre de fabrication</a>
+  </div>
   <div class="sidebar-menu" routerLink="/utilisateur">
     <span class="fas fa-user-friends"></span><a>Utilisateur</a>
   </div>
@@ -90,7 +93,7 @@
       <div class="card detail" style="max-height: 700px;">
         <div class="detail-header">
           <h2>Tous les Produits</h2>
-          <button><a href="/list-prod">See More</a></button>         
+          <button><a href="/list-prodFini">See More</a></button>         
         </div>
         <table>
           <tr>
@@ -106,7 +109,13 @@
             <td>{{ produit.id }}</td>
             <td>{{ produit.name }}</td>
             <td>{{ produit.quantite }}</td>
-            <td>{{ produit.matiere_Premier }}</td>
+            <td>
+              <ul>
+                <li *ngFor="let matiere of produit.matieresPremieres">
+                  {{ matiere.quantite }} - {{ matiere.name }}
+                </li>
+              </ul>
+            </td>
             <td>
               <span *ngIf="produit.etat == 2" class="status EnStock"><i class="fas fa-circle"> Terminé</i></span>
               <span *ngIf="produit.etat == 1" class="status presuqeFini"><i class="fas fa-circle"> En Cours de traitement</i></span>
@@ -114,7 +123,6 @@
             </td>
             <td>
               <button class="custom-btn btn-edit" [routerLink]="['/edit-prod', produit.id]">Edit</button>
-              <button class="custom-btn btn-2" (click)="deleteProduit(produit.id)" *ngIf="role === 'ADMIN'">Delete</button>
             </td>
           </tr>
         </ng-container>
@@ -122,48 +130,14 @@
       </div>
       <div class="card customer">
         <h2>Pannes Machines</h2>
-        <div class="customer-wrapper">
+        <div class="customer-wrapper" *ngFor="let machine of machines">
           <img class="customer-image" alt="no avaible image" src="../../../assets/img/user.png">
           <div class="customer-name">
-            <h4>Mollitia rerum</h4>
-            <p>Lorem ipsum dolor sit amet.</p>
+            <h4>{{ machine.username }}</h4>
+            <p>La Machine "{{machine.name}}" est tombée en panne : {{ machine.panneName }}</p>
           </div>
-          <p class="customer-date">Today</p>
+          <p class="customer-date">{{ machine.date | date:'short' }}</p>
         </div>
-        <!-- T add more-->
-        <div class="customer-wrapper">
-          <img class="customer-image" alt="no avaible image" src="../../../assets/img/user.png">
-          <div class="customer-name">
-            <h4>Mollitia rerum</h4>
-            <p>Lorem ipsum dolor sit amet.</p>
-          </div>
-          <p class="customer-date">Today</p>
-        </div>
-        <div class="customer-wrapper">
-          <img class="customer-image" alt="no avaible image" src="../../../assets/img/user.png">
-          <div class="customer-name">
-            <h4>Mollitia rerum</h4>
-            <p>Lorem ipsum dolor sit amet.</p>
-          </div>
-          <p class="customer-date">Yesterday</p>
-        </div>
-        <div class="customer-wrapper">
-          <img class="customer-image" alt="no avaible image" src="../../../assets/img/user.png">
-          <div class="customer-name">
-            <h4>Mollitia rerum</h4>
-            <p>Lorem ipsum dolor sit amet.</p>
-          </div>
-          <p class="customer-date">Yesterday</p>
-        </div>
-        <div class="customer-wrapper">
-          <img class="customer-image" alt="no avaible image" src="../../../assets/img/user.png">
-          <div class="customer-name">
-            <h4>Mollitia rerum</h4>
-            <p>Lorem ipsum dolor sit amet.</p>
-          </div>
-          <p class="customer-date">Yesterday</p>
-        </div>
-
     </div>
   </div>
   </main>

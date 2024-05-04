@@ -15,7 +15,9 @@ export class EditProduitComponent implements OnInit {
   modi:  boolean | null = null;
   username: String = '';
   role: string = '';
- 
+  typeProduit: string = '';
+  produits: Produit[] = [];
+  
   constructor(private mesService : mesService, private route: ActivatedRoute, private router : Router) { }
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -24,27 +26,56 @@ export class EditProduitComponent implements OnInit {
     });
     this.username = localStorage.getItem('username') || '';
     this.role = localStorage.getItem('roles') || '';
+    this.getProduitsConso();
   }
   getProduitDetails(id: number): void {
     this.mesService.getProduit(id).subscribe((data: Produit) => {
       this.produit = data;
+      if (this.produit.etat === undefined) { 
+        this.typeProduit = 'Consommable';
+    } else if (this.produit.etat >= 0 && this.produit.etat <= 2) {
+        this.typeProduit = 'Fini';
+    } else {
+    }
       console.log(this.produit);
     });
   }
 
-  editProduit(): void {
-    this.mesService.editProduit(this.produit.id, this.produit)
-      .subscribe(data => {
-        console.log(data);
+  editProduitFini(): void {
+    this.produit.matieresPremieres = this.produit.matieresPremieres || [];
+    this.mesService.editProduitFinis(this.produit.id, this.produit)
+    .subscribe((data: Produit) => {
+      console.log(data);
         this.modi = true;
       },
-      error => console.log(error));
+      (error : any) => console.log(error));
+      this.modi = false;
+  }
+  editProduitConso(): void {
+    this.mesService.editProduitConso(this.produit.id, this.produit)
+    .subscribe((data: Produit) => {
+      console.log(data);
+        this.modi = true;
+      },
+      (error : any) => console.log(error));
       this.modi = false;
   }
   onSubmit() {
-    this.editProduit();
+    if(this.typeProduit === 'Fini')
+      {
+        this.editProduitFini();
+      }
+      else
+      {
+        this.editProduitConso();
+      }
   }
-
+  getProduitsConso(): void{
+    this.mesService.getProduitConso().subscribe((data: any[]) => {
+      this.produits = data;
+      console.log("Produits:", this.produits);
+    });
+  }
   isAdmin(): boolean {
     const roles = JSON.parse(localStorage.getItem('roles') || '[]');
     return roles.includes('ROLE_ADMIN');

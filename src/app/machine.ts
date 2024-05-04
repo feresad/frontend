@@ -4,4 +4,6 @@ export class Machine {
     etat: boolean = false;
     panneId: any;
     panneName: string = '';
+    username: string = '';
+    date? : Date;
 }

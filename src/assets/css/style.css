@@ -490,7 +490,7 @@ button {
   outline: none;
 }
 .btn-2 {
-  width: 50px;
+  width: 70px;
   height: 40px;
   line-height: 42px;
   padding: 0;
@@ -843,13 +843,24 @@ h1 {
   grid-template-columns: repeat(auto-fit, minmax(min(8rem, 100%), 1fr));
   gap: 2rem;
 }
+.buttons2 {
+  display: grid;
+  width: min(90rem, 80%);
+  margin-inline: auto;
+  grid-template-columns: repeat(auto-fit, minmax(min(8rem, 100%), 1fr));
+  gap: 2rem;
+}
 
 span a {
   text-decoration: none;
   color: black;
 }
-
-/* make a responsive */
+.fa-eye{
+  margin: 10px;
+}
+.text-danger{
+  color: red;
+}
 
 @media screen and (max-width: 1070px) {
 

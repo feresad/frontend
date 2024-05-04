@@ -1,5 +1,5 @@
 export class Rebut {
-    id?: number;
+    id?: any;
     idProduit?: any;
     idMachine?: any;
     quantite?: number;

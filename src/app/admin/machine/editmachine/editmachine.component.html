@@ -28,6 +28,9 @@
   <div class="sidebar-menu" routerLink="/rebut">
     <span class="fas fa-exclamation-triangle"></span><a>Rubut</a>
   </div>
+  <div class="sidebar-menu" routerLink="/ordreFabrication">
+    <span class="fas fa-hammer"></span><a>Ordre de fabrication</a>
+  </div>
   <div class="sidebar-menu" routerLink="/utilisateur">
       <span class="fas fa-user-friends"></span><a>Utilisateur</a>
     </div>
@@ -55,19 +58,19 @@
             
             <form class="form" (submit)="onSubmit()">
                 <div class="form-group">
-                  <label for="name">Nom:</label><br>
+                  <label for="name">Nom:</label>
                   <input type="text" class="form-control" id="name" name="name" [(ngModel)]="machine.name"><br>
                 </div>
                 <div class="form-group">
-                  <label>Etat:</label><br>
+                  <label>Etat:</label>
                   <input name="etat" id="etat" type="checkbox" class="form-control" [(ngModel)]="machine.etat">En Marche<br>
                 </div>
               <div class="form-group">
-                <label for="panne">Pannes</label>
-                <select id="panneId" name="panneId" [(ngModel)]="machine.panneId" required>
-                    <option *ngFor="let panne of pannes" [value]="panne.id">{{panne.name}}</option>
+                <label for="panneId">Panne:</label>
+                <select [(ngModel)]="selectedid" name="panneId">
+                  <option *ngFor="let panne of pannes" [value]="panne.id">{{panne.name}}</option>
                 </select>
-            </div>
+              </div>
                 <button type="submit">Modifier Machine</button>
               </form>
              

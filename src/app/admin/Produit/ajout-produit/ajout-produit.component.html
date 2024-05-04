@@ -28,6 +28,9 @@
   <div class="sidebar-menu" routerLink="/rebut">
     <span class="fas fa-exclamation-triangle"></span><a>Rubut</a>
   </div>
+  <div class="sidebar-menu" routerLink="/ordreFabrication">
+    <span class="fas fa-hammer"></span><a>Ordre de fabrication</a>
+  </div>
   <div class="sidebar-menu" routerLink="/utilisateur">
       <span class="fas fa-user-friends"></span><a>Utilisateur</a>
     </div>
@@ -40,18 +43,28 @@
   <!-- main dahsboard -->
   <main>
     <div class="dashboard-container">
-      <div *ngIf="successMessage" class="alert alert-success">
-        {{ successMessage }}
-      </div>
-      
-      <div *ngIf="errorMessage" class="alert alert-danger">
-        {{ errorMessage }}
-      </div>
         <div class="card detail">
+          <div *ngIf="successMessage" class="alert alert-success">
+            {{ successMessage }}
+          </div>
+          
+          <div *ngIf="errorMessage" class="alert alert-danger">
+            {{ errorMessage }}
+          </div>
             <div class="detail-header">
                 <h2>Ajout Produit</h2>
-                <button routerLink="/list-prod" style="width: 150px;">List Produit</button>
+                <button routerLink="/list-prodFini" style="width: 150px;" *ngIf="produitType === 'fini'">List Produit Fini</button>
+                <button routerLink="/list-prodConso" style="width: 200px;" *ngIf="produitType === 'conso'">List Produit Conso</button>
             </div>
+
+            <div class="form-group">
+              <label for="produit">Choisie quelle produit tu doit ajouter</label>
+              <select id="produit" name="produit" [(ngModel)]="produitType" required>
+                  <option value="fini">Produit Fini</option>
+                  <option value="conso">Produit Consommable</option>
+              </select>
+            </div>
+            <div *ngIf="produitType === 'fini'">
             <p>L'etat par defaut du Produit "Aucun Traitement"</p>
             <div class="form-container">
               <div class="form-group">
@@ -62,13 +75,46 @@
               <label>Quantite:</label>
               <input [(ngModel)]="produit.quantite" name="quantite">
             </div>
-            <div class="form-group">
-              <label>Matiere Premier:</label>
-              <input [(ngModel)]="produit.matiere_Premier" name="matiere_Premier">
+            <div *ngFor="let matiere of matieresPremieres; let i = index">
+              <div class="form-group">
+                <label>Nom de la Matière Première Par Piéce:</label>
+                <select [(ngModel)]="matiere.name" name="matiere_name_{{ i }}" required>
+                  <option *ngFor="let produit of produits" [value]="produit.name">
+                    {{ produit.name }}
+                  </option>
+                </select>
+              </div>
+          
+              <div class="form-group">
+                <label>Quantité de la Matière Première:</label>
+                <input [(ngModel)]="matiere.quantite" name="matiere_quantite_{{ i }}" type="number" required>
+              </div>
+          
+              <!-- Bouton pour supprimer une matière première -->
+              <button (click)="supprimerMatierePremiere(i)">Supprimer</button>
             </div>
-              <button type="submit" (click)="ajouterProduit()">Add Product</button>
+          
+            <!-- Bouton pour ajouter une nouvelle matière première -->
+            <button (click)="ajouterMatierePremiere()">+ Ajouter Matière Première</button>
+          
+              <button type="submit" (click)="ajouterProduitFini()">Ajouter Produit Fini</button>
+            </div>
+            </div>
+            <div *ngIf="produitType == 'conso'">
+              <div class="form-container">
+                <div class="form-group">
+                <label>Nom:</label>
+                <input [(ngModel)]="produit.name" name="name">
+              </div>
+              <div class="form-group">
+                <label>Quantite:</label>
+                <input [(ngModel)]="produit.quantite" name="quantite">
+              </div>
+                <button type="submit" (click)="ajouterProduitConso()">Ajouter Produit Consommable</button>
+            </div>
+            </div>
         </div>
       </div>
-    </div>
+
   </main> 
                     

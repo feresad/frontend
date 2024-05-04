@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { mesService } from '../../../messervice';
 import { Router } from '@angular/router';
 import { Role } from '../../../role';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-adduser',
@@ -19,7 +20,16 @@ export class AdduserComponent implements OnInit{
   usernamenav: string = '';
   successMessage: string = '';
   errorMessage: string = '';
-  constructor(private mesService: mesService, private router: Router) {}
+  addUserForm: FormGroup;
+  constructor(private fb : FormBuilder,private mesService: mesService, private router: Router) {
+    this.addUserForm = this.fb.group({
+      username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
+      email: ['', [Validators.required, Validators.email, Validators.maxLength(50)]],
+      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(120)]],
+      confirmPassword: ['', Validators.required],
+      role: ['', Validators.required]
+    });
+  }
 
   ngOnInit() {
     this.loadRoles();
@@ -36,18 +46,26 @@ export class AdduserComponent implements OnInit{
     });
   }
   addUser(): void {
-    if (this.password !== this.confirmPassword) {
-      // Gérer l'erreur de confirmation de mot de passe
+    if (this.addUserForm.invalid) {
+      // Gérer l'erreur si le formulaire est invalide
+      this.errorMessage = "Le formulaire contient des erreurs.";
       return;
     }
 
-    this.mesService.register(this.username, this.email, this.password,[this.selectedRole]).subscribe({
+    const { username, email, password, confirmPassword, role } = this.addUserForm.value;
+
+    if (password !== confirmPassword) {
+      this.errorMessage = "Le mot de passe et la confirmation ne correspondent pas.";
+      return;
+    }
+
+    this.mesService.register(username, email, password, [role]).subscribe({
       next: (data) => {
-        this.successMessage = 'Utilisateur ajouté avec succès';
-      
+        this.successMessage = 'Utilisateur ajouté avec succès.';
+        this.addUserForm.reset(); // Réinitialiser le formulaire
       },
       error: (error) => {
-        this.errorMessage ='Erreur lors de l\'ajout de l\'utilisateur';
+        this.errorMessage = "Erreur lors de l'ajout de l'utilisateur.";
       }
     });
   }

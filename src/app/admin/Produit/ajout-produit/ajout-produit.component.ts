@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms'
 import { Router, RouterModule } from '@angular/router';
 import { mesService } from '../../../messervice';
 import { CommonModule } from '@angular/common';
+import { MatierePremier } from '../../../matiere-premier';
 
 @Component({
     selector: 'app-ajoutproduit',
@@ -13,34 +14,63 @@ import { CommonModule } from '@angular/common';
 })
 export class AjoutproduitComponent implements OnInit {
   produit: Produit = new Produit();
+  produitType: string = '';
   successMessage: string = '';
   errorMessage: string = '';
   username: String = '';
   role:String = '';
+  produits: Produit[] = [];
+  matieresPremieres: MatierePremier[] = [];
   
   constructor(private mesService: mesService, private router : Router){}
 
   ngOnInit():void{
     this.username = localStorage.getItem('username') || '';
     this.role = localStorage.getItem('roles') || '';
+    this.getProduitsConso();
   }
-  ajouterProduit(): void {
-    this.mesService.ajouterProduit(this.produit)
+  ajouterProduitFini(): void {
+    this.produit.matieresPremieres = this.matieresPremieres;
+    this.mesService.ajoutProduitFini(this.produit)
       .subscribe(
         (data) => {
-          this.successMessage = 'Produit ajouté avec succès.';
-          this.errorMessage = ''; // Assurez-vous que le message d'erreur est vide en cas de succès
-          // Réinitialisez le formulaire ou effectuez toute autre action nécessaire
-          this.produit.etat = 0;
+          console.log(data);
+          this.successMessage = 'Produit Fini ajouté avec succès.';
           this.produit = new Produit();
         },
         (error: HttpErrorResponse) => {
-          this.errorMessage = 'Erreur lors de l\'ajout du produit.';
-          this.successMessage = ''; // Assurez-vous que le message de succès est vide en cas d'erreur
+          console.log(error);
+          this.errorMessage = 'Erreur lors de l\'ajout d\'un produit Fini.';
         }
       );
   }
+  ajouterProduitConso(): void {
+    this.mesService.ajoutProduitConso(this.produit)
+      .subscribe(
+        (data) => {
+          this.successMessage = 'Produit Consommable ajouté avec succès.';
+          this.produit = new Produit();
+        },
+        (error: HttpErrorResponse) => {
+          this.errorMessage = 'Erreur lors de l\'ajout d\'un produit Consommable.';
+        }
+      );
+  }
+  ajouterMatierePremiere() {
+    this.matieresPremieres.push({ name: '', quantite: 0 }); // Ajoute un objet vide au tableau
+  }
 
+  // Méthode pour supprimer une matière première
+  supprimerMatierePremiere(index: number) {
+    this.matieresPremieres.splice(index, 1);
+  }
+  getProduitsConso(): void{
+    this.mesService.getProduitConso().subscribe((data: any[]) => {
+      this.produits = data;
+      console.log("Produits:", this.produits);
+    });
+  }
+  
   isAdmin(): boolean {
     const roles = JSON.parse(localStorage.getItem('roles') || '[]');
     return roles.includes('ADMIN');

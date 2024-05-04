@@ -25,21 +25,8 @@ this.username = localStorage.getItem('username') || '';
 this.role = localStorage.getItem('roles') || '';
 }
   getProduitsList(): void{
-    this.mesService.getProduitsList().subscribe((data: any[]) => {
+    this.mesService.getProduitFini().subscribe((data: Produit[]) => {
       this.produits = data;
-    });
-  }
-
-  deleteProduit(id: number): void {
-    this.mesService.deleteProduit(id).subscribe((data: any) => {
-      console.log(data);
-      this.successMessage = 'Produit supprimé avec succès !';
-      this.errorMessage = '';
-      this.getProduitsList();
-    }, (error) => {
-      console.error(error);
-      this.errorMessage = 'Erreur lors de la suppression du produit.';
-      this.successMessage = '';
     });
   }
   // Search Produit
@@ -54,6 +41,18 @@ this.role = localStorage.getItem('roles') || '';
     } else {
       this.getProduitsList();
     }
+  }
+  deleteProduit(id: number): void {
+    this.mesService.deleteProduit(id)
+      .subscribe(
+        (data) => {
+          this.successMessage = 'Produit Fini supprimé avec succès.';
+          this.getProduitsList();
+        },
+        (error) => {
+          this.errorMessage = 'Erreur lors de la suppression du produit Fini.';
+        }
+      );
   }
   isAdmin(): boolean {
     const roles = JSON.parse(localStorage.getItem('roles') || '[]');

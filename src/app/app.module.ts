@@ -30,6 +30,11 @@ import { ErrorComponent } from './error/error.component';
 import { ListconsommationComponent } from './admin/Consommation/listconsommation/listconsommation.component';
 import { ListrebutComponent } from './admin/rebut/listrebut/listrebut.component';
 import { AjoutrebutComponent } from './admin/rebut/ajoutrebut/ajoutrebut.component';
+import { ListProduitconsoComponent } from './admin/Produit/list-produitconso/list-produitconso.component';
+import { OrdrefabricationComponent } from './admin/ordrefabrication/ordrefabrication.component';
+import { AjoutordreComponent } from './admin/ordrefabrication/ajoutordre/ajoutordre.component';
+import { ListordreeComponent } from './admin/ordrefabrication/listordree/listordree.component';
+import { EditOrdreComponent } from './admin/ordrefabrication/edit-ordre/edit-ordre.component';
 
 // Fonction pour récupérer le token JWT depuis les cookies
 export function tokenGetter() {
@@ -41,6 +46,7 @@ export function tokenGetter() {
       DashComponent,
       AjoutproduitComponent,
       ListProdComponent,
+      ListProduitconsoComponent,
       EditProduitComponent,
       ProduitComponent,
       AjoutmachineComponent,
@@ -59,6 +65,10 @@ export function tokenGetter() {
       AjoutConsommationComponent,
       ErrorComponent,
       ListconsommationComponent,
+      OrdrefabricationComponent,
+      AjoutordreComponent,
+      ListordreeComponent,
+      EditOrdreComponent,
       // Ajoutez d'autres déclarations de composants ici si nécessaire
     ],
     imports: [
@@ -72,7 +82,7 @@ export function tokenGetter() {
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        allowedDomains: ["exemple.com"], // ajustez ce domaine à votre environnement
+        allowedDomains: ["http://localhost:8080"],
         disallowedRoutes: []
       }
     }),

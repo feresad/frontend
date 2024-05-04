@@ -35,8 +35,15 @@ export class ListconsommationComponent implements OnInit{
       })
     });
   }
+  deleteConso(id: number): void {
+    this.mesService.deleteConsommation(id).subscribe((data: any) => {
+      console.log(data);
+      this.getConsommationsList();
+    }, (error) => {
+      console.error(error);
+    });
+  }
 
- // Dans le composant consommation.component.ts
  searchConsommationsByMachineName(event: Event): void {
   const target = event.target as HTMLInputElement;
   const machineName = target.value;

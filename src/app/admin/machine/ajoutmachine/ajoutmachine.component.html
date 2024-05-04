@@ -28,38 +28,47 @@
   <div class="sidebar-menu" routerLink="/rebut">
     <span class="fas fa-exclamation-triangle"></span><a>Rubut</a>
   </div>
+  <div class="sidebar-menu" routerLink="/ordreFabrication">
+    <span class="fas fa-hammer"></span><a>Ordre de fabrication</a>
+  </div>
   <div class="sidebar-menu" routerLink="/utilisateur">
       <span class="fas fa-user-friends"></span><a>Utilisateur</a>
     </div>
-  <div class="sidebar-menu">
-    <span class="fas fa-cog" routerLink="/parametres"></span><a>Paramètres</a>
-  </div>
+    <div class="sidebar-menu" routerLink="/parametres">
+      <span class="fas fa-user"></span><a>Profile</a>
+    </div>
 </div>
 
   
   <!-- main dahsboard -->
   <main>
-    <div *ngIf="successMessage" class="alert alert-success">
-        {{ successMessage }}
-      </div>
-      
-      <div *ngIf="errorMessage" class="alert alert-danger">
-        {{ errorMessage }}
-      </div>
     <div class="dashboard-container">
         <div class="card detail">
+          <div *ngIf="successMessage" class="alert alert-success">
+            {{ successMessage }}
+          </div>
+          
+          <div *ngIf="errorMessage" class="alert alert-danger">
+            {{ errorMessage }}
+          </div>
             <div class="detail-header">
                 <h2>Ajout Machine</h2>
                 <button routerLink="/list-mach">List Machine</button>
             </div>
             <p>Note: La machine est declarer par defaut "En Marche"</p>
             <div class="form-container">
+              <form  [formGroup]="machineForm" (ngSubmit)="ajouterMachine()">
               <div class="form-group">
-              <label>Nom:</label><br>
-              <input (ngModel)="machine.name" name="name">
+              <label>Nom:</label>
+              <input (ngModel)="machine.name" formControlName="name" name="name">
+              <div *ngIf="machineForm.controls['name'].invalid && machineForm.controls['name'].touched">
+                <span class="text-danger" style="color: red;">Le nom de la machine est obligatoire.</span>
+              </div>
             </div>
-              <button type="submit" (click)="ajouterMachine()">Ajouter une Machine</button>
+              <button type="submit" [disabled]="machineForm.invalid">Ajouter une Machine</button>
+            </form>
           </div>
+          
         </div>
     </div>
   </main> 

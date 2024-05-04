@@ -36,6 +36,14 @@ export class ListrebutComponent implements OnInit{
       });
     });
   }
+  deleteRebut(id: number): void {
+    this.mesService.deleteRebut(id).subscribe((data: any) => {
+      console.log(data);
+      this.getRebutList();
+    }, (error) => {
+      console.error(error);
+    });
+  }
 
   isAdmin(): boolean {
     const roles = JSON.parse(localStorage.getItem('roles') || '[]');

@@ -1,0 +1,91 @@
+<nav class="navbar">
+    <h4>Abinject</h4>
+    <img class="logo" alt="no avaible image" src="../../../../assets/img/logo-2-1.png">
+    <div class="profile">
+      <img class="profile-image" alt="no avaible image" src="../../../../assets/img/user.png">
+      <p class="profile-name">{{username}}</p> 
+      <span class="fas fa-sign-out-alt" (click)="logout()"></span>   
+    </div>
+  </nav>
+  
+  <!-- sidebar -->
+  <input type="checkbox" id="toggle">
+  <label class="side-toggle" for="toggle"><span class="fas fa-bars"></span></label>
+  
+  <div class="sidebar">
+    <div class="sidebar-menu" routerLink="/dash">
+      <span class="fas fa-clipboard-list"></span><a>Dashboard</a>
+    </div>
+    <div class="sidebar-menu" routerLink="/produit">
+      <span class="fas fa-boxes"></span><a>Produit</a>
+    </div>
+    <div class="sidebar-menu" routerLink="/machine">
+      <span class="fas fa-cogs"></span><a>Machine</a>
+    </div>
+    <div class="sidebar-menu" routerLink="/consommation">
+      <span class="fas fa-battery-full"></span><a>Consomation</a>
+    </div>
+    <div class="sidebar-menu" routerLink="/rebut">
+      <span class="fas fa-exclamation-triangle"></span><a>Rubut</a>
+    </div>
+    <div class="sidebar-menu" routerLink="/ordreFabrication">
+        <span class="fas fa-hammer"></span><a>Ordre de fabrication</a>
+      </div>
+    <div class="sidebar-menu" routerLink="/utilisateur">
+      <span class="fas fa-user-friends"></span><a>Utilisateur</a>
+    </div>
+    <div class="sidebar-menu" routerLink="/parametres">
+      <span class="fas fa-user"></span><a>Profile</a>
+    </div>
+  </div>
+  
+    
+    <!-- main dahsboard -->
+    <main>
+      <div class="dashboard">
+          <div class="card detail">
+            <div *ngIf="errorMessage" class="alert alert-danger">
+                {{errorMessage}}
+            </div>
+              <div class="detail-header">
+                <h2>Liste Machine</h2>
+                <div class="group">
+                  <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><g><path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path></g></svg>
+                  <input placeholder="Search By" type="search"class="input">
+                </div>
+              </div>
+              <table>
+                <tr>
+                  <th>ID</th>
+                  <th>Nom Produit</th>
+                  <th>Nom Machine</th>
+                  <th>Quantite</th>
+                  <th>Quantite Rebut</th>
+                  <th>Date Fin Production</th>
+                  <th>Etat</th>
+                  <th>Actions</th>
+              </tr>
+              <tr *ngFor="let ordre of ordres">
+                <td>{{ordre.id}}</td>
+                <td>{{ordre.nomProduit}}</td>
+                <td>{{ordre.nomMachine}}</td>
+                <td>{{ordre.quantite}}</td>
+                <td>{{ordre.quantiteRebut || 'N/A'}}</td>
+                <td>{{ordre.dateFin | date:'dd/MM/yyyy'}}</td>
+                <td>
+                    <span *ngIf="ordre.etat == 0" class="status presuqeFini"><i class="fas fa-circle"> Planification</i></span>    
+                    <span *ngIf="ordre.etat == 1" class="status presuqeFini"><i class="fas fa-circle"> En Cours</i></span> 
+                    <span *ngIf="ordre.etat == 2" class="status EnStock"><i class="fas fa-circle"> Terminer</i></span> 
+                    <span *ngIf="ordre.etat == 3" class="status horsStock"><i class="fas fa-circle"> Panne Machine</i></span> 
+                    <span *ngIf="ordre.etat == 4" class="status horsStock"><i class="fas fa-circle"> Probléme Emplyée</i></span> 
+                </td>
+                <td>
+                    <button class="custom-btn btn-edit" [routerLink]="['/edit-ordre', ordre.id]">Modifer</button>
+                    <button class="custom-btn btn-2" (click)="deleteOrdre(ordre.id)">Delete</button>
+                </td>
+              </tr>
+  
+              </table>
+              </div>
+      </div>
+    </main>

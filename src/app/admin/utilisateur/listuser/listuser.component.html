@@ -28,11 +28,14 @@
     <div class="sidebar-menu" routerLink="/rebut">
       <span class="fas fa-exclamation-triangle"></span><a>Rubut</a>
     </div>
+    <div class="sidebar-menu" routerLink="/ordreFabrication">
+      <span class="fas fa-hammer"></span><a>Ordre de fabrication</a>
+    </div>
     <div class="sidebar-menu" routerLink="/utilisateur">
       <span class="fas fa-user-friends"></span><a>Utilisateur</a>
     </div>
     <div class="sidebar-menu" routerLink="/parametres">
-      <span class="fas fa-cog"></span><a>Paramètres</a>
+      <span class="fas fa-user"></span><a>Profile</a>
     </div>
   </div>
   
@@ -41,6 +44,13 @@
     <main>
       <div class="dashboard">
           <div class="card detail">
+            <div *ngIf="sucessMessage" class="alert alert-success">
+              {{sucessMessage}}
+            </div>
+            
+            <div *ngIf="errorMessage" class="alert alert-danger">
+              {{errorMessage}}
+            </div>
               <div class="detail-header">
                 <h2>Liste Machine</h2>
                 <div class="group">
@@ -63,20 +73,20 @@
                 <td *ngFor="let role of user.roles">{{ role.name }}</td>
                 <td>
                     <button class="custom-btn btn-1" (click)="openModal(user)">
-                      <div id="passwordModal" class="modal" *ngIf="showModal">
+                      <div id="passwordModal" class="modal" *ngIf="showModal" (click)="($event).stopPropagation()">
                         <div class="modal-content">
                           <span class="close" (click)="closeModal()">&times;</span>
                           <h2>Modifier Mot de Passe</h2>
                           <form (submit)="changePassword()">
                             <input type="password" class="input" [(ngModel)]="newPassword" name="newPassword" placeholder="Nouveau mot de passe" required><br>
                             <input type="password" class="input" [(ngModel)]="confirmPassword" name="confirmPassword" placeholder="Confirmer mot de passe" required>
-                            <button type="submit" class=".button">Modifier</button>
+                            <button type="submit" class=".button" (click)="($event).stopPropagation()">Modifier</button>
                           </form>
                         </div>
                       </div>
                       Modifier Mot de Passe</button>
                     
-                  <button class="custom-btn btn-2" (click)="deleteUser(user.id)">Delete</button>
+                  <button class="custom-btn btn-2" (click)="deleteUser(user.id)">Supprimer</button>
                 </td>
               </tr>
   

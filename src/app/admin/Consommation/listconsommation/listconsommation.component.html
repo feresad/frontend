@@ -28,11 +28,14 @@
     <div class="sidebar-menu" routerLink="/rebut">
       <span class="fas fa-exclamation-triangle"></span><a>Rubut</a>
     </div>
+    <div class="sidebar-menu" routerLink="/ordreFabrication">
+      <span class="fas fa-hammer"></span><a>Ordre de fabrication</a>
+    </div>
     <div class="sidebar-menu" routerLink="/utilisateur">
       <span class="fas fa-user-friends"></span><a>Utilisateur</a>
     </div>
     <div class="sidebar-menu" routerLink="/parametres">
-      <span class="fas fa-cog"></span><a>Paramètres</a>
+      <span class="fas fa-user"></span><a>Profile</a>
     </div>
   </div>
   
@@ -53,12 +56,14 @@
                   <th>Qantité</th>
                   <th>Nom Produit</th>
                   <th>Nom Machine</th>
+                  <th>Action</th>
               </tr>
               <tr *ngFor="let consommation of conso">
                 <td>{{ consommation.id }}</td>
                 <td>{{ consommation.quantite }}</td>
                 <td>{{ consommation.nomProduit }}</td>
                 <td>{{ consommation.nomMachine }}</td>
+                <td><button class="custom-btn btn-2" (click)="deleteConso(consommation.id)" *ngIf="isAdmin()">Delete</button></td>
               </table>
               </div>
       </div>

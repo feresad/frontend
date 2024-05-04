@@ -23,6 +23,11 @@ import { AjoutConsommationComponent } from './admin/Consommation/ajout-consommat
 import { ListconsommationComponent } from './admin/Consommation/listconsommation/listconsommation.component';
 import { ListrebutComponent } from './admin/rebut/listrebut/listrebut.component';
 import { AjoutrebutComponent } from './admin/rebut/ajoutrebut/ajoutrebut.component';
+import { ListProduitconsoComponent } from './admin/Produit/list-produitconso/list-produitconso.component';
+import { OrdrefabricationComponent } from './admin/ordrefabrication/ordrefabrication.component';
+import { AjoutordreComponent } from './admin/ordrefabrication/ajoutordre/ajoutordre.component';
+import { ListordreeComponent } from './admin/ordrefabrication/listordree/listordree.component';
+import { EditOrdreComponent } from './admin/ordrefabrication/edit-ordre/edit-ordre.component';
 
 export const routes: Routes = [
 
@@ -36,7 +41,10 @@ export const routes: Routes = [
         path:'produit',component:ProduitComponent,canActivate: [AuthGuard]
     },
     {
-        path:'list-prod',component:ListProdComponent,canActivate: [AuthGuard]
+        path:'list-prodFini',component:ListProdComponent,canActivate: [AuthGuard]
+    },
+    {
+        path:'list-prodConso',component:ListProduitconsoComponent,canActivate: [AuthGuard]
     },
     {
         path:'ajout-prod',component:AjoutproduitComponent,canActivate: [AuthGuard]
@@ -85,6 +93,18 @@ export const routes: Routes = [
     },
     {
         path:'list-util',component:ListuserComponent,canActivate: [AuthGuard],data: { expectedRole: 'ADMIN' }
+    },
+    {
+        path:'ordreFabrication',component:OrdrefabricationComponent,canActivate: [AuthGuard]
+    },
+    {
+        path:'ajoutordre',component:AjoutordreComponent,canActivate: [AuthGuard]
+    },
+    {
+        path:'listordre',component:ListordreeComponent,canActivate: [AuthGuard]
+    },
+    {
+        path:'edit-ordre/:id',component:EditOrdreComponent,canActivate: [AuthGuard]
     },
     {
         path:'error',component:ErrorComponent
