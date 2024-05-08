@@ -28,6 +28,8 @@ import { OrdrefabricationComponent } from './admin/ordrefabrication/ordrefabrica
 import { AjoutordreComponent } from './admin/ordrefabrication/ajoutordre/ajoutordre.component';
 import { ListordreeComponent } from './admin/ordrefabrication/listordree/listordree.component';
 import { EditOrdreComponent } from './admin/ordrefabrication/edit-ordre/edit-ordre.component';
+import { EditRebutComponent } from './admin/rebut/edit-rebut/edit-rebut.component';
+import { EditconsoComponent } from './admin/Consommation/editconso/editconso.component';
 
 export const routes: Routes = [
 
@@ -59,7 +61,7 @@ export const routes: Routes = [
         path:'list-mach',component:ListmachineComponent,canActivate: [AuthGuard]
     },
     {
-        path:'ajout-mach',component:AjoutmachineComponent,canActivate: [AuthGuard]
+        path:'ajout-mach',component:AjoutmachineComponent,canActivate: [AuthGuard],data: { expectedRole: 'ADMIN' }
     },
     {
         path:'edit-mach/:id',component:EditmachineComponent,canActivate: [AuthGuard]
@@ -74,10 +76,16 @@ export const routes: Routes = [
         path:'list-conso',component:ListconsommationComponent,canActivate: [AuthGuard]
     },
     {
+        path:'edit-conso/:id',component:EditconsoComponent,canActivate: [AuthGuard]
+    },
+    {
         path:'rebut',component:RebutComponent,canActivate: [AuthGuard]
     },
     {
         path:'list-rebut',component:ListrebutComponent,canActivate: [AuthGuard]
+    },
+    {
+        path:'edit-rebut/:id',component:EditRebutComponent,canActivate: [AuthGuard]
     },
     {
         path:'ajout-rebut',component:AjoutrebutComponent,canActivate: [AuthGuard]

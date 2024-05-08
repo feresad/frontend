@@ -25,7 +25,7 @@ export class ListuserComponent implements OnInit{
   
   ngOnInit(): void {
     this.loadUsers();
-    this.username = localStorage.getItem('username') || '';
+    this.username = this.mesService.getUsernameFromToken();
   }
 // delete user by id
   deleteUser(id: any): void {

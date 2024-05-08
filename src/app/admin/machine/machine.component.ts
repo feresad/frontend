@@ -14,7 +14,7 @@ export class MachineComponent implements OnInit{
   role: string = '';
   constructor(private mesService: mesService, private router :Router) { }
   ngOnInit(): void {
-    this.username = localStorage.getItem('username') || '';
+    this.username = this.mesService.getUsernameFromToken();
     this.role = localStorage.getItem('roles') || '';
   }
   isAdmin(): boolean {

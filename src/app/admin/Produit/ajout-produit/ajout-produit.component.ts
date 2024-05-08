@@ -25,7 +25,7 @@ export class AjoutproduitComponent implements OnInit {
   constructor(private mesService: mesService, private router : Router){}
 
   ngOnInit():void{
-    this.username = localStorage.getItem('username') || '';
+    this.username = this.mesService.getUsernameFromToken();
     this.role = localStorage.getItem('roles') || '';
     this.getProduitsConso();
   }
@@ -34,13 +34,12 @@ export class AjoutproduitComponent implements OnInit {
     this.mesService.ajoutProduitFini(this.produit)
       .subscribe(
         (data) => {
-          console.log(data);
           this.successMessage = 'Produit Fini ajouté avec succès.';
           this.produit = new Produit();
+          // Ideally, navigate to a success page or refresh the list
         },
-        (error: HttpErrorResponse) => {
-          console.log(error);
-          this.errorMessage = 'Erreur lors de l\'ajout d\'un produit Fini.';
+        (error) => { // Catch the error here
+          this.errorMessage = error.message; // Extract the error message
         }
       );
   }
@@ -67,7 +66,6 @@ export class AjoutproduitComponent implements OnInit {
   getProduitsConso(): void{
     this.mesService.getProduitConso().subscribe((data: any[]) => {
       this.produits = data;
-      console.log("Produits:", this.produits);
     });
   }
   

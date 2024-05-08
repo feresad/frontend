@@ -52,18 +52,18 @@
       <div class="dashboard-container">
           <div class="card detail">
               <div class="detail-header">
-                  <h2>Ajout Rebut</h2>
+                  <h2>Modifier Rebut</h2>
                   <button routerLink="/list-rebut">List Rebut</button>
               </div>
               <div class="form-container">
-                  <form>
+                  <form (ngSubmit)="editRebut()">
                 <div class="form-group">
                 <label>Quantite:</label><br>
                 <input name="quantite" [(ngModel)]="rebut.quantite">
               </div>
               <div class="form-group">
-                <label for="produit">Nom Produit</label>
-                <select id="produit" name="produit" [(ngModel)]="rebut.idProduitFini" required>
+                <label for="name">Nom Produit</label>
+                <select id="name" name="name" [(ngModel)]="rebut.idProduitFini" required>
                     <option *ngFor="let produit of produits" [value]="produit.id">{{produit.name}}</option>
                 </select>
               </div>
@@ -73,10 +73,9 @@
                     <option *ngFor="let machine of machines" [value]="machine.id">{{machine.name}}</option>
                 </select>
               </div>
-                <button type="submit" (click)="ajoutRebut()">Ajouter un Rebut</button>
+                <button type="submit">Modifier un Rebut</button>
             </form>
             </div>
-            
           </div>
       </div>
     </main> 

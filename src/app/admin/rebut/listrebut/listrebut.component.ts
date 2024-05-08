@@ -18,7 +18,7 @@ export class ListrebutComponent implements OnInit{
 
   ngOnInit() {
   this.getRebutList();
-  this.username = localStorage.getItem('username') || '';
+  this.username = this.mesService.getUsernameFromToken();
   this.role = localStorage.getItem('roles') || '';
   }
 
@@ -27,7 +27,7 @@ export class ListrebutComponent implements OnInit{
     this.mesService.getRebutList().subscribe((data: Rebut[])=>{
       this.rebut = data;
       this.rebut.forEach((element) => {
-        this.mesService.getProduit(element.idProduit).subscribe((data: Produit) => {
+        this.mesService.getProduit(element.idProduitFini).subscribe((data: Produit) => {
           element.nomproduit = data.name;
         });
         this.mesService.getMachineDetails(element.idMachine).subscribe((data: Machine) => {

@@ -26,7 +26,7 @@ export class ParametresComponent implements OnInit{
   constructor(private mesService: mesService, private router :Router) { }
 
   ngOnInit(): void {
-    this.username = localStorage.getItem('username') || '';
+    this.username = this.mesService.getUsernameFromToken();
     this.role = localStorage.getItem('roles') || '';
     this.loadUserInfo();
   }

@@ -23,7 +23,7 @@ export class AjoutmachineComponent implements OnInit{
     });
   }
   ngOnInit(): void {
-    this.username = localStorage.getItem('username') || '';
+    this.username = this.mesService.getUsernameFromToken();
     this.role = localStorage.getItem('roles') || '';
   }
   ajouterMachine(): void {

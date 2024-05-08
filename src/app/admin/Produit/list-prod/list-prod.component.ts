@@ -21,7 +21,7 @@ export class ListProdComponent {
   constructor(private mesService: mesService, private router : Router) { }
 ngOnInit(){
 this.getProduitsList();
-this.username = localStorage.getItem('username') || '';
+this.username = this.mesService.getUsernameFromToken();
 this.role = localStorage.getItem('roles') || '';
 }
   getProduitsList(): void{

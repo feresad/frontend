@@ -20,7 +20,7 @@ export class AjoutordreComponent {
   Ordre : OrdreFabrication = new OrdreFabrication();
   constructor(private mesService: mesService, private router :Router) { }
   ngOnInit(): void {
-    this.username = localStorage.getItem('username') || '';
+    this.username = this.mesService.getUsernameFromToken();
     this.role = localStorage.getItem('roles') || '';
     this.getListProduitFini();
     this.getMachineList();
@@ -46,9 +46,7 @@ export class AjoutordreComponent {
     });
   }
   ajoutOrdre(): void {
-    // Récupérez l'ID du produit fini
     const idProduitFini = this.Ordre.idProduitFini;
-
     // Obtenez la quantité associée au plan produit
     this.mesService.getProduitFiniById(idProduitFini).subscribe({
       next: (produit) => {

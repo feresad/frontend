@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { mesService } from '../../../messervice';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-edit-produit',
@@ -12,10 +13,11 @@ import { mesService } from '../../../messervice';
 })
 export class EditProduitComponent implements OnInit {
   produit: Produit = new Produit();
-  modi:  boolean | null = null;
   username: String = '';
   role: string = '';
   typeProduit: string = '';
+  successMessage: string = '';
+  errorMessage: string = '';
   produits: Produit[] = [];
   
   constructor(private mesService : mesService, private route: ActivatedRoute, private router : Router) { }
@@ -24,7 +26,7 @@ export class EditProduitComponent implements OnInit {
       const id = params['id'];
       this.getProduitDetails(id);
     });
-    this.username = localStorage.getItem('username') || '';
+    this.username = this.mesService.getUsernameFromToken();
     this.role = localStorage.getItem('roles') || '';
     this.getProduitsConso();
   }
@@ -42,23 +44,22 @@ export class EditProduitComponent implements OnInit {
   }
 
   editProduitFini(): void {
-    this.produit.matieresPremieres = this.produit.matieresPremieres || [];
     this.mesService.editProduitFinis(this.produit.id, this.produit)
-    .subscribe((data: Produit) => {
-      console.log(data);
-        this.modi = true;
-      },
-      (error : any) => console.log(error));
-      this.modi = false;
-  }
+    .subscribe({
+        next: (data: Produit) => {
+            this.successMessage = 'Produit modifié avec succès.';
+        },
+        error: (error: HttpErrorResponse) => {
+            this.errorMessage = 'Erreur lors de la modification du produit.';
+        }
+    });
+}
   editProduitConso(): void {
     this.mesService.editProduitConso(this.produit.id, this.produit)
     .subscribe((data: Produit) => {
-      console.log(data);
-        this.modi = true;
+      this.successMessage = 'Produit modifié avec succès.';
       },
-      (error : any) => console.log(error));
-      this.modi = false;
+      (error : any) => this.errorMessage = 'Erreur lors de la modification du produit.');
   }
   onSubmit() {
     if(this.typeProduit === 'Fini')

@@ -14,22 +14,23 @@ export class ListconsommationComponent implements OnInit{
   conso : Consommationn[] = [];
   username : String = '';
   role: string = '';
+  successMessage: string = '';
+  errorMessage: string = '';
 
   constructor(private mesService : mesService, private router: Router) { }
   ngOnInit(){
     this.getConsommationsList();
-    this.username = localStorage.getItem('username') || '';
+    this.username = this.mesService.getUsernameFromToken();
     this.role = localStorage.getItem('roles') || '';
   }
   getConsommationsList(): void {
     this.mesService.getConsommationsList().subscribe((data: Consommationn[]) => {
       this.conso= data;
       this.conso.forEach((element) => {
-        // affecter les details du getMachineDetails to an array
         this.mesService.getMachineDetails(element.idMachine).subscribe((data: Machine) => {
           element.nomMachine = data.name;
         });
-        this.mesService.getProduit(element.idProduit).subscribe((data: Produit) => {
+        this.mesService.getProduit(element.idProduitFini).subscribe((data: Produit) => {
           element.nomProduit = data.name;
         });
       })
@@ -40,7 +41,7 @@ export class ListconsommationComponent implements OnInit{
       console.log(data);
       this.getConsommationsList();
     }, (error) => {
-      console.error(error);
+      this.errorMessage = 'Erreur lors de la suppression de la consommation';
     });
   }
 
@@ -55,7 +56,7 @@ export class ListconsommationComponent implements OnInit{
                       this.mesService.getMachineDetails(element.idMachine).subscribe((data: Machine) => {
                           element.nomMachine = data.name;
                       });
-                      this.mesService.getProduit(element.idProduit).subscribe((data: Produit) => {
+                      this.mesService.getProduit(element.idProduitFini).subscribe((data: Produit) => {
                           element.nomProduit = data.name;
                       });
                   });

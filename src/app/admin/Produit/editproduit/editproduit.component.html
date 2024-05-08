@@ -22,14 +22,14 @@
   <div class="sidebar-menu" routerLink="/machine">
     <span class="fas fa-cogs"></span><a>Machine</a>
   </div>
+  <div class="sidebar-menu" routerLink="/ordreFabrication">
+    <span class="fas fa-hammer"></span><a>Ordre de fabrication</a>
+  </div>
   <div class="sidebar-menu" routerLink="/consommation">
     <span class="fas fa-battery-full"></span><a>Consomation</a>
   </div>
   <div class="sidebar-menu" routerLink="/rebut">
     <span class="fas fa-exclamation-triangle"></span><a>Rubut</a>
-  </div>
-  <div class="sidebar-menu" routerLink="/ordreFabrication">
-    <span class="fas fa-hammer"></span><a>Ordre de fabrication</a>
   </div>
   <div class="sidebar-menu" routerLink="/utilisateur">
       <span class="fas fa-user-friends"></span><a>Utilisateur</a>
@@ -45,11 +45,11 @@
    
     <div class="dashboard-container">
         <div class="card detail">
-          <div *ngIf="modi === true" class="alert alert-success">
-            Le produit a été modifié avec succès.
+          <div *ngIf="successMessage" class="alert alert-success">
+            {{successMessage}}
           </div>
-          <div *ngIf="modi === false" class="alert alert-danger">
-            Une erreur est survenue lors de la modification du produit. Veuillez réessayer.
+          <div *ngIf="errorMessage" class="alert alert-danger">
+            {{errorMessage}}
           </div>
             <div class="detail-header">
                 <h2>Modifier Produit</h2>

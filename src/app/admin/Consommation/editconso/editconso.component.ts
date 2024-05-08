@@ -1,44 +1,37 @@
 import { Component, OnInit } from '@angular/core';
 import { mesService } from '../../../messervice';
-import { Router } from '@angular/router';
-import { Consommationn } from '../../../consommationn';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Produit } from '../../../produit';
+import { Consommationn } from '../../../consommationn';
 import { Machine } from '../../../machine';
 import { QuantiteConso } from '../../../quantite-conso';
 
 @Component({
-  selector: 'app-ajout-consommation',
-  templateUrl: './ajout-consommation.component.html',
-  styleUrl: './ajout-consommation.component.css'
+  selector: 'app-editconso',
+  templateUrl: './editconso.component.html',
+  styleUrl: './editconso.component.css'
 })
-export class AjoutConsommationComponent implements OnInit{
+export class EditconsoComponent implements OnInit{
+
   username: String = '';
-  Consommation : Consommationn = new Consommationn();
-  produitFini: Produit[] = [];
-  produitConso: Produit[] = [];
-  machines: Machine[] = [];
-  quantiteMatiereConso : QuantiteConso[] = [];
   successMessage: string = '';
   errorMessage: string = '';
-  role: string = '';
-  constructor(private mesService: mesService, private router : Router){}
+  conso: Consommationn = new Consommationn();
+  produitFini: Produit[] = [];
+  machines : Machine [] = [];
+  produitConso: Produit[] = [];
+
+  constructor(private mesService: mesService, private router : Router, private route: ActivatedRoute) { }
   ngOnInit(): void {
     this.username = this.mesService.getUsernameFromToken();
+    this.route.params.subscribe(params => {
+      const id = params['id'];
+      this.getConsommationById(id);
+    });
     this.getProduitsFini();
     this.getMachinesList();
-    this.getProduitConso();
-    this.role = localStorage.getItem('roles') || '';
-  }
-  ajoutConsommation(): void {
-    this.Consommation.quantiteMatiereConso = this.quantiteMatiereConso;
-    this.mesService.ajoutConsommation(this.Consommation).subscribe({
-      next: (data) => {
-        this.successMessage = 'Consommation ajoutée avec succès';
-      },
-      error: (error) => {
-        this.errorMessage = 'Erreur lors de l\'ajout de la consommation';
-      }
-    });
+    this.getPrdouitConso();
+
   }
   getProduitsFini(): void {
     this.mesService.getProduitFini().subscribe({
@@ -60,15 +53,7 @@ export class AjoutConsommationComponent implements OnInit{
       }
     });
   }
-  ajouterQuantiteMatiereConso() {
-    this.quantiteMatiereConso.push({ nomMatiere: '', quantite: 0 });
-  }
-
-  // Méthode pour supprimer une matière première
-  supprimerQuantiteMatiereConso(index: number) {
-    this.quantiteMatiereConso.splice(index, 1);
-  }
-  getProduitConso():void{
+  getPrdouitConso(): void {
     this.mesService.getProduitConso().subscribe({
       next: (data) => {
         this.produitConso = data;
@@ -78,6 +63,27 @@ export class AjoutConsommationComponent implements OnInit{
       }
     });
   }
+  getConsommationById(id: number): void {
+    this.mesService.getConsommation(id).subscribe({
+      next: (data) => {
+        this.conso = data;
+      },
+      error: (error) => {
+        console.error('Erreur lors de la récupération de la consommation', error);
+      }
+    });
+  }
+  editConsommation(): void {
+    this.mesService.editConsommation(this.conso.id, this.conso).subscribe({
+      next: (data) => {
+        this.successMessage = 'Consommation modifiée avec succès';
+      },
+      error: (error) => {
+        this.errorMessage = 'Erreur lors de la modification de la consommation';
+      }
+    });
+  }
+
   isAdmin(): boolean {
     const roles = JSON.parse(localStorage.getItem('roles') || '[]');
     return roles.includes('ADMIN');

@@ -5,6 +5,7 @@ export class OrdreFabrication {
     quantite? : number;
     quantiteRebut? : number;
     etat? : number;
+    dateDebut? : Date;
     dateFin? : Date;
     nomProduit?: string;
     nomMachine?: string;

@@ -1,7 +1,7 @@
     import { Injectable } from "@angular/core";
     import { Observable, catchError, map, throwError } from "rxjs";
     import { Produit } from "./produit";
-    import { HttpClient, HttpHeaders } from "@angular/common/http";
+    import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
     import { Machine } from "./machine";
     import { Consommationn } from "./consommationn";
 import { Users } from "./users";
@@ -66,14 +66,36 @@ import { Planproduit } from "./planproduit";
             return this.httpClient.post<Produit>(`${this.PURL}addConso`, produit);
         }
         ajoutProduitFini(produit: Produit): Observable<Produit> {
-            return this.httpClient.post<Produit>(`${this.PURL}addFini`, produit, this.getHttpOptions());
-        }
+            return this.httpClient.post<Produit>(`${this.PURL}addFini`, produit, this.getHttpOptions())
+              .pipe(
+                catchError((error: HttpErrorResponse) => {
+                  if (error.error instanceof ErrorEvent) {
+                    throw new Error(`Error: ${error.error.message}`);
+                  } else {
+                    if (error.error.message) {
+                      return throwError(() => new Error(error.error.message)); 
+                    } else {
+                      return throwError(() => new Error('An error occurred; please try again later.'));
+                    }
+                  }
+                })
+              );
+          }
         deleteProduit(id: number): Observable<Object> {
             return this.httpClient.delete(`${this.PURL}delete/${id}`);
         }
     
-        editProduitFinis(id: number,produit: Produit): Observable<Produit> {
-            return this.httpClient.put<Produit>(`${this.PURL}fini/${id}`, produit);
+        editProduitFinis(id: number, produit: Produit): Observable<Produit> {
+            return this.httpClient.put<Produit>(`${this.PURL}fini/${id}`, produit, this.getHttpOptions())
+                .pipe(
+                    catchError((error: HttpErrorResponse) => {
+                        let errorMessage = 'An error occurred';
+                        if (error.error instanceof Object && error.error.message) {
+                            errorMessage = error.error.message;
+                        }
+                        return throwError(() => new Error(errorMessage));
+                    })
+                );
         }
         editProduitConso(id: number,produit: Produit): Observable<Produit> {
             return this.httpClient.put<Produit>(`${this.PURL}conso/${id}`, produit);
@@ -159,6 +181,12 @@ import { Planproduit } from "./planproduit";
         ajoutConsommation(consommation: Consommationn): Observable<Consommationn> {
             return this.httpClient.post<Consommationn>(`${this.CURL}add`, consommation);
         }
+        getConsommation(id: number): Observable<Consommationn> {
+            return this.httpClient.get<Consommationn>(`${this.CURL}${id}`);
+        }
+        editConsommation(id: number, consommation: Consommationn): Observable<Consommationn> {
+            return this.httpClient.put<Consommationn>(`${this.CURL}${id}`, consommation);
+        }
         getConsommationsByMachineId(machineId: number): Observable<Consommationn[]> {
             return this.httpClient.get<Consommationn[]>(`${this.CURL}machine/${machineId}`);
         }
@@ -176,6 +204,12 @@ import { Planproduit } from "./planproduit";
         deleteRebut(id: number): Observable<Object> {
             return this.httpClient.delete(`${this.RURL}${id}`);
         }
+        getRebut(id: number): Observable<Rebut> {
+            return this.httpClient.get<Rebut>(`${this.RURL}${id}`);
+        }
+        editRebut(id: number, Rebut: Rebut): Observable<Rebut> {
+            return this.httpClient.put<Rebut>(`${this.RURL}${id}`, Rebut, this.getHttpOptions());
+          }
          
         
 

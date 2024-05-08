@@ -13,11 +13,11 @@ export class ListordreeComponent {
   username: String = '';
   role: string = '';
   ordres: OrdreFabrication[] = [];
-
+  successMessage: string = '';
   errorMessage: string = '';
   constructor(private mesService: mesService, private router :Router) { }
   ngOnInit(): void {
-    this.username = localStorage.getItem('username') || '';
+    this.username = this.mesService.getUsernameFromToken();
     this.role = localStorage.getItem('roles') || '';
     this.getOrdreFabrication();
   }
@@ -48,12 +48,16 @@ export class ListordreeComponent {
     this.mesService.deleteOrdreFabrication(id).subscribe({
       next: (data) => {
         this.getOrdreFabrication();
-        console.log('Ordre supprimé avec succès', data);
+        this.successMessage = 'Ordre supprimé avec succès';
       },
       error: (error) => {
-        console.error('Erreur lors de la suppression de l\'ordre', error);
+        this.errorMessage = 'Erreur lors de la suppression de l\'ordre';
       }
     });
+  }
+  isAdmin(): boolean {
+    const roles = JSON.parse(localStorage.getItem('roles') || '[]');
+    return roles.includes('ADMIN');
   }
 
   logout(): void {

@@ -1,45 +1,39 @@
 import { Component, OnInit } from '@angular/core';
-import { Rebut } from '../../../rebut';
 import { mesService } from '../../../messervice';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Produit } from '../../../produit';
 import { Machine } from '../../../machine';
+import { Rebut } from '../../../rebut';
 
 @Component({
-  selector: 'app-ajoutrebut',
-  templateUrl: './ajoutrebut.component.html',
-  styleUrl: './ajoutrebut.component.css'
+  selector: 'app-edit-rebut',
+  templateUrl: './edit-rebut.component.html',
+  styleUrl: './edit-rebut.component.css'
 })
-export class AjoutrebutComponent implements OnInit{
+export class EditRebutComponent implements OnInit{
+  username : string = '';
   rebut: Rebut = new Rebut();
   produits: Produit[] = [];
   machines: Machine[] = [];
-  username: String = '';
-  role: string = '';
   successMessage: string = '';
   errorMessage: string = '';
-  constructor(private mesService : mesService,private router : Router) { }
+  constructor(private mesService : mesService, private route: ActivatedRoute,private router: Router) { }
 
   ngOnInit() {
-  this.username = this.mesService.getUsernameFromToken();
-  this.role = localStorage.getItem('roles') || '';
-  this.getProduitsList();
-  this.getMachinesList();
+    this.username = this.mesService.getUsernameFromToken();
+    this.route.params.subscribe(params => {
+      const id = params['id'];
+      this.getRebutDetails(id);
+    });
+    this.getMachinesList();
+    this.getProduitsFini();
   }
-  //ajout rebut
-  ajoutRebut(): void {
-    this.mesService.addRebut(this.rebut).subscribe({
-      next: (data:Rebut) => {
-        this.successMessage = 'Rebut ajouté avec succès';
-        this.rebut.date =new Date().toLocaleDateString(); 
-      },
-      error: (error:any) => {
-        this.errorMessage = 'Erreur lors de l\'ajout du rebut';
-        console.error('Ajout rebut error', error);
-      }
+  getRebutDetails(id: number): void {
+    this.mesService.getRebut(id).subscribe((data: Rebut) => {
+      this.rebut = data;
     });
   }
-  getProduitsList(): void {
+  getProduitsFini(): void {
     this.mesService.getProduitFini().subscribe({
       next: (data) => {
         this.produits = data;
@@ -56,6 +50,17 @@ export class AjoutrebutComponent implements OnInit{
       },
       error: (error) => {
         console.error('Get machines error', error);
+      }
+    });
+  }
+  editRebut(): void {
+    this.mesService.editRebut(this.rebut.id, this.rebut).subscribe({
+      next: (data: Rebut) => {
+        this.successMessage = 'Rebut modifié avec succès.';
+      },
+      error: (error: any) => {
+        this.errorMessage = 'Erreur lors de la modification du rebut.';
+        console.error('Edit rebut error', error);
       }
     });
   }

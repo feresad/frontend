@@ -22,7 +22,7 @@ export class EditOrdreComponent implements OnInit{
   constructor(private mesService: mesService, private router :Router,private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.username = localStorage.getItem('username') || '';
+    this.username = this.mesService.getUsernameFromToken();
     this.role = localStorage.getItem('roles') || '';
     this.route.params.subscribe(params => {
       const id = params['id'];

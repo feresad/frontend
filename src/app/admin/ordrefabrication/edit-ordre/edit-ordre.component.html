@@ -22,15 +22,15 @@
     <div class="sidebar-menu" routerLink="/machine">
       <span class="fas fa-cogs"></span><a>Machine</a>
     </div>
+    <div class="sidebar-menu" routerLink="/ordreFabrication">
+        <span class="fas fa-hammer"></span><a>Ordre de fabrication</a>
+      </div>
     <div class="sidebar-menu" routerLink="/consommation">
       <span class="fas fa-battery-full"></span><a>Consomation</a>
     </div>
     <div class="sidebar-menu" routerLink="/rebut">
       <span class="fas fa-exclamation-triangle"></span><a>Rubut</a>
     </div>
-    <div class="sidebar-menu" routerLink="/ordreFabrication">
-        <span class="fas fa-hammer"></span><a>Ordre de fabrication</a>
-      </div>
     <div class="sidebar-menu" routerLink="/utilisateur">
         <span class="fas fa-user-friends"></span><a>Utilisateur</a>
       </div>
@@ -70,7 +70,11 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="date">Date</label>
+                  <label for="dateDebut">Date Debut Production</label>
+                  <input type="date" id="dateDebut" name="dateDebut" [(ngModel)]="Ordre.dateDebut" required>
+              </div>
+                <div class="form-group">
+                    <label for="date">Date Fin Production</label>
                     <input type="date" id="date" name="date" [(ngModel)]="Ordre.dateFin" required>
                 </div>
                 <div class="form-group">

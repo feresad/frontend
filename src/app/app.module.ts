@@ -35,6 +35,8 @@ import { OrdrefabricationComponent } from './admin/ordrefabrication/ordrefabrica
 import { AjoutordreComponent } from './admin/ordrefabrication/ajoutordre/ajoutordre.component';
 import { ListordreeComponent } from './admin/ordrefabrication/listordree/listordree.component';
 import { EditOrdreComponent } from './admin/ordrefabrication/edit-ordre/edit-ordre.component';
+import { EditRebutComponent } from './admin/rebut/edit-rebut/edit-rebut.component';
+import { EditconsoComponent } from './admin/Consommation/editconso/editconso.component';
 
 // Fonction pour récupérer le token JWT depuis les cookies
 export function tokenGetter() {
@@ -69,6 +71,8 @@ export function tokenGetter() {
       AjoutordreComponent,
       ListordreeComponent,
       EditOrdreComponent,
+      EditRebutComponent,
+      EditconsoComponent,
       // Ajoutez d'autres déclarations de composants ici si nécessaire
     ],
     imports: [

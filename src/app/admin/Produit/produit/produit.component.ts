@@ -11,7 +11,7 @@ export class ProduitComponent implements OnInit{
   username: String = '';
   role: string = '';
 ngOnInit(): void {
-  this.username = localStorage.getItem('username') || '';
+  this.username = this.mesService.getUsernameFromToken();
   this.role = localStorage.getItem('roles') || '';
 }
 isAdmin(): boolean {

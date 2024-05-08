@@ -25,6 +25,8 @@ export class DashComponent {
   username: string = '';
   role: string = '';
   machines: Machine[] = [];
+  successMessage: string = '';
+  errorMessage: string = '';
   isSidebarOpen: boolean = false;
 
   constructor(private mesService: mesService, private router :Router) { }
@@ -76,6 +78,18 @@ getProduitsList(): void{
             });
         });
     });
+}
+deleteProduit(id: number): void {
+  this.mesService.deleteProduit(id)
+    .subscribe(
+      (data) => {
+        this.successMessage = 'Produit Fini supprimé avec succès.';
+        this.getProduitsList();
+      },
+      (error) => {
+        this.errorMessage = 'Erreur lors de la suppression du produit Fini.';
+      }
+    );
 }
 
   isAdmin(): boolean {

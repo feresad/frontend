@@ -22,7 +22,7 @@ export class ListmachineComponent {
 
   ngOnInit(){
     this.getMachinesList();
-    this.username = localStorage.getItem('username') || '';
+    this.username = this.mesService.getUsernameFromToken();
     this.role = localStorage.getItem('roles') || '';
   }
   getMachinesList(): void{

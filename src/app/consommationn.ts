@@ -1,7 +1,9 @@
+import { QuantiteConso } from "./quantite-conso";
+
 export class Consommationn {
     id?: any;
-    quantite?: any;
-    idProduit?: any;
+    quantiteMatiereConso: QuantiteConso[] = [];
+    idProduitFini?: any;
     idMachine?: any;
     nomProduit?: string;
     nomMachine?: string;
