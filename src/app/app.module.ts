@@ -37,6 +37,7 @@ import { ListordreeComponent } from './admin/ordrefabrication/listordree/listord
 import { EditOrdreComponent } from './admin/ordrefabrication/edit-ordre/edit-ordre.component';
 import { EditRebutComponent } from './admin/rebut/edit-rebut/edit-rebut.component';
 import { EditconsoComponent } from './admin/Consommation/editconso/editconso.component';
+import { ChartModule } from 'angular-highcharts';
 
 // Fonction pour récupérer le token JWT depuis les cookies
 export function tokenGetter() {
@@ -79,6 +80,7 @@ export function tokenGetter() {
     BrowserModule,
     HttpClientModule,
     RouterModule,
+    ChartModule,
     CommonModule,
     RouterModule.forRoot(routes),
     FormsModule,

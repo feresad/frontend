@@ -59,7 +59,7 @@ export class AdduserComponent implements OnInit{
       return;
     }
 
-    this.mesService.register(username, email, password, [role]).subscribe({
+    this.mesService.register(username, email, password, role).subscribe({
       next: (data) => {
         this.successMessage = 'Utilisateur ajouté avec succès.';
         this.addUserForm.reset(); // Réinitialiser le formulaire

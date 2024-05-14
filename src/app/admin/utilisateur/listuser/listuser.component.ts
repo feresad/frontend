@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { mesService } from '../../../messervice';
 import { Router } from '@angular/router';
 import { Users } from '../../../users';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-listuser',
@@ -19,8 +20,14 @@ export class ListuserComponent implements OnInit{
   sucessMessage: string = '';
   errorMessage: string = '';
   searchQuery: string = '';
+  changePasswordForm!: FormGroup;
 
-  constructor(private mesService: mesService, private router: Router) {}
+  constructor(private mesService: mesService, private router: Router,private fb: FormBuilder) {
+    this.changePasswordForm = this.fb.group({
+      newPassword: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['', [Validators.required, Validators.minLength(6)]]
+    });
+  }
 
   
   ngOnInit(): void {
@@ -51,12 +58,14 @@ export class ListuserComponent implements OnInit{
   
 
   changePassword(): void {
+    if (this.changePasswordForm.invalid) {
+      this.errorMessage = "Veuillez corriger les erreurs du formulaire";
+      return;
+    }
     if (this.newPassword !== this.confirmPassword) {
       this.errorMessage = "Les mots de passe ne correspondent pas";
       return;
     }
-    console.log(this.userToEdit);
-
     this.mesService.changePassword(this.userToEdit, this.newPassword).subscribe({
         next: () => {
             this.sucessMessage = "Mot de passe modifié avec succès";
@@ -79,6 +88,7 @@ closeModal(): void {
     this.mesService.getUsersList().subscribe({
       next: (data) => {
         this.users = data;
+        console.log(this.users);
       },
       error: (error) => {
         console.error('Erreur lors de la récupération des utilisateurs', error);

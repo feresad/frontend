@@ -29,7 +29,7 @@
     <span class="fas fa-battery-full"></span><a>Consomation</a>
   </div>
   <div class="sidebar-menu" routerLink="/rebut">
-    <span class="fas fa-exclamation-triangle"></span><a>Rubut</a>
+    <span class="fas fa-exclamation-triangle"></span><a>Rebut</a>
   </div>
   <div class="sidebar-menu" routerLink="/utilisateur">
       <span class="fas fa-user-friends"></span><a>Utilisateur</a>
@@ -64,30 +64,44 @@
                   <option value="conso">Produit Consommable</option>
               </select>
             </div>
+            <form [formGroup]="produitForm">
             <div *ngIf="produitType === 'fini'">
             <p>L'etat par defaut du Produit "Aucun Traitement"</p>
             <div class="form-container">
               <div class="form-group">
               <label>Nom:</label>
-              <input [(ngModel)]="produit.name" name="name">
+              <input [(ngModel)]="produit.name" formControlName="name" name="name">
+              <div *ngIf="produitForm.controls['name'].invalid && produitForm.controls['name'].touched">
+                <span class="text-danger">Le nom du produit ne doit pas etre vide.</span>
+              </div>
             </div>
             <div class="form-group">
               <label>Quantite:</label>
-              <input [(ngModel)]="produit.quantite" name="quantite">
+              <input [(ngModel)]="produit.quantite" formControlName="quantite" name="quantite">
+              <div *ngIf="produitForm.controls['quantite'].invalid && produitForm.controls['quantite'].touched">
+                <span class="text-danger">La quanite doit etre en minimum 1 .</span>
+              </div>
             </div>
-            <div *ngFor="let matiere of matieresPremieres; let i = index">
+            <div formArrayName="matieresPremieres">
+            <div *ngFor="let matierePremiereGroup of matieresPremieresFormArray.controls; let i = index" [formGroupName]="i"> 
               <div class="form-group">
                 <label>Nom de la Matière Première Par Piéce:</label>
-                <select [(ngModel)]="matiere.name" name="matiere_name_{{ i }}" required>
+                <select formControlName="name" name="matiere_name_{{ i }}" required>
                   <option *ngFor="let produit of produits" [value]="produit.name">
                     {{ produit.name }}
                   </option>
                 </select>
+                <div *ngIf="getMatierePremiereFormGroup(i).controls['name'].invalid && getMatierePremiereFormGroup(i).controls['name'].touched">
+                  <span class="text-danger">Le nom de la matière première est requis.</span>
+                </div>
               </div>
           
               <div class="form-group">
                 <label>Quantité de la Matière Première:</label>
-                <input [(ngModel)]="matiere.quantite" name="matiere_quantite_{{ i }}" type="number" required>
+                <input formControlName="quantite" name="matiere_quantite_{{ i }}" type="number" required>
+                <div *ngIf="getMatierePremiereFormGroup(i).controls['quantite'].invalid && getMatierePremiereFormGroup(i).controls['quantite'].touched">
+                  <span class="text-danger">La quantité de la matière première doit être supérieure à zéro.</span>
+                </div>
               </div>
           
               <!-- Bouton pour supprimer une matière première -->
@@ -97,21 +111,32 @@
             <!-- Bouton pour ajouter une nouvelle matière première -->
             <button (click)="ajouterMatierePremiere()">+ Ajouter Matière Première</button>
           
-              <button type="submit" (click)="ajouterProduitFini()">Ajouter Produit Fini</button>
+              <button type="submit" [disabled]="produitForm.invalid" (click)="ajouterProduitFini()">Ajouter Produit Fini</button>
             </div>
+            
             </div>
+          </div>
+          </form>
             <div *ngIf="produitType == 'conso'">
+              <form [formGroup]="produitForm">
               <div class="form-container">
                 <div class="form-group">
                 <label>Nom:</label>
-                <input [(ngModel)]="produit.name" name="name">
+                <input [(ngModel)]="produit.name" formControlName="name" name="name">
+                <div *ngIf="produitForm.controls['name'].invalid && produitForm.controls['name'].touched">
+                  <span class="text-danger">Le nom du produit ne doit pas etre vide.</span>
+                </div>
               </div>
               <div class="form-group">
                 <label>Quantite:</label>
-                <input [(ngModel)]="produit.quantite" name="quantite">
+                <input [(ngModel)]="produit.quantite" formControlName="quantite" name="quantite">
+                <div *ngIf="produitForm.controls['quantite'].invalid && produitForm.controls['quantite'].touched">
+                  <span class="text-danger">La quanite doit etre en minimum 1 .</span>
+                </div>
               </div>
-                <button type="submit" (click)="ajouterProduitConso()">Ajouter Produit Consommable</button>
+                <button type="submit" [disabled]="produitForm.invalid" (click)="ajouterProduitConso()">Ajouter Produit Consommable</button>
             </div>
+            </form>
             </div>
         </div>
       </div>

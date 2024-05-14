@@ -86,7 +86,7 @@
                 </td>
                 <td>
                     <button class="custom-btn btn-edit" [routerLink]="['/edit-ordre', ordre.id]">Modifer</button>
-                    <button class="custom-btn btn-2" (click)="deleteOrdre(ordre.id)" *ngIf="isAdmin">Delete</button>
+                    <button class="custom-btn btn-2" (click)="deleteOrdre(ordre.id)" *ngIf="isAdmin()">Delete</button>
                 </td>
               </tr>
   

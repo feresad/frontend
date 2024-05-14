@@ -169,6 +169,9 @@ import { Planproduit } from "./planproduit";
         getMachinesEnPanne(): Observable<Machine[]> {
             return this.httpClient.get<Machine[]>(`${this.MURL}enpanne`);
         }
+        getMachineStatistiques(): Observable<{ [key: string]: number }> {
+            return this.httpClient.get<{ [key: string]: number }>(`${this.MURL}statistiques`);
+        }
 
 
         // Consommations
@@ -223,12 +226,12 @@ import { Planproduit } from "./planproduit";
             );
         }
 
-        register(username: string, email: string, password: string, roles: string[]): Observable<any> {
+        register(username: string, email: string, password: string, role: string): Observable<any> {
             return this.httpClient.post(`${this.AURL}signup`, {
                 username,
                 email,
                 password,
-                role : roles
+                role
             }).pipe(
                 catchError(this.handleError)
             );

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Produit } from '../../../produit';
 import { HttpErrorResponse } from '@angular/common/http';
-import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { mesService } from '../../../messervice';
 import { CommonModule } from '@angular/common';
@@ -21,8 +21,16 @@ export class AjoutproduitComponent implements OnInit {
   role:String = '';
   produits: Produit[] = [];
   matieresPremieres: MatierePremier[] = [];
+  produitForm: FormGroup;
   
-  constructor(private mesService: mesService, private router : Router){}
+  
+  constructor(private mesService: mesService, private router : Router, private fb: FormBuilder){
+    this.produitForm = this.fb.group({
+      name: ['', Validators.required],
+      quantite: ['', [Validators.required, Validators.min(1)]],
+      matieresPremieres: this.fb.array([]),
+    });
+  }
 
   ngOnInit():void{
     this.username = this.mesService.getUsernameFromToken();
@@ -30,33 +38,48 @@ export class AjoutproduitComponent implements OnInit {
     this.getProduitsConso();
   }
   ajouterProduitFini(): void {
-    this.produit.matieresPremieres = this.matieresPremieres;
-    this.mesService.ajoutProduitFini(this.produit)
-      .subscribe(
-        (data) => {
-          this.successMessage = 'Produit Fini ajouté avec succès.';
-          this.produit = new Produit();
-          // Ideally, navigate to a success page or refresh the list
-        },
-        (error) => { // Catch the error here
-          this.errorMessage = error.message; // Extract the error message
-        }
-      );
+    if (this.produitForm.valid) {
+        this.produit.matieresPremieres = this.matieresPremieresFormArray.controls.map(control => {
+          return {
+            name: control.get('name')?.value,
+            quantite: control.get('quantite')?.value
+          };
+        });
+      this.mesService.ajoutProduitFini(this.produit)
+        .subscribe(
+          (data) => {
+            this.successMessage = 'Produit Fini ajouté avec succès.';
+            this.produitForm.reset();
+          },
+          (error) => {
+            this.errorMessage = error.message;
+          }
+        );
+    }
   }
   ajouterProduitConso(): void {
-    this.mesService.ajoutProduitConso(this.produit)
-      .subscribe(
-        (data) => {
-          this.successMessage = 'Produit Consommable ajouté avec succès.';
-          this.produit = new Produit();
-        },
-        (error: HttpErrorResponse) => {
-          this.errorMessage = 'Erreur lors de l\'ajout d\'un produit Consommable.';
-        }
-      );
+    if (this.produitForm.valid) { // Vérifiez si le formulaire est valide avant de soumettre
+      this.mesService.ajoutProduitConso(this.produit)
+        .subscribe(
+          (data) => {
+            this.successMessage = 'Produit Consommable ajouté avec succès.';
+            this.produitForm.reset();
+          },
+          (error: HttpErrorResponse) => {
+            this.errorMessage = 'Erreur lors de l\'ajout d\'un produit Consommable.';
+          }
+        );
+    }
   }
   ajouterMatierePremiere() {
-    this.matieresPremieres.push({ name: '', quantite: 0 }); // Ajoute un objet vide au tableau
+    const matierePremiereGroup = this.fb.group({
+      name: ['', Validators.required],
+      quantite: ['', [Validators.required, Validators.min(0.1)]]
+    });
+    this.matieresPremieresFormArray.push(matierePremiereGroup);
+  }
+  get matieresPremieresFormArray(): FormArray {
+    return this.produitForm.get('matieresPremieres') as FormArray;
   }
 
   // Méthode pour supprimer une matière première
@@ -68,9 +91,13 @@ export class AjoutproduitComponent implements OnInit {
       this.produits = data;
     });
   }
-  
+  getMatierePremiereFormGroup(index: number): FormGroup {
+    const matierePremiereFormArray = this.produitForm.get('matieresPremieres') as FormArray;
+    const matierePremiereFormGroup = matierePremiereFormArray.at(index) as FormGroup;
+    return matierePremiereFormGroup;
+  }
   isAdmin(): boolean {
-    const roles = JSON.parse(localStorage.getItem('roles') || '[]');
+    const roles = JSON.parse(localStorage.getItem('role') || '[]');
     return roles.includes('ADMIN');
   }
 

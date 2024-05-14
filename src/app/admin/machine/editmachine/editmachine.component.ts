@@ -43,7 +43,7 @@ export class EditmachineComponent implements OnInit{
         this.machine = data;
   
           if (this.checked) {
-            this.machine.panneId = null;
+            this.machine.panneId = 1;
           } else {
             this.machine.panneId = this.selectedid;
           }

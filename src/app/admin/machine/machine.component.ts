@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { Router, RouterModule } from '@angular/router';
 import { mesService } from '../../messervice';
+import { Chart } from 'angular-highcharts';
+import { Options } from 'highcharts';
 
 
 @Component({
@@ -12,10 +14,44 @@ import { mesService } from '../../messervice';
 export class MachineComponent implements OnInit{
   username: String = '';
   role: string = '';
+  pieChart: Chart = new Chart({});
   constructor(private mesService: mesService, private router :Router) { }
   ngOnInit(): void {
     this.username = this.mesService.getUsernameFromToken();
-    this.role = localStorage.getItem('roles') || '';
+
+    this.mesService.getMachineStatistiques().subscribe((statistiques) => {
+      const enMarche = statistiques['enMarche'];
+      const enPanne = statistiques['enPanne'];
+      const pieChartConfig: Options = {
+        chart: {
+          type: 'pie',
+        },
+        title: {
+          text: 'Graphe des Machines en Panne et En Marche',
+        },
+        series: [
+          {
+            type: 'pie',
+            name: 'Machines',
+            data: [
+              { name: 'En Marche', y: enMarche ,color : 'green'},
+              { name: 'En Panne', y: enPanne ,color : 'red'},
+            ],
+          },
+        ],
+        plotOptions: {
+          pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+              enabled: true,
+            },
+          },
+        },
+      };
+
+      this.pieChart = new Chart(pieChartConfig);
+    });
   }
   isAdmin(): boolean {
     const roles = JSON.parse(localStorage.getItem('roles') || '[]');

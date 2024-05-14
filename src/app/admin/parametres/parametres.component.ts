@@ -3,6 +3,7 @@ import { Router, RouterModule } from '@angular/router';
 import { mesService } from '../../messervice';
 import { Users } from '../../users';
 import { Validators } from '@angular/forms';
+import { Role } from '../../role';
 
 @Component({
   selector: 'app-parametres',
@@ -14,20 +15,19 @@ export class ParametresComponent implements OnInit{
   email: string = '';
   password: string = '';
   confirmPassword: string = '';
-  role: string = '';
   successMessage: string = '';
   errorMessage: string = '';
   showPassword: boolean = false;
   user: Users = {
     username: '',
     email: '',
-    password: ''
+    password: '',
+    role: Role,
   };
   constructor(private mesService: mesService, private router :Router) { }
 
   ngOnInit(): void {
     this.username = this.mesService.getUsernameFromToken();
-    this.role = localStorage.getItem('roles') || '';
     this.loadUserInfo();
   }
 
@@ -55,9 +55,12 @@ export class ParametresComponent implements OnInit{
     }
 
     const userUpdate: Users = {
-      ...this.user, // Conserver les détails existants
-      password: this.password, // Mettre à jour le mot de passe
+      ...this.user,
+      password: this.password,
     };
+    if (this.password && this.password.trim() !== '') {
+      userUpdate.password = this.password;
+    }
 
     this.mesService.updateUser(this.user.username, userUpdate).subscribe({
       next: () => {

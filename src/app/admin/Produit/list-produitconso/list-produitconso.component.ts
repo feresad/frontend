@@ -19,7 +19,7 @@ export class ListProduitconsoComponent {
   ngOnInit(){
   this.getProduitsConso();
   this.username = this.mesService.getUsernameFromToken();
-  this.role = localStorage.getItem('roles') || '';
+  this.role = localStorage.getItem('role') || '';
   }
     getProduitsConso(): void{
       this.mesService.getProduitConso().subscribe((data: any[]) => {
@@ -53,10 +53,9 @@ export class ListProduitconsoComponent {
     }
 
     isAdmin(): boolean {
-      const roles = JSON.parse(localStorage.getItem('roles') || '[]');
+      const roles = JSON.parse(localStorage.getItem('role') || '[]');
       return roles.includes('ADMIN');
     }
-  
     logout(): void {
       this.mesService.logout().subscribe({
         next: (data) => {

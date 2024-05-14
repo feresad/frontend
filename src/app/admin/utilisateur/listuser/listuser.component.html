@@ -70,16 +70,32 @@
                 <td>{{ user.id }}</td>
                 <td>{{ user.username }}</td>
                 <td>{{ user.email }}</td>
-                <td *ngFor="let role of user.roles">{{ role.name }}</td>
+                <td>{{ user.role?.name }}</td>
                 <td>
                     <button class="custom-btn btn-1" (click)="openModal(user)">
                       <div id="passwordModal" class="modal" *ngIf="showModal" (click)="($event).stopPropagation()">
                         <div class="modal-content">
                           <span class="close" (click)="closeModal()">&times;</span>
                           <h2>Modifier Mot de Passe</h2>
-                          <form (submit)="changePassword()">
-                            <input type="password" class="input" [(ngModel)]="newPassword" name="newPassword" placeholder="Nouveau mot de passe" required><br>
-                            <input type="password" class="input" [(ngModel)]="confirmPassword" name="confirmPassword" placeholder="Confirmer mot de passe" required>
+                          <form (submit)="changePassword()" [formGroup]="changePasswordForm">
+                            <input type="password" class="input" formControlName="newPassword" [(ngModel)]="newPassword" name="newPassword" placeholder="Nouveau mot de passe" required><br>
+                            <div *ngIf="changePasswordForm.get('newPassword')?.invalid && (changePasswordForm.get('newPassword')?.dirty || changePasswordForm.get('newPassword')?.touched)" class="text-danger">
+                              <div *ngIf="changePasswordForm.get('newPassword')?.errors?.['required']">
+                                  Le champ mot de passe est obligatoire
+                              </div>
+                              <div *ngIf="changePasswordForm.get('newPassword')?.errors?.['minlength']">
+                                  Le mot de passe doit comporter au moins 6 caractères.
+                              </div>
+                          </div>
+                          <input type="password" class="input" formControlName="confirmPassword" [(ngModel)]="confirmPassword" name="confirmPassword" placeholder="Confirmer mot de passe" required>
+                            <div *ngIf="changePasswordForm.get('confirmPassword')?.invalid && (changePasswordForm.get('confirmPassword')?.dirty || changePasswordForm.get('confirmPassword')?.touched)" class="text-danger">
+                              <div *ngIf="changePasswordForm.get('confirmPassword')?.errors?.['required']">
+                                  Le champ confirmer mot de passe est obligatoire
+                              </div>
+                              <div *ngIf="changePasswordForm.get('confirmPassword')?.errors?.['minlength']">
+                                  Le mot de passe doit comporter au moins 6 caractères.
+                              </div>
+                          </div>
                             <button type="submit" class=".button" (click)="($event).stopPropagation()">Modifier</button>
                           </form>
                         </div>

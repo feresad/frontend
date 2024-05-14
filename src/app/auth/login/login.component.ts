@@ -25,7 +25,7 @@ export class LoginComponent {
         localStorage.setItem('authToken', data.token);
         localStorage.setItem('username', data.username);
         localStorage.setItem('email', data.email);
-        localStorage.setItem('roles', JSON.stringify(data.roles));
+        localStorage.setItem('role', JSON.stringify(data.role));
   
         // Redirection vers dash après l'authentification réussie
         this.router.navigate(['/dash']);

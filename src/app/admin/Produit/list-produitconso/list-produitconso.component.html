@@ -75,7 +75,7 @@
               <td>{{produit.date | date:'HH:mm  dd/MM/yyyy'}}</td>
               <td>
                 <button class="custom-btn btn-edit" [routerLink]="['/edit-prod', produit.id]">Modifier</button>
-                <button class="custom-btn btn-2" (click)="deleteProduit(produit.id)" *ngIf="isAdmin">Supprimer</button>
+                <button class="custom-btn btn-2" (click)="deleteProduit(produit.id)" *ngIf="isAdmin()">Supprimer</button>
               </td>
               
              </tr>

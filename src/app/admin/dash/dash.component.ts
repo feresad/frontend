@@ -93,7 +93,7 @@ deleteProduit(id: number): void {
 }
 
   isAdmin(): boolean {
-    const roles = JSON.parse(localStorage.getItem('roles') || '[]');
+    const roles = JSON.parse(localStorage.getItem('role') || '[]');
     return roles.includes('ADMIN');
   }
 
