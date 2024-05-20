@@ -23,12 +23,12 @@ export class AjoutmachineComponent implements OnInit{
     });
   }
   ngOnInit(): void {
-    this.username = this.mesService.getUsernameFromToken();
-    this.role = localStorage.getItem('roles') || '';
+    this.username = localStorage.getItem('username') || '';
   }
   ajouterMachine(): void {
     if (this.machineForm.valid) { // Ne soumettez que si le formulaire est valide
       const machineData = this.machineForm.value; // Obtenez les valeurs du formulaire
+      machineData.name = machineData.name.toLowerCase();
       this.mesService.ajouterMachine(machineData).subscribe(
         (data) => {
           this.successMessage = 'L\'ajout de la machine a été effectué avec succès. La machine est maintenant en état de marche.';
@@ -42,10 +42,7 @@ export class AjoutmachineComponent implements OnInit{
       this.errorMessage = 'Veuillez remplir correctement le formulaire.';
     }
   }
-  isAdmin(): boolean {
-    const roles = JSON.parse(localStorage.getItem('roles') || '[]');
-    return roles.includes('ROLE_ADMIN');
-  }
+
 
   logout(): void {
     this.mesService.logout().subscribe({

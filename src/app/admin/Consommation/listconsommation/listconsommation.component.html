@@ -29,7 +29,7 @@
       <span class="fas fa-battery-full"></span><a>Consomation</a>
     </div>
     <div class="sidebar-menu" routerLink="/rebut">
-      <span class="fas fa-exclamation-triangle"></span><a>Rubut</a>
+      <span class="fas fa-exclamation-triangle"></span><a>Rebut</a>
     </div>
     <div class="sidebar-menu" routerLink="/utilisateur">
       <span class="fas fa-user-friends"></span><a>Utilisateur</a>
@@ -43,6 +43,13 @@
     <main>
       <div class="dashboard">
           <div class="card detail">
+            <div *ngIf="successMessage" class="alert alert-success">
+              {{ successMessage }}
+            </div>
+            
+            <div *ngIf="errorMessage" class="alert alert-danger">
+              {{ errorMessage }}
+            </div>
               <div class="detail-header">
                 <h2>Liste Consommation</h2>  
                 <div class="group">
@@ -63,7 +70,7 @@
                 <td>
                   <ul>
                     <li *ngFor="let quantite of consommation.quantiteMatiereConso">
-                      {{ quantite.quantite }} - {{ quantite.nomMatiere }}
+                      {{ quantite.quantite }} Kg - {{ quantite.nomMatiere }}
                     </li>
                   </ul>
                 </td>

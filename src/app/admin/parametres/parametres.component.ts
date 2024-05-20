@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { mesService } from '../../messervice';
 import { Users } from '../../users';
-import { Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Role } from '../../role';
 
 @Component({
@@ -18,16 +18,17 @@ export class ParametresComponent implements OnInit{
   successMessage: string = '';
   errorMessage: string = '';
   showPassword: boolean = false;
+  oldusername: string = '';
   user: Users = {
     username: '',
     email: '',
     password: '',
     role: Role,
   };
-  constructor(private mesService: mesService, private router :Router) { }
+  constructor(private mesService: mesService, private router :Router,private fb: FormBuilder) { }
 
   ngOnInit(): void {
-    this.username = this.mesService.getUsernameFromToken();
+    this.username = localStorage.getItem('username') || '';
     this.loadUserInfo();
   }
 
@@ -49,6 +50,7 @@ export class ParametresComponent implements OnInit{
     }
   }
   updateUser(): void {
+    this.oldusername = this.username;
     if (this.password !== this.confirmPassword) {
       this.errorMessage = "Les mots de passe ne correspondent pas.";
       return;
@@ -62,21 +64,15 @@ export class ParametresComponent implements OnInit{
       userUpdate.password = this.password;
     }
 
-    this.mesService.updateUser(this.user.username, userUpdate).subscribe({
+    this.mesService.updateUser(this.oldusername, userUpdate).subscribe({
       next: () => {
         this.successMessage = "Utilisateur mis à jour avec succès";
-        console.log(userUpdate);
+        this.username = userUpdate.username;
       },
       error: (error: any) => {
-        this.errorMessage = "Erreur lors de la mise à jour de l'utilisateur";
-        console.error(error);
+          this.errorMessage = "Erreur lors de la mise à jour de l'utilisateur";
       },
     });
-  }
-
-  isAdmin(): boolean {
-    const roles = JSON.parse(localStorage.getItem('roles') || '[]');
-    return roles.includes('ADMIN');
   }
 
   logout(): void {

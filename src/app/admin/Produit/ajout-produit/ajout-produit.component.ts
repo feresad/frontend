@@ -33,12 +33,12 @@ export class AjoutproduitComponent implements OnInit {
   }
 
   ngOnInit():void{
-    this.username = this.mesService.getUsernameFromToken();
-    this.role = localStorage.getItem('roles') || '';
+    this.username = localStorage.getItem('username') || '';
     this.getProduitsConso();
   }
   ajouterProduitFini(): void {
     if (this.produitForm.valid) {
+      this.produit.name = this.produit.name.toLowerCase();
         this.produit.matieresPremieres = this.matieresPremieresFormArray.controls.map(control => {
           return {
             name: control.get('name')?.value,
@@ -58,7 +58,8 @@ export class AjoutproduitComponent implements OnInit {
     }
   }
   ajouterProduitConso(): void {
-    if (this.produitForm.valid) { // Vérifiez si le formulaire est valide avant de soumettre
+    if (this.produitForm.valid) {
+      this. produit.name = this.produit.name.toLowerCase();
       this.mesService.ajoutProduitConso(this.produit)
         .subscribe(
           (data) => {
@@ -95,10 +96,6 @@ export class AjoutproduitComponent implements OnInit {
     const matierePremiereFormArray = this.produitForm.get('matieresPremieres') as FormArray;
     const matierePremiereFormGroup = matierePremiereFormArray.at(index) as FormGroup;
     return matierePremiereFormGroup;
-  }
-  isAdmin(): boolean {
-    const roles = JSON.parse(localStorage.getItem('role') || '[]');
-    return roles.includes('ADMIN');
   }
 
   logout(): void {

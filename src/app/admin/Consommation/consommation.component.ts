@@ -19,14 +19,8 @@ export class ConsommationComponent implements OnInit{
 
   constructor(private mesService : mesService, private router: Router) { }
   ngOnInit(){
-    this.username = this.mesService.getUsernameFromToken();
-    this.role = localStorage.getItem('roles') || '';
+    this.username = localStorage.getItem('username') || '';
   }
-  
-isAdmin(): boolean {
-  const roles = JSON.parse(localStorage.getItem('roles') || '[]');
-  return roles.includes('ADMIN');
-}
 
   logout(): void {
     this.mesService.logout().subscribe({

@@ -17,8 +17,7 @@ export class ListordreeComponent {
   errorMessage: string = '';
   constructor(private mesService: mesService, private router :Router) { }
   ngOnInit(): void {
-    this.username = this.mesService.getUsernameFromToken();
-    this.role = localStorage.getItem('roles') || '';
+    this.username = localStorage.getItem('username') || '';
     this.getOrdreFabrication();
   }
 

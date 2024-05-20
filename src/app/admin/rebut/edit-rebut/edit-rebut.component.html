@@ -42,15 +42,15 @@
     
     <!-- main dahsboard -->
     <main>
-      <div *ngIf="successMessage" class="alert alert-success">
-          {{ successMessage }}
-        </div>
-        
-        <div *ngIf="errorMessage" class="alert alert-danger">
-          {{ errorMessage }}
-        </div>
       <div class="dashboard-container">
           <div class="card detail">
+            <div *ngIf="successMessage" class="alert alert-success">
+              {{ successMessage }}
+            </div>
+            
+            <div *ngIf="errorMessage" class="alert alert-danger">
+              {{ errorMessage }}
+            </div>
               <div class="detail-header">
                   <h2>Modifier Rebut</h2>
                   <button routerLink="/list-rebut">List Rebut</button>

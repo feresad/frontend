@@ -23,11 +23,10 @@ export class AjoutConsommationComponent implements OnInit{
   role: string = '';
   constructor(private mesService: mesService, private router : Router){}
   ngOnInit(): void {
-    this.username = this.mesService.getUsernameFromToken();
     this.getProduitsFini();
     this.getMachinesList();
     this.getProduitConso();
-    this.role = localStorage.getItem('roles') || '';
+    this.username = localStorage.getItem('username') || '';
   }
   ajoutConsommation(): void {
     this.Consommation.quantiteMatiereConso = this.quantiteMatiereConso;
@@ -64,7 +63,6 @@ export class AjoutConsommationComponent implements OnInit{
     this.quantiteMatiereConso.push({ nomMatiere: '', quantite: 0 });
   }
 
-  // Méthode pour supprimer une matière première
   supprimerQuantiteMatiereConso(index: number) {
     this.quantiteMatiereConso.splice(index, 1);
   }
@@ -77,10 +75,6 @@ export class AjoutConsommationComponent implements OnInit{
         this.errorMessage = 'Erreur lors de la récupération des produits consommables';
       }
     });
-  }
-  isAdmin(): boolean {
-    const roles = JSON.parse(localStorage.getItem('roles') || '[]');
-    return roles.includes('ADMIN');
   }
 
   logout(): void {

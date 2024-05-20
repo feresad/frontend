@@ -20,7 +20,7 @@ export class EditRebutComponent implements OnInit{
   constructor(private mesService : mesService, private route: ActivatedRoute,private router: Router) { }
 
   ngOnInit() {
-    this.username = this.mesService.getUsernameFromToken();
+    this.username = localStorage.getItem('username') || '';
     this.route.params.subscribe(params => {
       const id = params['id'];
       this.getRebutDetails(id);
@@ -63,10 +63,6 @@ export class EditRebutComponent implements OnInit{
         console.error('Edit rebut error', error);
       }
     });
-  }
-  isAdmin(): boolean {
-    const roles = JSON.parse(localStorage.getItem('roles') || '[]');
-    return roles.includes('ADMIN');
   }
 
   logout(): void {

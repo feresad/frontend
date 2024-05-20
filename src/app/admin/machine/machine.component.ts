@@ -17,7 +17,7 @@ export class MachineComponent implements OnInit{
   pieChart: Chart = new Chart({});
   constructor(private mesService: mesService, private router :Router) { }
   ngOnInit(): void {
-    this.username = this.mesService.getUsernameFromToken();
+    this.username = localStorage.getItem('username') || '';
 
     this.mesService.getMachineStatistiques().subscribe((statistiques) => {
       const enMarche = statistiques['enMarche'];
@@ -34,8 +34,8 @@ export class MachineComponent implements OnInit{
             type: 'pie',
             name: 'Machines',
             data: [
-              { name: 'En Marche', y: enMarche ,color : 'green'},
-              { name: 'En Panne', y: enPanne ,color : 'red'},
+              { name: 'En Marche', y: enMarche ,color : '#99ff99'},
+              { name: 'En Panne', y: enPanne ,color : '#ffcc99'},
             ],
           },
         ],
@@ -52,10 +52,6 @@ export class MachineComponent implements OnInit{
 
       this.pieChart = new Chart(pieChartConfig);
     });
-  }
-  isAdmin(): boolean {
-    const roles = JSON.parse(localStorage.getItem('roles') || '[]');
-    return roles.includes('ROLE_ADMIN');
   }
   logout(): void {
     this.mesService.logout().subscribe({

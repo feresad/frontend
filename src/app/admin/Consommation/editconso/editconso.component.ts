@@ -23,7 +23,6 @@ export class EditconsoComponent implements OnInit{
 
   constructor(private mesService: mesService, private router : Router, private route: ActivatedRoute) { }
   ngOnInit(): void {
-    this.username = this.mesService.getUsernameFromToken();
     this.route.params.subscribe(params => {
       const id = params['id'];
       this.getConsommationById(id);
@@ -31,6 +30,7 @@ export class EditconsoComponent implements OnInit{
     this.getProduitsFini();
     this.getMachinesList();
     this.getPrdouitConso();
+    this.username = localStorage.getItem('username') || '';
 
   }
   getProduitsFini(): void {
@@ -83,11 +83,7 @@ export class EditconsoComponent implements OnInit{
       }
     });
   }
-
-  isAdmin(): boolean {
-    const roles = JSON.parse(localStorage.getItem('roles') || '[]');
-    return roles.includes('ADMIN');
-  }
+  
 
   logout(): void {
     this.mesService.logout().subscribe({

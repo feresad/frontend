@@ -861,6 +861,83 @@ span a {
 .text-danger{
   color: red;
 }
+.fullscreen-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%; /* Use width: 100% for responsiveness */
+  background-image: url(../../../assets/img/abinject.jpg);
+  background-size: cover; /* Ensure background covers the container */
+  background-position: center; /* Center background image */
+}
+
+
+.login-container {
+  width: 50%;
+  max-width: 400px;
+  min-width: 300px;
+  padding: 50px 25px 20px;
+  background: white;
+  border-radius: 10px;
+}
+
+.header {
+  text-align: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 50px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: .8rem;
+}
+
+.input-group input {
+  font-size: .9rem;
+  padding: 10px;
+  border: none;
+  margin: 0px;
+  width: 100%;
+  outline: none;
+  border-bottom: 2px solid hsl(0, 0%, 83%);
+}
+
+.input-group input:focus {
+  box-shadow: 0 0 0 1px hsl(178, 100%, 50%);
+  border-bottom: 2px solid hsl(0, 0%, 83%, 0%);
+}
+
+.button {
+  margin: 20px 0;
+  padding: 10px 0;
+  border-radius: 25px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background: linear-gradient(53deg, rgba(25,191,203,1) 6%, rgba(188,81,218,1) 73%);
+  color: white;
+  font-size: 1rem;
+}
+
+.button:focus {
+  box-shadow: 0 0 0 1px hsl(178, 100%, 50%);
+}
+
+.signup-header {
+  text-align: center;
+  font-weight: 200;
+  font-size: .9rem;
+  margin-top: 75px;
+}
+
 
 @media screen and (max-width: 1070px) {
 
@@ -881,18 +958,31 @@ span a {
   .profile-name{
     display: none;
   }
-
+  .fullscreen-container {
+    background-image: url(../../../assets/img/abinject.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  .login-container{
+    width: 100%;
+  }
   .sidebar{
     display: none;
+    z-index: 3;
   }
 
   main{
     padding: 6rem 2rem 2rem 2rem;
   }
+  nav h4{
+    display: none;
+  }
 
   #toggle:checked ~ .sidebar{
       width: 200px;
       display: block;
+      z-index: 1;
   }
 
   #toggle:checked ~ .sidebar .sidebar-menu > a {
@@ -916,6 +1006,7 @@ span a {
   } 
   .detail table {
     font-size: 0.9rem;
+    z-index: auto;
   }
   .modal-content form .input{
   width: 200px;

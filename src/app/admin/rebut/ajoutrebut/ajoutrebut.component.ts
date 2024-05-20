@@ -21,8 +21,7 @@ export class AjoutrebutComponent implements OnInit{
   constructor(private mesService : mesService,private router : Router) { }
 
   ngOnInit() {
-  this.username = this.mesService.getUsernameFromToken();
-  this.role = localStorage.getItem('roles') || '';
+    this.username = localStorage.getItem('username') || '';
   this.getProduitsList();
   this.getMachinesList();
   }
@@ -58,10 +57,6 @@ export class AjoutrebutComponent implements OnInit{
         console.error('Get machines error', error);
       }
     });
-  }
-  isAdmin(): boolean {
-    const roles = JSON.parse(localStorage.getItem('roles') || '[]');
-    return roles.includes('ADMIN');
   }
 
   logout(): void {

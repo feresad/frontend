@@ -32,7 +32,7 @@ export class ListuserComponent implements OnInit{
   
   ngOnInit(): void {
     this.loadUsers();
-    this.username = this.mesService.getUsernameFromToken();
+    this.username = localStorage.getItem('username') || '';
   }
 // delete user by id
   deleteUser(id: any): void {

@@ -20,8 +20,7 @@ export class ListconsommationComponent implements OnInit{
   constructor(private mesService : mesService, private router: Router) { }
   ngOnInit(){
     this.getConsommationsList();
-    this.username = this.mesService.getUsernameFromToken();
-    this.role = localStorage.getItem('roles') || '';
+    this.username = localStorage.getItem('username') || '';
   }
   getConsommationsList(): void {
     this.mesService.getConsommationsList().subscribe((data: Consommationn[]) => {
@@ -38,8 +37,8 @@ export class ListconsommationComponent implements OnInit{
   }
   deleteConso(id: number): void {
     this.mesService.deleteConsommation(id).subscribe((data: any) => {
-      console.log(data);
       this.getConsommationsList();
+      this.successMessage = 'Consommation supprimée avec succès';
     }, (error) => {
       this.errorMessage = 'Erreur lors de la suppression de la consommation';
     });

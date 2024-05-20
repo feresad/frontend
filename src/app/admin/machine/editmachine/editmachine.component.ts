@@ -1,6 +1,4 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { mesService } from '../../../messervice';
 import { Machine } from '../../../machine';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
@@ -19,7 +17,7 @@ export class EditmachineComponent implements OnInit{
   role: string = '';
   pannes: Panne[] =[];
   checked: boolean = false;
-  selectedid: number = 1;
+  selectedPannes: number[] = [];
   constructor(private mesService: mesService,private route: ActivatedRoute,private router : Router) {}
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -27,8 +25,7 @@ export class EditmachineComponent implements OnInit{
       this.getMachineDetails(id);
     });
     this.getPannesList();
-    this.username = this.mesService.getUsernameFromToken();
-    this.role = localStorage.getItem('roles') || '';
+    this.username = localStorage.getItem('username') || '';
   }
   getMachineDetails(id: number) {
     this.mesService.getMachineDetails(id)
@@ -37,30 +34,17 @@ export class EditmachineComponent implements OnInit{
       }, error => console.log(error));
   }
   updateMachine() {
-    this.mesService.editMachine(this.machine.id, this.machine)
-    .subscribe(
-      (data) => {
-        this.machine = data;
-  
-          if (this.checked) {
-            this.machine.panneId = 1;
-          } else {
-            this.machine.panneId = this.selectedid;
-          }
-          this.mesService.addPannetoMachine(this.machine.id, this.machine.panneId,this.username)
-            .subscribe(
-              (updatedMachine) => {
-                this.successMessage = "Machine modifiée avec succès!";
-              },
-              (error) => {
-                this.errorMessage = 'Erreur lors de la modification de la machine';
-              }
-            );
-        },
-        (error) => {
-          this.errorMessage = 'Erreur lors de la modification de la machine';
-        }
-      );
+    this.machine.name = this.machine.name.toLowerCase();
+    this.machine.pannes = this.pannes.filter(panne => this.selectedPannes.includes(panne.id));
+    this.mesService.editMachine(this.machine.id, this.machine).subscribe(
+      updatedMachine => {
+        this.mesService.addPannetoMachine(this.machine.id, this.selectedPannes, this.username).subscribe(
+          () => this.successMessage = "Machine modifiée avec succès!",
+          error => this.errorMessage = 'Erreur lors de la modification de la machine'
+        );
+      },
+      error => this.errorMessage = 'Erreur lors de la modification de la machine'
+    );
   }
  
   getPannesList(): void {
@@ -76,10 +60,6 @@ export class EditmachineComponent implements OnInit{
 
   onSubmit() {
     this.updateMachine();
-  }
-  isAdmin(): boolean {
-    const roles = JSON.parse(localStorage.getItem('roles') || '[]');
-    return roles.includes('ADMIN');
   }
   logout(): void {
     this.mesService.logout().subscribe({

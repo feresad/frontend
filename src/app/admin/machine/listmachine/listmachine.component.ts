@@ -22,8 +22,7 @@ export class ListmachineComponent {
 
   ngOnInit(){
     this.getMachinesList();
-    this.username = this.mesService.getUsernameFromToken();
-    this.role = localStorage.getItem('roles') || '';
+    this.username = localStorage.getItem('username') || '';
   }
   getMachinesList(): void{
     this.mesService.getMachinesList().subscribe((data: any[]) => {
@@ -31,9 +30,9 @@ export class ListmachineComponent {
       //je veux prendre panneId et chercher le panne byId et afficher Name
       this.machines.forEach((machine) => {
         if(!machine.etat){
-        this.mesService.getPanneById(machine.panneId).subscribe((data: Panne) => {
+        /*this.mesService.getPanneById(machine.panneId).subscribe((data: Panne) => {
           machine.panneName = data.name;
-        });
+        });*/
       }
       });
     });

@@ -10,7 +10,7 @@ import { Router,RouterModule } from '@angular/router';
 export class UtilisateurComponent implements OnInit{
   username: String = '';
   ngOnInit(): void {
-    this.username = this.mesService.getUsernameFromToken();
+    this.username = localStorage.getItem('username') || '';
   }
   constructor(private mesService: mesService, private router: Router) {}
   

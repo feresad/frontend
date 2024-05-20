@@ -14,12 +14,14 @@ export class ListrebutComponent implements OnInit{
   rebut: Rebut[] = [];
   username: String = '';
   role: string = '';
+  searchTerm: string = '';
+  successMessage: string = '';
+  errorMessage: string = '';
   constructor(private mesService : mesService,private router : Router) { }
 
   ngOnInit() {
   this.getRebutList();
-  this.username = this.mesService.getUsernameFromToken();
-  this.role = localStorage.getItem('roles') || '';
+  this.username = localStorage.getItem('username') || '';
   }
 
   getRebutList(){
@@ -40,9 +42,34 @@ export class ListrebutComponent implements OnInit{
     this.mesService.deleteRebut(id).subscribe((data: any) => {
       console.log(data);
       this.getRebutList();
+      this.successMessage = 'Rebut supprimé avec succès';
     }, (error) => {
-      console.error(error);
+      this.errorMessage = 'Erreur lors de la suppression du rebut';
     });
+  }
+  searchRebutByProduitName(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    const ProduitName = target.value;
+    if (ProduitName.trim()) {
+        this.mesService.SearchProduit(ProduitName).subscribe((produits: Produit[]) => {
+            produits.forEach(produits => {
+                this.mesService.getRebutByProduitFini(produits.id).subscribe((data: Rebut[]) => {
+                    data.forEach((element) => {
+                        this.mesService.getMachineDetails(element.idMachine).subscribe((data: Machine) => {
+                            element.nomMachine = data.name;
+                        });
+                        this.mesService.getProduit(element.idProduitFini).subscribe((data: Produit) => {
+                            element.nomproduit = data.name;
+                        });
+                    });
+                    this.rebut = data;
+                });
+            });
+        });
+    } else {
+        
+        this.getRebutList();
+    }
   }
 
   isAdmin(): boolean {

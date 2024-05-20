@@ -37,8 +37,7 @@ this.CountMachine();
 this.CountConsommation();
 this.countUser();
 this.getMachinesEnPanne();
-this.username = this.mesService.getUsernameFromToken();
-this.role = localStorage.getItem('roles') || '';
+this.username = localStorage.getItem('username') || '';
 }
 toggleSidebar(): void {
   this.isSidebarOpen = !this.isSidebarOpen;
@@ -72,11 +71,6 @@ getProduitsList(): void{
   getMachinesEnPanne() {
     this.mesService.getMachinesEnPanne().subscribe((machines: Machine[]) => {
         this.machines = machines;
-        machines.forEach((machine) => {
-            this.mesService.getPanneById(machine.panneId).subscribe((panne: Panne) => {
-                machine.panneName = panne.name;
-            });
-        });
     });
 }
 deleteProduit(id: number): void {

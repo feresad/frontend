@@ -71,7 +71,11 @@
                 <i class="fas fa-circle"></i> En Panne
               </span>
             </ng-template></td>
-            <td>{{machine.panneName}}</td>
+            <td>
+              <ul>
+              <li *ngFor="let panne of machine.pannes">{{ panne.name }}</li>
+            </ul>
+          </td>
             <td>
               <button class="custom-btn btn-edit" [routerLink]="['/edit-mach', machine.id]">Modifier</button>
                 <button class="custom-btn btn-2" (click)="deleteMachine(machine.id)" *ngIf="isAdmin()">Supprimer</button>

@@ -33,7 +33,7 @@ export class AdduserComponent implements OnInit{
 
   ngOnInit() {
     this.loadRoles();
-    this.usernamenav = this.mesService.getUsernameFromToken();
+    this.usernamenav = localStorage.getItem('username') || '';
   }
   loadRoles(): void {
     this.mesService.getRoles().subscribe({

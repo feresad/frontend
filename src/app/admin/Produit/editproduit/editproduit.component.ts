@@ -26,8 +26,7 @@ export class EditProduitComponent implements OnInit {
       const id = params['id'];
       this.getProduitDetails(id);
     });
-    this.username = this.mesService.getUsernameFromToken();
-    this.role = localStorage.getItem('roles') || '';
+    this.username = localStorage.getItem('username') || '';
     this.getProduitsConso();
   }
   getProduitDetails(id: number): void {
@@ -44,9 +43,11 @@ export class EditProduitComponent implements OnInit {
   }
 
   editProduitFini(): void {
+    this.produit.name = this.produit.name.toLowerCase();
     this.mesService.editProduitFinis(this.produit.id, this.produit)
     .subscribe({
         next: (data: Produit) => {
+          console.log(data);
             this.successMessage = 'Produit modifié avec succès.';
         },
         error: (error: HttpErrorResponse) => {
@@ -55,6 +56,7 @@ export class EditProduitComponent implements OnInit {
     });
 }
   editProduitConso(): void {
+    this.produit.name = this.produit.name.toLowerCase();
     this.mesService.editProduitConso(this.produit.id, this.produit)
     .subscribe((data: Produit) => {
       this.successMessage = 'Produit modifié avec succès.';
@@ -74,12 +76,7 @@ export class EditProduitComponent implements OnInit {
   getProduitsConso(): void{
     this.mesService.getProduitConso().subscribe((data: any[]) => {
       this.produits = data;
-      console.log("Produits:", this.produits);
     });
-  }
-  isAdmin(): boolean {
-    const roles = JSON.parse(localStorage.getItem('roles') || '[]');
-    return roles.includes('ROLE_ADMIN');
   }
 
   logout(): void {

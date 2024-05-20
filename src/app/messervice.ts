@@ -11,7 +11,7 @@ import { Rebut } from "./rebut";
 import { Panne } from "./panne";
 import { OrdreFabrication } from "./ordre-fabrication";
 import { Planproduit } from "./planproduit";
-
+import { tap } from 'rxjs/operators';
     @Injectable({ 
         providedIn: 'root'
     })
@@ -38,15 +38,6 @@ import { Planproduit } from "./planproduit";
                 })
             };
         }
-        getUsernameFromToken(): string {
-            const token = localStorage.getItem('authToken');
-            if (token) {
-              const decodedToken: any = jwtDecode(token);
-              return decodedToken?.sub; // généralement 'sub' contient le nom d'utilisateur
-            }
-            return '';
-          }
-
         constructor(private httpClient: HttpClient) { }
 
         //Produit
@@ -112,6 +103,9 @@ import { Planproduit } from "./planproduit";
         getProduitFiniById(id: number): Observable<Produit> {
             return this.httpClient.get<Produit>(`${this.PURL}produitFini/${id}`);
         }
+        getProduitFiniStatistiques(): Observable<{ [key: string]: number }> {
+            return this.httpClient.get<{ [key: string]: number }>(`${this.PURL}statistiques`);
+        }
 
         //ordre de fabrication
         getOrdresFabrication(): Observable<OrdreFabrication[]> {
@@ -163,8 +157,13 @@ import { Planproduit } from "./planproduit";
         getPanneById(id: number): Observable<Panne> {
             return this.httpClient.get<Panne>(`${this.MURL}pannes/${id}`);
         }
-        addPannetoMachine(id: number, panneId: number, username: string): Observable<Machine> {
-            return this.httpClient.put<Machine>(`${this.MURL}add-panne/${id}/${panneId}`,{username});
+        addPannetoMachine(machineId: number, panneIds: number[], username: string): Observable<Machine> {
+            const requestBody = { 
+                panneIds: panneIds, 
+                username: username 
+            }; 
+            // Use the updated endpoint
+            return this.httpClient.put<Machine>(`${this.MURL}add-panne/${machineId}`, requestBody, this.getHttpOptions());
         }
         getMachinesEnPanne(): Observable<Machine[]> {
             return this.httpClient.get<Machine[]>(`${this.MURL}enpanne`);
@@ -213,6 +212,10 @@ import { Planproduit } from "./planproduit";
         editRebut(id: number, Rebut: Rebut): Observable<Rebut> {
             return this.httpClient.put<Rebut>(`${this.RURL}${id}`, Rebut, this.getHttpOptions());
           }
+          getRebutByProduitFini(idProduitFini: number): Observable<Rebut[]> {
+            return this.httpClient.get<Rebut[]>(`${this.RURL}produit/${idProduitFini}`);
+        }
+        
          
         
 
@@ -255,6 +258,10 @@ import { Planproduit } from "./planproduit";
         updateUser(username: string, user: Users): Observable<any> {
             return this.httpClient.put(`${this.AURL}update/${username}`, user, this.getHttpOptions())
               .pipe(
+                tap(() => {
+                    // Mettre à jour le nom d'utilisateur dans le stockage local
+                    localStorage.setItem('username', user.username);
+                }),
                 catchError(this.handleError)
               );
           }

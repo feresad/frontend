@@ -54,15 +54,14 @@
             <div class="detail-header">
                 <h2>Modifier Produit</h2>
             </div>
-            
             <form class="form" (submit)="onSubmit()">
                 <div class="form-group">
-                  <label for="name">Nom:</label><br>
-                  <input type="text" class="form-control" id="name" name="name" [(ngModel)]="produit.name"><br>
+                  <label for="name">Nom:</label>
+                  <input type="text" class="form-control" id="name" name="name" [(ngModel)]="produit.name">
                 </div>
                 <div class="form-group">
-                  <label>Quantite:</label><br>
-                  <input name="quantite" id="quantite" class="form-control" [(ngModel)]="produit.quantite"><br>
+                  <label>Quantite:</label>
+                  <input name="quantite" id="quantite" class="form-control" [(ngModel)]="produit.quantite">
                 </div>
                 <div class="form-group" *ngIf="typeProduit === 'Fini'">
                   <label>Matières Premières:</label>
@@ -75,7 +74,6 @@
                         </option>
                       </select>
                     </div>
-                    
                     <div class="form-group">
                       <label>Quantité:</label>
                       <input [(ngModel)]="matiere.quantite" type="number" name="matiere_quantite_{{ i }}">
