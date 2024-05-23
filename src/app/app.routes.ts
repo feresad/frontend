@@ -49,7 +49,7 @@ export const routes: Routes = [
         path:'list-prodConso',component:ListProduitconsoComponent,canActivate: [AuthGuard]
     },
     {
-        path:'ajout-prod',component:AjoutproduitComponent,canActivate: [AuthGuard]
+        path:'ajout-prod',component:AjoutproduitComponent,canActivate: [AuthGuard],data: { expectedRole: 'ADMIN' }
     },
     {
         path:'edit-prod/:id',component:EditProduitComponent,canActivate: [AuthGuard]
@@ -106,7 +106,7 @@ export const routes: Routes = [
         path:'ordreFabrication',component:OrdrefabricationComponent,canActivate: [AuthGuard]
     },
     {
-        path:'ajoutordre',component:AjoutordreComponent,canActivate: [AuthGuard]
+        path:'ajoutordre',component:AjoutordreComponent,canActivate: [AuthGuard],data: { expectedRole: 'ADMIN' }
     },
     {
         path:'listordre',component:ListordreeComponent,canActivate: [AuthGuard]

@@ -65,7 +65,7 @@
                   <th>Nom</th>
                   <th>Qantité</th>
                   <th>Date</th>
-                  <th>Actions</th>
+                  <th *ngIf="isAdmin()">Actions</th>
               </tr>
              
   <tr *ngFor="let produit of produits">
@@ -73,9 +73,9 @@
               <td>{{ produit.name }}</td>
               <td>{{ produit.quantite }}</td> 
               <td>{{produit.date | date:'HH:mm  dd/MM/yyyy'}}</td>
-              <td>
+              <td *ngIf="isAdmin()">
                 <button class="custom-btn btn-edit" [routerLink]="['/edit-prod', produit.id]">Modifier</button>
-                <button class="custom-btn btn-2" (click)="deleteProduit(produit.id)" *ngIf="isAdmin()">Supprimer</button>
+                <button class="custom-btn btn-2" (click)="deleteProduit(produit.id)">Supprimer</button>
               </td>
               
              </tr>

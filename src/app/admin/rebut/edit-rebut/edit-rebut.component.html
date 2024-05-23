@@ -56,22 +56,31 @@
                   <button routerLink="/list-rebut">List Rebut</button>
               </div>
               <div class="form-container">
-                  <form (ngSubmit)="editRebut()">
+                <form [formGroup]="rebutForm" (ngSubmit)="editRebut()">
                 <div class="form-group">
                 <label>Quantite:</label><br>
-                <input name="quantite" [(ngModel)]="rebut.quantite">
+                <input name="quantite" formControlName="quantite">
+                <div *ngIf="rebutForm.controls['quantite'].invalid && rebutForm.controls['quantite'].touched" class="text-danger">
+                  <small>La quantité est requise et doit être un nombre positif.</small>
+                </div>
               </div>
               <div class="form-group">
                 <label for="name">Nom Produit</label>
-                <select id="name" name="name" [(ngModel)]="rebut.idProduitFini" required>
+                <select id="name" name="name" formControlName="idProduitFini" required>
                     <option *ngFor="let produit of produits" [value]="produit.id">{{produit.name}}</option>
                 </select>
+                <div *ngIf="rebutForm.controls['idProduitFini'].invalid && rebutForm.controls['idProduitFini'].touched" class="error">
+                  <small>Veuillez sélectionner un produit.</small>
+                </div>
               </div>
               <div class="form-group">
                 <label for="produit">Nom Machine</label>
-                <select id="produit" name="produit" [(ngModel)]="rebut.idMachine" required>
+                <select id="produit" name="produit" formControlName="idMachine" required>
                     <option *ngFor="let machine of machines" [value]="machine.id">{{machine.name}}</option>
                 </select>
+                <div *ngIf="rebutForm.controls['idMachine'].invalid && rebutForm.controls['idMachine'].touched" class="error">
+                  <small>Veuillez sélectionner une machine.</small>
+                </div>
               </div>
                 <button type="submit">Modifier un Rebut</button>
             </form>

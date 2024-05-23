@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Machine } from '../../machine';
 import { Panne } from '../../panne';
+import { JwtService } from '../../jwt-service';
 
 
 
@@ -29,7 +30,7 @@ export class DashComponent {
   errorMessage: string = '';
   isSidebarOpen: boolean = false;
 
-  constructor(private mesService: mesService, private router :Router) { }
+  constructor(private mesService: mesService, private router :Router,private jwtService: JwtService) { }
 ngOnInit(){
 this.getProduitsList();
 this.CountProduit();
@@ -38,6 +39,10 @@ this.CountConsommation();
 this.countUser();
 this.getMachinesEnPanne();
 this.username = localStorage.getItem('username') || '';
+const token = localStorage.getItem('authToken');
+  if (token) {
+    const decodedToken = this.jwtService.getDecodedAccessToken(token);
+  }
 }
 toggleSidebar(): void {
   this.isSidebarOpen = !this.isSidebarOpen;

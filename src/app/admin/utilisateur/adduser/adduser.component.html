@@ -61,28 +61,28 @@
                         <label for="username">Nom d'utilisateur</label>
                         <input formControlName="username" type="text" id="username" name="username" [(ngModel)]="username" required>
                         <div *ngIf="addUserForm.controls['username'].invalid && addUserForm.controls['username'].touched">
-                          <span class="text-danger">Le nom d'utilisateur doit contenir entre 3 et 20 caractères.</span>
+                          <small class="text-danger">Le nom d'utilisateur doit contenir entre 3 et 20 caractères.</small>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
                         <input formControlName="email" type="email" id="email" name="email" [(ngModel)]="email" required>
                         <div *ngIf="addUserForm.controls['email'].invalid && addUserForm.controls['email'].touched">
-                          <span class="text-danger">L'email est invalide ou dépasse 50 caractères.</span>
+                          <small class="text-danger">L'email est invalide ou dépasse 50 caractères.</small>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="password">Mot de passe</label>
                         <input formControlName="password" type="password" [(ngModel)]="password" name="password" required>
                         <div *ngIf="addUserForm.controls['password'].invalid && addUserForm.controls['password'].touched">
-                          <span class="text-danger">Le mot de passe doit contenir entre 6 et 120 caractères.</span>
+                          <small class="text-danger">Le mot de passe doit contenir entre 6 et 120 caractères.</small>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="confirmPassword">Confirmer le mot de passe</label>
                         <input formControlName="confirmPassword" type="password" name="confirmPassword" [(ngModel)]="confirmPassword" required>
                         <div *ngIf="addUserForm.controls['confirmPassword'].invalid && addUserForm.controls['confirmPassword'].touched">
-                          <span class="text-danger">La confirmation du mot de passe est obligatoire.</span>
+                          <small class="text-danger">La confirmation du mot de passe est obligatoire.</small>
                         </div>
                     </div>
 
@@ -91,6 +91,9 @@
                             <select id="role" name="role" formControlName="role" [(ngModel)]="selectedRole" required>
                              <option *ngFor="let role of roles" [value]="role.name">{{ role.name }}</option>
                             </select>
+                            <div *ngIf="addUserForm.controls['role'].invalid && addUserForm.controls['role'].touched" class="text-danger">
+                              <small>Veuillez sélectionner un role.</small>
+                            </div>
                     </div>
                     <button type="submit" [disabled]="addUserForm.invalid">Ajouter Utilisateur</button>
                 </form>

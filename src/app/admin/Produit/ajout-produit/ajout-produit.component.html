@@ -72,14 +72,14 @@
               <label>Nom:</label>
               <input [(ngModel)]="produit.name" formControlName="name" name="name">
               <div *ngIf="produitForm.controls['name'].invalid && produitForm.controls['name'].touched">
-                <span class="text-danger">Le nom du produit ne doit pas etre vide.</span>
+                <small class="text-danger">Le nom du produit ne doit pas etre vide.</small>
               </div>
             </div>
             <div class="form-group">
               <label>Quantite:</label>
               <input [(ngModel)]="produit.quantite" formControlName="quantite" name="quantite">
               <div *ngIf="produitForm.controls['quantite'].invalid && produitForm.controls['quantite'].touched">
-                <span class="text-danger">La quanite doit etre en minimum 1 .</span>
+                <small class="text-danger">La quanite doit etre en minimum 1 .</small>
               </div>
             </div>
             <div formArrayName="matieresPremieres">
@@ -92,7 +92,7 @@
                   </option>
                 </select>
                 <div *ngIf="getMatierePremiereFormGroup(i).controls['name'].invalid && getMatierePremiereFormGroup(i).controls['name'].touched">
-                  <span class="text-danger">Le nom de la matière première est requis.</span>
+                  <small class="text-danger">Le nom de la matière première est requis.</small>
                 </div>
               </div>
           
@@ -100,7 +100,7 @@
                 <label>Quantité de la Matière Première:</label>
                 <input formControlName="quantite" name="matiere_quantite_{{ i }}" type="number" required>
                 <div *ngIf="getMatierePremiereFormGroup(i).controls['quantite'].invalid && getMatierePremiereFormGroup(i).controls['quantite'].touched">
-                  <span class="text-danger">La quantité de la matière première doit être supérieure à zéro.</span>
+                  <small class="text-danger">La quantité de la matière première doit être supérieure à zéro.</small>
                 </div>
               </div>
           
@@ -124,14 +124,14 @@
                 <label>Nom:</label>
                 <input [(ngModel)]="produit.name" formControlName="name" name="name">
                 <div *ngIf="produitForm.controls['name'].invalid && produitForm.controls['name'].touched">
-                  <span class="text-danger">Le nom du produit ne doit pas etre vide.</span>
+                  <small class="text-danger">Le nom du produit ne doit pas etre vide.</small>
                 </div>
               </div>
               <div class="form-group">
                 <label>Quantite:</label>
                 <input [(ngModel)]="produit.quantite" formControlName="quantite" name="quantite">
                 <div *ngIf="produitForm.controls['quantite'].invalid && produitForm.controls['quantite'].touched">
-                  <span class="text-danger">La quanite doit etre en minimum 1 .</span>
+                  <small class="text-danger">La quanite doit etre en minimum 1 .</small>
                 </div>
               </div>
                 <button type="submit" [disabled]="produitForm.invalid" (click)="ajouterProduitConso()">Ajouter Produit Consommable</button>

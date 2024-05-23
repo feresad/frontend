@@ -62,7 +62,7 @@
               <label>Nom:</label>
               <input (ngModel)="machine.name" formControlName="name" name="name">
               <div *ngIf="machineForm.controls['name'].invalid && machineForm.controls['name'].touched">
-                <span class="text-danger" style="color: red;">Le nom de la machine est obligatoire.</span>
+                <small class="text-danger">Le nom de la machine est obligatoire.</small>
               </div>
             </div>
               <button type="submit" [disabled]="machineForm.invalid">Ajouter une Machine</button>

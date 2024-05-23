@@ -56,24 +56,33 @@
                   <button routerLink="/list-rebut">List Rebut</button>
               </div>
               <div class="form-container">
-                  <form>
+                <form [formGroup]="rebutForm" (ngSubmit)="ajoutRebut()">
                 <div class="form-group">
-                <label>Quantite:</label><br>
-                <input name="quantite" [(ngModel)]="rebut.quantite">
+                <label>Quantite:</label>
+                <input name="quantite" formControlName="quantite">
+                <div *ngIf="rebutForm.controls['quantite'].invalid && rebutForm.controls['quantite'].touched" class="text-danger">
+                  <small> La quantité est requise et doit être un nombre positif.</small>
+                </div>
               </div>
               <div class="form-group">
                 <label for="produit">Nom Produit</label>
-                <select id="produit" name="produit" [(ngModel)]="rebut.idProduitFini" required>
+                <select id="produit" formControlName="idProduitFini" name="produit" required>
                     <option *ngFor="let produit of produits" [value]="produit.id">{{produit.name}}</option>
                 </select>
+                <div *ngIf="rebutForm.controls['idProduitFini'].invalid && rebutForm.controls['idProduitFini'].touched" class="text-danger">
+                  <small>Veuillez sélectionner un produit.</small>
+                </div>
               </div>
               <div class="form-group">
                 <label for="produit">Nom Machine</label>
-                <select id="produit" name="produit" [(ngModel)]="rebut.idMachine" required>
+                <select id="produit" name="produit" formControlName="idMachine" required>
                     <option *ngFor="let machine of machines" [value]="machine.id">{{machine.name}}</option>
                 </select>
+                <div *ngIf="rebutForm.controls['idMachine'].invalid && rebutForm.controls['idMachine'].touched" class="text-danger">
+                  <small>Veuillez sélectionner une machine.</small>
+                </div>
               </div>
-                <button type="submit" (click)="ajoutRebut()">Ajouter un Rebut</button>
+                <button type="submit">Ajouter un Rebut</button>
             </form>
             </div>
             

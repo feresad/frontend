@@ -66,7 +66,7 @@
                 <th>Qantité</th>
                 <th>Matiere_Premier</th>
                 <th>Etat</th>
-                <th>Actions</th>
+                <th *ngIf="isAdmin()">Actions</th>
             </tr>
            @for (produit of produits; track produit) {
 <tr>
@@ -85,9 +85,9 @@
             <span *ngIf="produit.etat == 1" class="status presuqeFini"><i class="fas fa-circle"> En Cours de traitement</i></span>
             <span *ngIf="produit.etat == 0" class="status horsStock"><i class="fas fa-circle"> Aucun Traitement</i></span>
             </td>
-            <td>
+            <td *ngIf="isAdmin()">
               <button class="custom-btn btn-edit" [routerLink]="['/edit-prod', produit.id]">Modifier</button>
-              <button class="custom-btn btn-2" (click)="deleteProduit(produit.id)" *ngIf="isAdmin()">Supprimer</button>
+              <button class="custom-btn btn-2" (click)="deleteProduit(produit.id)">Supprimer</button>
             </td>
             
            </tr>

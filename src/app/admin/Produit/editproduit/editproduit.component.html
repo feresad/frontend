@@ -54,35 +54,51 @@
             <div class="detail-header">
                 <h2>Modifier Produit</h2>
             </div>
-            <form class="form" (submit)="onSubmit()">
+            <form [formGroup]="produitForm" (submit)="onSubmit()">
                 <div class="form-group">
                   <label for="name">Nom:</label>
-                  <input type="text" class="form-control" id="name" name="name" [(ngModel)]="produit.name">
+                  <input type="text" class="form-control" formControlName="name" id="name" name="name">
+                  <div *ngIf="produitForm.controls['name'].invalid && produitForm.controls['name'].touched">
+                    <small class="text-danger">Le nom du produit ne doit pas être vide.</small>
+                  </div>
                 </div>
                 <div class="form-group">
                   <label>Quantite:</label>
-                  <input name="quantite" id="quantite" class="form-control" [(ngModel)]="produit.quantite">
+                  <input name="quantite" id="quantite" formControlName="quantite" class="form-control">
+                  <div *ngIf="produitForm.controls['quantite'].invalid && produitForm.controls['quantite'].touched">
+                    <small class="text-danger">La quantité doit être au minimum 1.</small>
+                  </div>
                 </div>
                 <div class="form-group" *ngIf="typeProduit === 'Fini'">
                   <label>Matières Premières:</label>
-                  <div *ngFor="let matiere of produit.matieresPremieres; let i = index">
+                  <div formArrayName="matieresPremieres">
+                  <div *ngFor="let matierePremiereGroup of matieresPremieresFormArray.controls; let i = index" [formGroupName]="i">
                     <div class="form-group">
                       <label>Nom de la Matière Première:</label>
-                      <select [(ngModel)]="matiere.name" name="matiere_name_{{ i }}">
+                      <select formControlName="name" name="matiere_name_{{ i }}">
                         <option *ngFor="let produit of produits" [value]="produit.name">
                           {{ produit.name }}
                         </option>
                       </select>
+                      <div *ngIf="matierePremiereGroup.get('name')?.invalid && matierePremiereGroup.get('name')?.touched">
+                        <small class="text-danger">Le nom de la matière première est requis.</small>
+                      </div>
                     </div>
                     <div class="form-group">
                       <label>Quantité:</label>
-                      <input [(ngModel)]="matiere.quantite" type="number" name="matiere_quantite_{{ i }}">
+                      <input formControlName="quantite" type="number" name="matiere_quantite_{{ i }}">
+                      <div *ngIf="matierePremiereGroup.get('quantite')?.invalid && matierePremiereGroup.get('quantite')?.touched">
+                        <small class="text-danger">La quantité de la matière première doit être supérieure à zéro.</small>
+                      </div>
                     </div>
+                    <button type="button" (click)="supprimerMatierePremiere(i)">Supprimer</button>
                   </div>
+                  <button type="button" (click)="ajouterMatierePremiere()">+ Ajouter Matière Première</button>
+                </div>
                 </div>
                 <div class="form-group" *ngIf="typeProduit === 'Fini'">
                   <label for="machine">Etat</label>
-                      <select id="machine" name="machine" [(ngModel)]="produit.etat" required>
+                      <select id="machine" name="machine" formControlName="etat" required>
                        <option [ngValue]="0">Aucun Traitement</option>
                        <option [ngValue]="1">Debut de Travail</option>
                        <option [ngValue]="2">Terminer</option>

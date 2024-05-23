@@ -56,44 +56,71 @@
                   <button routerLink="/listordre">List des Ordres</button>
               </div>
               <div class="form-container">
-                <form (submit)="onSubmit()">
-                <div class="form-group">
+                <form [formGroup]="ordreForm" (submit)="onSubmit()">
+                <div class="form-group" *ngIf="isAdmin()">
                     <label for="produit">Nom de la Produit</label>
-                    <select id="produit" name="produit" [(ngModel)]="Ordre.idProduitFini" required>
+                    <select id="produit" name="produit" formControlName="idProduitFini" required>
                         <option *ngFor="let produit of produits" [value]="produit.id">{{produit.name}}</option>
                     </select>
+                    <div *ngIf="ordreForm.controls['idProduitFini'].invalid && ordreForm.controls['idProduitFini'].touched" class="text-danger">
+                      <small></small> Veuillez sélectionner un produit.
+                    </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" *ngIf="isAdmin()">
                     <label for="machine">Nom de la Machine</label>
-                    <select id="machine" name="machine" [(ngModel)]="Ordre.idmachine" required>
+                    <select id="machine" name="machine" formControlName="idmachine" required>
                         <option *ngFor="let machine of machines" [value]="machine.id">{{machine.name}}</option>
                     </select>
+                    <div *ngIf="ordreForm.controls['idmachine'].invalid && ordreForm.controls['idmachine'].touched" class="text-danger">
+                      <small>Veuillez sélectionner une machine.</small>
+                    </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" *ngIf="isAdmin()">
                   <label for="dateDebut">Date Debut Production</label>
-                  <input type="date" id="dateDebut" name="dateDebut" [(ngModel)]="Ordre.dateDebut" required>
-              </div>
-                <div class="form-group">
+                  <input type="date" id="dateDebut" name="dateDebut" formControlName="dateDebut" required>
+                  <div *ngIf="ordreForm.controls['dateDebut'].invalid && ordreForm.controls['dateDebut'].touched" class="text-danger">
+                    <small>Veuillez sélectionner une date de début.</small>
+                  </div>
+                  <div *ngIf="ordreForm.controls['dateDebut'].errors?.['invalidDate']" class="text-danger">
+                    <small>La date de début doit être égale ou postérieure à aujourd'hui.</small>
+                  </div>
+                </div>
+                <div class="form-group" *ngIf="isAdmin()">
                     <label for="date">Date Fin Production</label>
-                    <input type="date" id="date" name="date" [(ngModel)]="Ordre.dateFin" required>
-                </div>
-                <div class="form-group">
+                    <input type="date" id="date" name="date" formControlName="dateFin" required>
+                    <div *ngIf="ordreForm.controls['dateFin'].invalid && ordreForm.controls['dateFin'].touched" class="text-danger">
+                      <small>Veuillez sélectionner une date de fin.</small>
+                    </div>
+                    <div *ngIf="ordreForm.controls['dateFin'].errors?.['invalidEndDate']" class="text-danger">
+                      <small> La date de fin doit être égale ou postérieure à la date de début.</small>
+                    </div>
+                  </div>
+                <div class="form-group" *ngIf="isAdmin()">
                     <label for="quantite">Quantite</label>
-                    <input type="number" id="quantite" name="quantite" [(ngModel)]="Ordre.quantite" required>
-                </div>
-                <div class="form-group">
+                    <input type="number" id="quantite" name="quantite" formControlName="quantite" required>
+                    <div *ngIf="ordreForm.controls['quantite'].invalid && ordreForm.controls['quantite'].touched" class="text-danger">
+                      <small> Veuillez entrer une quantité du produit > 0.</small>
+                    </div>
+                  </div>
+                <div class="form-group" *ngIf="isAdmin()">
                     <label for="quantiteRebut">Quantite Rebut</label>
-                    <input type="number" id="quantiteRebut" name="quantiteRebut" [(ngModel)]="Ordre.quantiteRebut" required>
-                </div>
+                    <input type="number" id="quantiteRebut" name="quantiteRebut" formControlName="quantiteRebut" required>
+                    <div *ngIf="ordreForm.controls['quantiteRebut'].invalid && ordreForm.controls['quantiteRebut'].touched" class="text-danger">
+                      <small> Veuillez entrer une quantité de rebut >= 0.</small>
+                    </div>
+                  </div>
                 <div class="form-group">
                     <label for="etat">Etat</label>
-                    <select id="etat" name="etat" [(ngModel)]="Ordre.etat" required>
+                    <select id="etat" name="etat" formControlName="etat" required>
                         <option [value]="0">Planification</option>
                         <option [value]="1">En Cours</option>
                         <option [value]="2">Terminer</option>
                         <option [value]="3">Panne Machine</option>
                         <option [value]="4">Probleme Empolyée</option>
                     </select>
+                    <div *ngIf="ordreForm.controls['etat'].invalid && ordreForm.controls['etat'].touched" class="text-danger">
+                      <small>Veuillez sélectionner un état.</small>
+                    </div>
                 </div>
                 <button type="submit">Modifier un Ordre</button>
                 </form>

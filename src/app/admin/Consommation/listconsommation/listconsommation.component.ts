@@ -49,8 +49,8 @@ export class ListconsommationComponent implements OnInit{
   const machineName = target.value;
   if (machineName.trim()) {
       this.mesService.getMachinesByName(machineName).subscribe((machines: Machine[]) => {
-          machines.forEach(machine => {
-              this.mesService.getConsommationsByMachineId(machine.id).subscribe((data: Consommationn[]) => {
+          machines.forEach(machines => {
+              this.mesService.getConsommationsByMachineId(machines.id).subscribe((data: Consommationn[]) => {
                   data.forEach((element) => {
                       this.mesService.getMachineDetails(element.idMachine).subscribe((data: Machine) => {
                           element.nomMachine = data.name;
@@ -60,11 +60,10 @@ export class ListconsommationComponent implements OnInit{
                       });
                   });
                   this.conso = data;
-              });
+                });
           });
       });
   } else {
-      
       this.getConsommationsList();
   }
 }

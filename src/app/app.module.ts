@@ -1,7 +1,7 @@
 // src/app/app.module.ts
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http'; // Pour les requêtes HTTP
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http'; // Pour les requêtes HTTP
 import { Router, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { routes } from './app.routes'; // Assurez-vous que le chemin vers votre fichier de routes est correct
@@ -38,6 +38,7 @@ import { EditOrdreComponent } from './admin/ordrefabrication/edit-ordre/edit-ord
 import { EditRebutComponent } from './admin/rebut/edit-rebut/edit-rebut.component';
 import { EditconsoComponent } from './admin/Consommation/editconso/editconso.component';
 import { ChartModule } from 'angular-highcharts';
+import { AuthInterceptor } from './auth/auth-interceptor';
 
 // Fonction pour récupérer le token JWT depuis les cookies
 export function tokenGetter() {
@@ -93,7 +94,9 @@ export function tokenGetter() {
       }
     }),
   ],
-  providers: [mesService],
+  providers: [mesService,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  ],
   bootstrap: []
 })
 export class AppModule { }

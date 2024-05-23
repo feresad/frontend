@@ -56,25 +56,29 @@
                 <h2>Modifier Machine</h2>
             </div>
             
-            <form class="form" (submit)="onSubmit()">
-                <div class="form-group">
+            <form [formGroup]="machineForm" (submit)="onSubmit()">
+                <div class="form-group" *ngIf="isAdmin()">
                   <label for="name">Nom:</label>
-                  <input type="text" class="form-control" id="name" name="name" [(ngModel)]="machine.name"><br>
+                  <input type="text" class="form-control" id="name" name="name" formControlName="name">
+                  <div *ngIf="machineForm.controls['name'].invalid && machineForm.controls['name'].touched">
+                    <small class="text-danger">Le nom de la machine est obligatoire.</small>
+                  </div>
                 </div>
                 <div class="form-group">
                   <label>Etat:</label>
-                  <input name="etat" id="etat" type="checkbox" class="form-control" [(ngModel)]="machine.etat">En Marche<br>
+                  <input name="etat" id="etat" type="checkbox" class="form-control" formControlName="etat">En Marche
                 </div>
-              <div class="form-group">
+              <div class="form-group" *ngIf="!machineForm.get('etat')?.value">
                 <label for="pannes">Panne:</label>
-                <select name="pannes" multiple [(ngModel)]="selectedPannes" style="height: auto;">
+                <select name="pannes" multiple formControlName="pannes" style="height: auto;">
                   <option *ngFor="let panne of pannes" [value]="panne.id">{{panne.name}}</option>
                 </select>
+                <div>
+                  <small class="text-danger">une panne au minimium doit etre selectionner. Et Pour selectionner Plusieurs Panne Appuyer CTRL et selectionner les pannes</small>
+                </div>
               </div>
                 <button type="submit">Modifier Machine</button>
               </form>
-             
-              
         </div>
     </div>
   </main> 

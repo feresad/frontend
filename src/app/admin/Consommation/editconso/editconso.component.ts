@@ -5,6 +5,7 @@ import { Produit } from '../../../produit';
 import { Consommationn } from '../../../consommationn';
 import { Machine } from '../../../machine';
 import { QuantiteConso } from '../../../quantite-conso';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-editconso',
@@ -20,8 +21,15 @@ export class EditconsoComponent implements OnInit{
   produitFini: Produit[] = [];
   machines : Machine [] = [];
   produitConso: Produit[] = [];
+  consommationForm: FormGroup;
 
-  constructor(private mesService: mesService, private router : Router, private route: ActivatedRoute) { }
+  constructor(private mesService: mesService, private router : Router, private route: ActivatedRoute,private fb : FormBuilder) { 
+    this.consommationForm = this.fb.group({
+      idProduitFini: ['', Validators.required],
+      idMachine: ['', Validators.required],
+      quantiteMatiereConso: this.fb.array([])
+    });
+  }
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       const id = params['id'];
@@ -32,6 +40,19 @@ export class EditconsoComponent implements OnInit{
     this.getPrdouitConso();
     this.username = localStorage.getItem('username') || '';
 
+  }
+  get quantiteMatiereConso(): FormArray {
+    return this.consommationForm.get('quantiteMatiereConso') as FormArray;
+  }
+  ajouterQuantiteMatiereConso(nomMatiere = '', quantite = 0): void {
+    this.quantiteMatiereConso.push(this.fb.group({
+      nomMatiere: [nomMatiere, Validators.required],
+      quantite: [quantite, [Validators.required, Validators.min(1)]]
+    }));
+  }
+
+  supprimerQuantiteMatiereConso(index: number): void {
+    this.quantiteMatiereConso.removeAt(index);
   }
   getProduitsFini(): void {
     this.mesService.getProduitFini().subscribe({
@@ -67,6 +88,13 @@ export class EditconsoComponent implements OnInit{
     this.mesService.getConsommation(id).subscribe({
       next: (data) => {
         this.conso = data;
+        this.consommationForm.patchValue({
+          idProduitFini: this.conso.idProduitFini,
+          idMachine: this.conso.idMachine
+        });
+        data.quantiteMatiereConso.forEach((matiere: QuantiteConso) => {
+          this.ajouterQuantiteMatiereConso(matiere.nomMatiere, matiere.quantite);
+        });
       },
       error: (error) => {
         console.error('Erreur lors de la récupération de la consommation', error);
@@ -74,6 +102,7 @@ export class EditconsoComponent implements OnInit{
     });
   }
   editConsommation(): void {
+    if (this.consommationForm.valid) {
     this.mesService.editConsommation(this.conso.id, this.conso).subscribe({
       next: (data) => {
         this.successMessage = 'Consommation modifiée avec succès';
@@ -83,6 +112,7 @@ export class EditconsoComponent implements OnInit{
       }
     });
   }
+}
   
 
   logout(): void {

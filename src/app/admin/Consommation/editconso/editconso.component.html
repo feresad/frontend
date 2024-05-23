@@ -56,35 +56,60 @@
                   <button routerLink="/list-conso" style="width: 200px;">List Consommations</button>
               </div>
               <div class="form-container">
+                <form [formGroup]="consommationForm">
                     <div class="form-group">
                       <label for="produit">Nom du Produit</label>
-                          <select id="produit" name="produit" [(ngModel)]="conso.idProduitFini" required>
+                          <select id="produit" name="produit" formControlName="idProduitFini" required>
                            <option *ngFor="let produit of produitFini" [value]="produit.id">{{produit.name}}</option>
                           </select>
+                          <div *ngIf="consommationForm.get('idProduitFini')?.invalid && (consommationForm.get('idProduitFini')?.touched || consommationForm.get('idProduitFini')?.dirty)">
+                            <small class="text-danger" *ngIf="consommationForm.get('idProduitFini')?.errors?.['required']">
+                              Le nom du produit est requis.
+                            </small>
+                          </div>
                   </div>
-                    <div class="form-group">
-                        <label for="machine">Nom de la Machine</label>
-                            <select id="machine" name="machine" [(ngModel)]="conso.idMachine" required>
-                             <option *ngFor="let machine of machines" [value]="machine.id">{{machine.name}}</option>
-                            </select>
+                  <div class="form-group">
+                    <label for="machine">Nom de la Machine</label>
+                    <select id="machine" name="machine" formControlName="idMachine" required>
+                      <option *ngFor="let machine of machines" [value]="machine.id">{{machine.name}}</option>
+                    </select>
+                    <div *ngIf="consommationForm.get('idMachine')?.invalid && (consommationForm.get('idMachine')?.touched || consommationForm.get('idMachine')?.dirty)">
+                      <small class="text-danger" *ngIf="consommationForm.get('idMachine')?.errors?.['required']">
+                        Le nom de la machine est requis.
+                      </small>
                     </div>
-                    <div *ngFor="let matiere of conso.quantiteMatiereConso; let i = index">
+                  </div>
+                  <div formArrayName="quantiteMatiereConso">
+                    <div *ngFor="let matiere of quantiteMatiereConso.controls; let i = index" [formGroupName]="i">
                       <div class="form-group">
                         <label>Nom de la Matière Première Par Piéce:</label>
-                        <select [(ngModel)]="matiere.nomMatiere" name="matiere_name_{{ i }}" required>
+                        <select formControlName="nomMatiere" name="matiere_name_{{ i }}" required>
                           <option *ngFor="let prod of produitConso" [value]="prod.name">
                             {{ prod.name }}
                           </option>
                         </select>
+                        <div *ngIf="matiere.get('nomMatiere')?.invalid && (matiere.get('nomMatiere')?.touched || matiere.get('nomMatiere')?.dirty)">
+                          <small class="text-danger" *ngIf="matiere.get('nomMatiere')?.errors?.['required']">
+                            Le nom de la matière est requis.
+                          </small>
+                        </div>
                       </div>
                       <div class="form-group">
                         <label>Quantité de la Matière Première:</label>
-                        <input [(ngModel)]="matiere.quantite" name="matiere_quantite_{{ i }}" type="number" required>
+                        <input formControlName="quantite" name="matiere_quantite_{{ i }}" type="number" required>
+                        <div *ngIf="matiere.get('quantite')?.invalid && (matiere.get('quantite')?.touched || matiere.get('quantite')?.dirty)">
+                          <small class="text-danger" *ngIf="matiere.get('quantite')?.errors?.['required']">
+                            La quantité est requise.
+                          </small>
+                          <small class="text-danger" *ngIf="matiere.get('quantite')?.errors?.['min']">
+                            La quantité doit être supérieure à 0.
+                          </small>
+                        </div>
                       </div>                
                     </div>
-                  
-                    <!-- Bouton pour ajouter une nouvelle matière première -->
+                  </div> 
                     <button type="submit" (click)="editConsommation()">Ajouter Consommation</button>
+                  </form>
             </div>
           </div>
       </div>

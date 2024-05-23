@@ -47,8 +47,7 @@ export class AdduserComponent implements OnInit{
   }
   addUser(): void {
     if (this.addUserForm.invalid) {
-      // Gérer l'erreur si le formulaire est invalide
-      this.errorMessage = "Le formulaire contient des erreurs.";
+      this.errorMessage = 'Veuillez remplir tous les champs correctement.';
       return;
     }
 

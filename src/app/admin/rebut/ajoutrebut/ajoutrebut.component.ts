@@ -4,6 +4,7 @@ import { mesService } from '../../../messervice';
 import { Router } from '@angular/router';
 import { Produit } from '../../../produit';
 import { Machine } from '../../../machine';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-ajoutrebut',
@@ -18,7 +19,14 @@ export class AjoutrebutComponent implements OnInit{
   role: string = '';
   successMessage: string = '';
   errorMessage: string = '';
-  constructor(private mesService : mesService,private router : Router) { }
+  rebutForm: FormGroup;
+  constructor(private mesService : mesService,private router : Router,private fb:FormBuilder) { 
+    this.rebutForm = this.fb.group({
+      quantite: ['', [Validators.required, Validators.min(1)]],
+      idProduitFini: ['', Validators.required],
+      idMachine: ['', Validators.required]
+    });
+  }
 
   ngOnInit() {
     this.username = localStorage.getItem('username') || '';
@@ -27,12 +35,16 @@ export class AjoutrebutComponent implements OnInit{
   }
   //ajout rebut
   ajoutRebut(): void {
-    this.mesService.addRebut(this.rebut).subscribe({
-      next: (data:Rebut) => {
+    if (this.rebutForm.invalid) {
+      this.errorMessage = 'Veuillez remplir tous les champs correctement';
+      return;
+    }
+    this.mesService.addRebut(this.rebutForm.value).subscribe({
+      next: (data: Rebut) => {
         this.successMessage = 'Rebut ajouté avec succès';
-        this.rebut.date =new Date().toLocaleDateString(); 
+        this.rebutForm.reset();
       },
-      error: (error:any) => {
+      error: (error: any) => {
         this.errorMessage = 'Erreur lors de l\'ajout du rebut';
         console.error('Ajout rebut error', error);
       }

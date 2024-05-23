@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Produit } from '../../../produit';
 import { Machine } from '../../../machine';
 import { Rebut } from '../../../rebut';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-edit-rebut',
@@ -17,7 +18,14 @@ export class EditRebutComponent implements OnInit{
   machines: Machine[] = [];
   successMessage: string = '';
   errorMessage: string = '';
-  constructor(private mesService : mesService, private route: ActivatedRoute,private router: Router) { }
+  rebutForm: FormGroup;
+  constructor(private mesService : mesService, private route: ActivatedRoute,private router: Router,private fb: FormBuilder) { 
+    this.rebutForm = this.fb.group({
+      quantite: ['', [Validators.required, Validators.min(1)]],
+      idProduitFini: ['', Validators.required],
+      idMachine: ['', Validators.required]
+    });
+  }
 
   ngOnInit() {
     this.username = localStorage.getItem('username') || '';
@@ -28,8 +36,10 @@ export class EditRebutComponent implements OnInit{
     this.getMachinesList();
     this.getProduitsFini();
   }
+  
   getRebutDetails(id: number): void {
     this.mesService.getRebut(id).subscribe((data: Rebut) => {
+      this.rebutForm.patchValue(data);
       this.rebut = data;
     });
   }
@@ -54,7 +64,11 @@ export class EditRebutComponent implements OnInit{
     });
   }
   editRebut(): void {
-    this.mesService.editRebut(this.rebut.id, this.rebut).subscribe({
+    if (this.rebutForm.invalid) {
+      this.errorMessage = 'Veuillez remplir tous les champs correctement';
+      return;
+    }
+    this.mesService.editRebut(this.rebut.id, this.rebutForm.value).subscribe({
       next: (data: Rebut) => {
         this.successMessage = 'Rebut modifié avec succès.';
       },

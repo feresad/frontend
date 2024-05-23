@@ -5,6 +5,7 @@ import { Consommationn } from '../../../consommationn';
 import { Produit } from '../../../produit';
 import { Machine } from '../../../machine';
 import { QuantiteConso } from '../../../quantite-conso';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-ajout-consommation',
@@ -17,19 +18,41 @@ export class AjoutConsommationComponent implements OnInit{
   produitFini: Produit[] = [];
   produitConso: Produit[] = [];
   machines: Machine[] = [];
-  quantiteMatiereConso : QuantiteConso[] = [];
   successMessage: string = '';
   errorMessage: string = '';
   role: string = '';
-  constructor(private mesService: mesService, private router : Router){}
+  consommationForm: FormGroup;
+  constructor(private mesService: mesService, private router : Router,private fb: FormBuilder){
+    this.consommationForm = this.fb.group({
+      idProduitFini: ['', Validators.required],
+      idMachine: ['', Validators.required],
+      quantiteMatiereConso: this.fb.array([], Validators.required)
+    });
+  }
   ngOnInit(): void {
     this.getProduitsFini();
     this.getMachinesList();
     this.getProduitConso();
     this.username = localStorage.getItem('username') || '';
   }
+  get quantiteMatiereConso() {
+    return this.consommationForm.get('quantiteMatiereConso') as FormArray;
+  }
   ajoutConsommation(): void {
-    this.Consommation.quantiteMatiereConso = this.quantiteMatiereConso;
+    if(this.consommationForm.invalid)
+      {
+        this.errorMessage = 'Veuillez remplir tous les champs';
+        return;
+      }
+    if (this.consommationForm.valid) {
+      this.Consommation.idProduitFini = this.consommationForm.get('idProduitFini')?.value;
+      this.Consommation.idMachine = this.consommationForm.get('idMachine')?.value;
+      this.Consommation.quantiteMatiereConso = this.quantiteMatiereConso.controls.map(control => {
+        return {
+          nomMatiere: control.get('nomMatiere')?.value,
+          quantite: control.get('quantite')?.value
+        };
+      });
     this.mesService.ajoutConsommation(this.Consommation).subscribe({
       next: (data) => {
         this.successMessage = 'Consommation ajoutée avec succès';
@@ -37,7 +60,7 @@ export class AjoutConsommationComponent implements OnInit{
       error: (error) => {
         this.errorMessage = 'Erreur lors de l\'ajout de la consommation';
       }
-    });
+    });}
   }
   getProduitsFini(): void {
     this.mesService.getProduitFini().subscribe({
@@ -60,11 +83,14 @@ export class AjoutConsommationComponent implements OnInit{
     });
   }
   ajouterQuantiteMatiereConso() {
-    this.quantiteMatiereConso.push({ nomMatiere: '', quantite: 0 });
+    this.quantiteMatiereConso.push(this.fb.group({
+      nomMatiere: ['', Validators.required],
+      quantite: [0, [Validators.required, Validators.min(1)]]
+    }));
   }
 
   supprimerQuantiteMatiereConso(index: number) {
-    this.quantiteMatiereConso.splice(index, 1);
+    this.quantiteMatiereConso.removeAt(index);
   }
   getProduitConso():void{
     this.mesService.getProduitConso().subscribe({

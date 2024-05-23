@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Produit } from '../../../produit';
-import { FormsModule } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { mesService } from '../../../messervice';
@@ -19,8 +19,16 @@ export class EditProduitComponent implements OnInit {
   successMessage: string = '';
   errorMessage: string = '';
   produits: Produit[] = [];
+  produitForm: FormGroup;
   
-  constructor(private mesService : mesService, private route: ActivatedRoute, private router : Router) { }
+  constructor(private mesService : mesService, private route: ActivatedRoute, private router : Router,private fb: FormBuilder) { 
+    this.produitForm = this.fb.group({
+      name: ['', Validators.required],
+      quantite: ['', [Validators.required, Validators.min(1)]],
+      etat: ['', Validators.required],
+      matieresPremieres: this.fb.array([])
+    });
+  }
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       const id = params['id'];
@@ -32,6 +40,19 @@ export class EditProduitComponent implements OnInit {
   getProduitDetails(id: number): void {
     this.mesService.getProduit(id).subscribe((data: Produit) => {
       this.produit = data;
+      this.produitForm.patchValue({
+        name: this.produit.name,
+        quantite: this.produit.quantite,
+        etat: this.produit.etat
+      });
+      if (this.produit.matieresPremieres) {
+        this.produit.matieresPremieres.forEach(matierePremiere => {
+          this.matieresPremieresFormArray.push(this.fb.group({
+            name: [matierePremiere.name, Validators.required],
+            quantite: [matierePremiere.quantite, [Validators.required, Validators.min(0.1)]]
+          }));
+        });
+      }
       if (this.produit.etat === undefined) { 
         this.typeProduit = 'Consommable';
     } else if (this.produit.etat >= 0 && this.produit.etat <= 2) {
@@ -41,27 +62,39 @@ export class EditProduitComponent implements OnInit {
       console.log(this.produit);
     });
   }
-
+  get matieresPremieresFormArray(): FormArray {
+    return this.produitForm.get('matieresPremieres') as FormArray;
+  }
   editProduitFini(): void {
-    this.produit.name = this.produit.name.toLowerCase();
-    this.mesService.editProduitFinis(this.produit.id, this.produit)
-    .subscribe({
-        next: (data: Produit) => {
-          console.log(data);
+    if (this.produitForm.valid) {
+      this.produit.name = this.produitForm.value.name.toLowerCase();
+      this.produit.quantite = this.produitForm.value.quantite;
+      this.produit.matieresPremieres = this.produitForm.value.matieresPremieres;
+      this.mesService.editProduitFinis(this.produit.id, this.produit)
+        .subscribe({
+          next: (data: Produit) => {
             this.successMessage = 'Produit modifié avec succès.';
-        },
-        error: (error: HttpErrorResponse) => {
+          },
+          error: (error: HttpErrorResponse) => {
             this.errorMessage = 'Erreur lors de la modification du produit.';
-        }
-    });
-}
+          }
+        });
+    }
+  }
   editProduitConso(): void {
-    this.produit.name = this.produit.name.toLowerCase();
-    this.mesService.editProduitConso(this.produit.id, this.produit)
-    .subscribe((data: Produit) => {
-      this.successMessage = 'Produit modifié avec succès.';
-      },
-      (error : any) => this.errorMessage = 'Erreur lors de la modification du produit.');
+    if (this.produitForm.valid) {
+      this.produit.name = this.produitForm.value.name.toLowerCase();
+      this.produit.quantite = this.produitForm.value.quantite;
+      this.mesService.editProduitConso(this.produit.id, this.produit)
+        .subscribe({
+          next: (data: Produit) => {
+            this.successMessage = 'Produit modifié avec succès.';
+          },
+          error: (error: HttpErrorResponse) => {
+            this.errorMessage = 'Erreur lors de la modification du produit.';
+          }
+        });
+    }
   }
   onSubmit() {
     if(this.typeProduit === 'Fini')
@@ -77,6 +110,17 @@ export class EditProduitComponent implements OnInit {
     this.mesService.getProduitConso().subscribe((data: any[]) => {
       this.produits = data;
     });
+  }
+  ajouterMatierePremiere() {
+    const matierePremiereGroup = this.fb.group({
+      name: ['', Validators.required],
+      quantite: ['', [Validators.required, Validators.min(0.1)]]
+    });
+    this.matieresPremieresFormArray.push(matierePremiereGroup);
+  }
+
+  supprimerMatierePremiere(index: number) {
+    this.matieresPremieresFormArray.removeAt(index);
   }
 
   logout(): void {

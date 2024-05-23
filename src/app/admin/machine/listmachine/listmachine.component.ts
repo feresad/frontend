@@ -27,14 +27,6 @@ export class ListmachineComponent {
   getMachinesList(): void{
     this.mesService.getMachinesList().subscribe((data: any[]) => {
       this.machines = data;
-      //je veux prendre panneId et chercher le panne byId et afficher Name
-      this.machines.forEach((machine) => {
-        if(!machine.etat){
-        /*this.mesService.getPanneById(machine.panneId).subscribe((data: Panne) => {
-          machine.panneName = data.name;
-        });*/
-      }
-      });
     });
   }
   deleteMachine(id: number){

@@ -83,7 +83,6 @@ export class AjoutproduitComponent implements OnInit {
     return this.produitForm.get('matieresPremieres') as FormArray;
   }
 
-  // Méthode pour supprimer une matière première
   supprimerMatierePremiere(index: number) {
     this.matieresPremieres.splice(index, 1);
   }
