@@ -55,7 +55,6 @@
                   <h2>Modifier Ordre</h2>
                   <button routerLink="/listordre">List des Ordres</button>
               </div>
-              <div class="form-container">
                 <form [formGroup]="ordreForm" (submit)="onSubmit()">
                 <div class="form-group" *ngIf="isAdmin()">
                     <label for="produit">Nom de la Produit</label>
@@ -127,7 +126,6 @@
             </div>
             
           </div>
-      </div>
     </main> 
                       
   

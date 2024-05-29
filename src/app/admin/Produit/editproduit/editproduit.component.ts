@@ -69,6 +69,7 @@ export class EditProduitComponent implements OnInit {
     if (this.produitForm.valid) {
       this.produit.name = this.produitForm.value.name.toLowerCase();
       this.produit.quantite = this.produitForm.value.quantite;
+      this.produit.etat = this.produitForm.value.etat;
       this.produit.matieresPremieres = this.produitForm.value.matieresPremieres;
       this.mesService.editProduitFinis(this.produit.id, this.produit)
         .subscribe({

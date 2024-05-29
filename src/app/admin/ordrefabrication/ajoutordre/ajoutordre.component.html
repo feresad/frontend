@@ -96,6 +96,14 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label for="quantite">Quantite</label>
+                    <input type="number" id="quantite" name="quantite" formControlName="quantite" [defaultValue]="0" required>
+                    <div *ngIf="ordreForm.controls['quantite'].invalid && ordreForm.controls['quantite'].touched" class="text-danger">
+                      <small *ngIf="ordreForm.controls['quantite'].errors?.['min']">  Veuillez entrer une quantité > 0.</small>
+                      <small *ngIf="ordreForm.controls['quantite'].errors?.['quantiteExceedsRemaining']">Quantité dépasse la quantité restante de la commande.</small>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label for="quantiteRebut">Quantite Rebut</label>
                     <input type="number" id="quantiteRebut" name="quantiteRebut" formControlName="quantiteRebut" [defaultValue]="0" required>
                     <div *ngIf="ordreForm.controls['quantiteRebut'].invalid && ordreForm.controls['quantiteRebut'].touched" class="text-danger">

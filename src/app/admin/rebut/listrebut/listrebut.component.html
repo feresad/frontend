@@ -77,8 +77,8 @@
                 <td>{{rebut.date | date:'HH:mm'}}</td>
                 <td>{{rebut.date | date:'dd/MM/yyyy'}}</td>
                 <td>
-                  <button class="custom-btn btn-edit" [routerLink]="['/edit-rebut', rebut.id]">Edit</button>
-                  <button class="custom-btn btn-2" (click)="deleteRebut(rebut.id)" *ngIf="isAdmin()">Delete</button>
+                  <button class="custom-btn btn-edit" [routerLink]="['/edit-rebut', rebut.id]">Modifier</button>
+                  <button class="custom-btn btn-2" (click)="deleteRebut(rebut.id)" *ngIf="isAdmin()">Supprimer</button>
                 </td>
               </table>
               </div>

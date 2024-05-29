@@ -5,6 +5,7 @@ export class Produit {
     name: string ='';
     matieresPremieres: MatierePremier[] = [];
     quantite: number=0;
+    quantiteRestante : number=0;
     etat! : number
     date? : Date
 }

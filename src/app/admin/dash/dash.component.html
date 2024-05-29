@@ -106,6 +106,7 @@
             <th>ID</th>
             <th>Name</th>
             <th>Qantité</th>
+            <th>Quantite Restante du commande</th>
             <th>matiere_Premier</th>
             <th>Etat</th>
             <th>Actions</th>
@@ -115,6 +116,7 @@
             <td>{{ produit.id }}</td>
             <td>{{ produit.name }}</td>
             <td>{{ produit.quantite }}</td>
+            <td>{{ produit.quantiteRestante }}</td>
             <td>
               <ul>
                 <li *ngFor="let matiere of produit.matieresPremieres">
@@ -128,7 +130,7 @@
               <span *ngIf="produit.etat == 0" class="status horsStock"><i class="fas fa-circle"> Aucun Traitement</i></span>
             </td>
             <td>
-              <button class="custom-btn btn-edit" [routerLink]="['/edit-prod', produit.id]">Edit</button>
+              <button class="custom-btn btn-edit" [routerLink]="['/edit-prod', produit.id]">Modifier</button>
               <button class="custom-btn btn-2" (click)="deleteProduit(produit.id)" *ngIf="isAdmin()">Supprimer</button>
             </td>
           </tr>

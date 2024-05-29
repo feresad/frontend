@@ -84,7 +84,7 @@ export class AjoutproduitComponent implements OnInit {
   }
 
   supprimerMatierePremiere(index: number) {
-    this.matieresPremieres.splice(index, 1);
+    this.matieresPremieresFormArray.removeAt(index);
   }
   getProduitsConso(): void{
     this.mesService.getProduitConso().subscribe((data: any[]) => {

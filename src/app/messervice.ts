@@ -12,6 +12,7 @@ import { Panne } from "./panne";
 import { OrdreFabrication } from "./ordre-fabrication";
 import { Planproduit } from "./planproduit";
 import { tap } from 'rxjs/operators';
+import { Commande } from "./commande";
     @Injectable({ 
         providedIn: 'root'
     })
@@ -124,6 +125,9 @@ import { tap } from 'rxjs/operators';
         }
         modifierOrdreFabrication(id: number, ordre: OrdreFabrication): Observable<OrdreFabrication> {
             return this.httpClient.put<OrdreFabrication>(`${this.OURL}${id}`, ordre, this.getHttpOptions());
+        }
+        getCommande(id:number):Observable<Commande>{
+            return this.httpClient.get<Commande>(`${this.OURL}commande/${id}`);
         }
 
         // Machines 

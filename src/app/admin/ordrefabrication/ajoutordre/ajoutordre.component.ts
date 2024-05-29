@@ -26,8 +26,12 @@ export class AjoutordreComponent {
       idmachine: ['', Validators.required],
       dateDebut: ['', [Validators.required, dateDebutValidator()]],
       dateFin: ['', [Validators.required, dateFinValidator('dateDebut')]],
+      quantite:[0, [Validators.required, Validators.min(0)]],
       quantiteRebut: [0, [Validators.required, Validators.min(0)]],
       etat: ['', Validators.required]
+    },
+    {
+      validators: [quantiteValidator(this.mesService)]
     });
    }
   ngOnInit(): void {
@@ -64,9 +68,6 @@ export class AjoutordreComponent {
     // Obtenez la quantité associée au plan produit
     this.mesService.getProduitFiniById(idProduitFini).subscribe({
       next: (produit) => {
-        // Récupérez la quantité totale du plan produit
-        this.ordreForm.value.quantite = produit.quantite;
-
         // Ajoutez l'ordre de fabrication avec la quantité obtenue
         this.mesService.ajoutOrdreFabrication(this.ordreForm.value).subscribe({
           next: (data) => {
@@ -132,6 +133,29 @@ export function dateFinValidator(dateDebutControlName: string): ValidatorFn {
     if (dateFinDate < dateDebutDate) {
       return { invalidEndDate: true };
     }
+    return null;
+  };
+}
+export function quantiteValidator(mesService: mesService): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const idProduitFini = control.get('idProduitFini')?.value;
+    const quantite = control.get('quantite')?.value;
+
+    if (!idProduitFini || quantite === null) {
+      return null;
+    }
+
+    // Get the product details to find the remaining quantity
+    mesService.getCommande(idProduitFini).subscribe({
+      next: (produit) => {
+        if (quantite > produit.quantiteRestante) {
+          control.get('quantite')?.setErrors({ quantiteExceedsRemaining: true });
+        }
+      },
+      error: (error) => {
+        console.error('Erreur lors de la récupération du produit fini', error);
+      }
+    });
     return null;
   };
 }

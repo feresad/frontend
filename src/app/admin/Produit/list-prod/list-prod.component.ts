@@ -26,8 +26,13 @@ this.username = localStorage.getItem('username') || '';
   getProduitsList(): void{
     this.mesService.getProduitFini().subscribe((data: Produit[]) => {
       this.produits = data;
+      this.produits.forEach(produit => {
+        this.mesService.getCommande(produit.id).subscribe((data: any) => {
+          produit.quantiteRestante = data.quantiteRestante;
+        });
     });
-  }
+  });
+}
   // Search Produit
   SearchProduit(): void {
     if (this.searchQuery.trim() !== '') {

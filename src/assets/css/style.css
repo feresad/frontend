@@ -531,12 +531,12 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
 }
 
 .btn-edit {
-  width: 80px; /* Ajustez la largeur selon le contenu */
+  width: 80px;
   height: 40px;
   line-height: 42px;
   padding: 0;
   border: none;
-  background: yellow; /* Cette ligne est déjà correcte pour une couleur de fond jaune solide */
+  background: yellow; 
   background: linear-gradient(0deg, rgba(255,223,0,1) 0%, rgba(255,239,0,1) 100%); /* Dégradé de jaune */
 }
 
