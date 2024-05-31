@@ -26,7 +26,7 @@
       <span class="fas fa-hammer"></span><a>Ordre de fabrication</a>
     </div>
     <div class="sidebar-menu" routerLink="/consommation">
-      <span class="fas fa-battery-full"></span><a>Consomation</a>
+      <span class="fas fa-battery-full"></span><a>Consommation</a>
     </div>
     <div class="sidebar-menu" routerLink="/rebut">
       <span class="fas fa-exclamation-triangle"></span><a>Rebut</a>
@@ -77,8 +77,8 @@
                 <td>{{ consommation.nomProduit }}</td>
                 <td>{{ consommation.nomMachine }}</td>
                 <td>
-                  <button class="custom-btn btn-edit" [routerLink]="['/edit-conso',consommation.id]">Edit</button>
-                  <button class="custom-btn btn-2" (click)="deleteConso(consommation.id)" *ngIf="isAdmin()">Delete</button>
+                  <button class="custom-btn btn-edit" [routerLink]="['/edit-conso',consommation.id]">Modifier</button>
+                  <button class="custom-btn btn-2" (click)="deleteConso(consommation.id)" *ngIf="isAdmin()">Supprimer</button>
                 </td>
               </table>
               </div>

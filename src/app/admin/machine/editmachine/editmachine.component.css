@@ -1,31 +1,4 @@
-.card.detail label {
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  
-  /* Style des champs de saisie */
-  .card.detail input {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    box-sizing: border-box;
-  }
-  
-  /* Style du bouton */
-  .card.detail button {
-    background-color: #007bff; /* Couleur de fond du bouton */
-    color: white; /* Couleur du texte du bouton */
-    border: none;
-    padding: 10px 20px;
-    border-radius: 3px;
-    cursor: pointer;
-  }
-  
-  .card.detail button:hover {
-    background-color: #0056b3; /* Couleur de fond du bouton au survol */
-  }
+
   .card.detail .form-group input[type="checkbox"] {
     display: inline-block;
     width: 20px;

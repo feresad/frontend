@@ -18,6 +18,8 @@ export class ListmachineComponent {
   username: String = '';
   role: string = '';
   pannes: Panne[] =[];
+  successMessage: string = '';
+  errorMessage: string = '';
   constructor(private mesService: mesService , private router : Router) { }
 
   ngOnInit(){
@@ -32,7 +34,12 @@ export class ListmachineComponent {
   deleteMachine(id: number){
     this.mesService.deleteMachine(id).subscribe((data: any) => {
       this.getMachinesList();
-    });
+      this.successMessage = 'Machine supprimée avec succès';
+    },
+    (error) =>{
+      this.errorMessage = 'Erreur lors de la suppression de la machine';
+    }
+  );
   }
   SearchMachineByEtat() {
     if (this.etat.trim() !== '') {

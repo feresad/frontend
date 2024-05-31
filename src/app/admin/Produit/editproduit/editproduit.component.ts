@@ -25,7 +25,7 @@ export class EditProduitComponent implements OnInit {
     this.produitForm = this.fb.group({
       name: ['', Validators.required],
       quantite: ['', [Validators.required, Validators.min(1)]],
-      etat: ['', Validators.required],
+      etat: [''],
       matieresPremieres: this.fb.array([])
     });
   }
@@ -40,26 +40,32 @@ export class EditProduitComponent implements OnInit {
   getProduitDetails(id: number): void {
     this.mesService.getProduit(id).subscribe((data: Produit) => {
       this.produit = data;
+      if (this.produit.etat >= 0 && this.produit.etat <= 2) {
+        this.typeProduit = 'Fini';
+        console.log(this.typeProduit);
+      } else {
+        this.typeProduit = 'Consommable';
+        console.log(this.typeProduit);
+      }
       this.produitForm.patchValue({
         name: this.produit.name,
         quantite: this.produit.quantite,
-        etat: this.produit.etat
+        etat: this.produit.etat !== undefined ? this.produit.etat : ''
       });
-      if (this.produit.matieresPremieres) {
-        this.produit.matieresPremieres.forEach(matierePremiere => {
-          this.matieresPremieresFormArray.push(this.fb.group({
-            name: [matierePremiere.name, Validators.required],
-            quantite: [matierePremiere.quantite, [Validators.required, Validators.min(0.1)]]
-          }));
-        });
+      // Ajout des validateurs après avoir déterminé le type de produit
+      if (this.typeProduit === 'Fini') {
+        this.produitForm.get('etat')?.setValidators(Validators.required);
+        this.produitForm.get('matieresPremieres')?.setValidators(Validators.required);
+
+        if (this.produit.matieresPremieres) {
+          this.produit.matieresPremieres.forEach(matierePremiere => {
+            this.matieresPremieresFormArray.push(this.fb.group({
+              name: [matierePremiere.name, Validators.required],
+              quantite: [matierePremiere.quantite, [Validators.required, Validators.min(0.1)]]
+            }));
+          });
+        }
       }
-      if (this.produit.etat === undefined) { 
-        this.typeProduit = 'Consommable';
-    } else if (this.produit.etat >= 0 && this.produit.etat <= 2) {
-        this.typeProduit = 'Fini';
-    } else {
-    }
-      console.log(this.produit);
     });
   }
   get matieresPremieresFormArray(): FormArray {
@@ -83,9 +89,15 @@ export class EditProduitComponent implements OnInit {
     }
   }
   editProduitConso(): void {
+    if(this.produitForm.invalid)
+      {
+        this.errorMessage = 'Veuillez remplir tous les champs.';
+        return;
+      }
     if (this.produitForm.valid) {
       this.produit.name = this.produitForm.value.name.toLowerCase();
       this.produit.quantite = this.produitForm.value.quantite;
+      console.log(this.produit);
       this.mesService.editProduitConso(this.produit.id, this.produit)
         .subscribe({
           next: (data: Produit) => {

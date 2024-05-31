@@ -26,7 +26,7 @@
     <span class="fas fa-hammer"></span><a>Ordre de fabrication</a>
   </div>
   <div class="sidebar-menu" routerLink="/consommation">
-    <span class="fas fa-battery-full"></span><a>Consomation</a>
+    <span class="fas fa-battery-full"></span><a>Consommation</a>
   </div>
   <div class="sidebar-menu" routerLink="/rebut">
     <span class="fas fa-exclamation-triangle"></span><a>Rubut</a>
@@ -44,6 +44,12 @@
   <main>
     <div class="dashboard">
         <div class="card detail">
+          <div *ngIf="successMessage" class="alert alert-success">
+            {{ successMessage }}
+          </div>
+          <div *ngIf="errorMessage" class="alert alert-danger">
+            {{ errorMessage }}
+          </div>
             <div class="detail-header">
               <h2>Liste Machine</h2>
               <div class="group">

@@ -15,8 +15,8 @@
 
 /* Style du bouton */
 .card.detail button {
-  background-color: #007bff; /* Couleur de fond du bouton */
-  color: white; /* Couleur du texte du bouton */
+  background-color: #3e3dab;
+  color: white;
   border: none;
   padding: 10px 20px;
   border-radius: 3px;
@@ -24,5 +24,5 @@
 }
 
 .card.detail button:hover {
-  background-color: #0056b3; /* Couleur de fond du bouton au survol */
+  background-color: #3e3dab;
 }
