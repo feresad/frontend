@@ -85,7 +85,7 @@
             <div formArrayName="matieresPremieres">
             <div *ngFor="let matierePremiereGroup of matieresPremieresFormArray.controls; let i = index" [formGroupName]="i"> 
               <div class="form-group">
-                <label>Nom de la Matière Première Par Piéce:</label>
+                <label>Nom de la Matière Première :</label>
                 <select formControlName="name" name="matiere_name_{{ i }}" required>
                   <option *ngFor="let produit of produits" [value]="produit.name">
                     {{ produit.name }}
@@ -97,7 +97,7 @@
               </div>
           
               <div class="form-group">
-                <label>Quantité de la Matière Première:</label>
+                <label>Quantité de la Matière Première Par Piéce:</label>
                 <input formControlName="quantite" name="matiere_quantite_{{ i }}" type="number" required>
                 <div *ngIf="getMatierePremiereFormGroup(i).controls['quantite'].invalid && getMatierePremiereFormGroup(i).controls['quantite'].touched">
                   <small class="text-danger">La quantité de la matière première doit être supérieure à zéro.</small>

@@ -82,7 +82,7 @@
                   <div formArrayName="quantiteMatiereConso">
                     <div *ngFor="let matiere of quantiteMatiereConso.controls; let i = index" [formGroupName]="i">
                       <div class="form-group">
-                        <label>Nom de la Matière Première Par Piéce:</label>
+                        <label>Nom de la Matière Première :</label>
                         <select formControlName="nomMatiere" name="matiere_name_{{ i }}" required>
                           <option *ngFor="let prod of produitConso" [value]="prod.name">
                             {{ prod.name }}
@@ -108,7 +108,7 @@
                       </div>                
                     </div>
                   </div> 
-                    <button type="submit" (click)="editConsommation()">Ajouter Consommation</button>
+                    <button type="submit" (click)="editConsommation()">Modifier Consommation</button>
                   </form>
             </div>
           </div>

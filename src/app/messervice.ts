@@ -263,7 +263,6 @@ import { Commande } from "./commande";
             return this.httpClient.put(`${this.AURL}update/${username}`, user, this.getHttpOptions())
               .pipe(
                 tap(() => {
-                    // Mettre à jour le nom d'utilisateur dans le stockage local
                     localStorage.setItem('username', user.username);
                 }),
                 catchError(this.handleError)

@@ -52,7 +52,7 @@ export const routes: Routes = [
         path:'ajout-prod',component:AjoutproduitComponent,canActivate: [AuthGuard],data: { expectedRole: 'ADMIN' }
     },
     {
-        path:'edit-prod/:id',component:EditProduitComponent,canActivate: [AuthGuard]
+        path:'edit-prod/:id',component:EditProduitComponent,canActivate: [AuthGuard],data: { expectedRole: 'ADMIN' }
     },
     {
         path:'machine',component:MachineComponent,canActivate: [AuthGuard]

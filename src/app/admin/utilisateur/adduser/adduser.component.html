@@ -58,7 +58,7 @@
               <div class="form-container">
                 <form id="addUserForm" [formGroup]="addUserForm" (ngSubmit)="addUser()">
                     <div class="form-group">
-                        <label for="username">Nom d'utilisateur</label>
+                        <label for="username">Identifiant</label>
                         <input formControlName="username" type="text" id="username" name="username" [(ngModel)]="username" required>
                         <div *ngIf="addUserForm.controls['username'].invalid && addUserForm.controls['username'].touched">
                           <small class="text-danger">Le nom d'utilisateur doit contenir entre 3 et 20 caractères.</small>
